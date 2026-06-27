@@ -487,3 +487,16 @@ final diagramProvider = NotifierProvider<DiagramNotifier, DiagramState>(() {
 
 final canvasKeyProvider = Provider<GlobalKey>((ref) => GlobalKey());
 
+class NodeHoverNotifier extends Notifier<bool> {
+  @override
+  bool build() => false;
+  
+  void setHover(bool val) {
+    state = val;
+  }
+}
+
+final nodeHoverProvider = NotifierProvider<NodeHoverNotifier, bool>(() {
+  return NodeHoverNotifier();
+});
+

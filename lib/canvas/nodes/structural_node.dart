@@ -78,6 +78,8 @@ class StructuralNodeWidget extends ConsumerWidget {
       },
       child: MouseRegion(
         cursor: SystemMouseCursors.move,
+        onEnter: (_) => ref.read(nodeHoverProvider.notifier).setHover(true),
+        onExit: (_) => ref.read(nodeHoverProvider.notifier).setHover(false),
         child: SizedBox(
           width: 200,
           height: 80,

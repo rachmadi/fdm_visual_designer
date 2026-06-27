@@ -95,6 +95,8 @@ class SecurityBoundaryWidget extends ConsumerWidget {
               },
               child: MouseRegion(
                 cursor: SystemMouseCursors.move,
+                onEnter: (_) => ref.read(nodeHoverProvider.notifier).setHover(true),
+                onExit: (_) => ref.read(nodeHoverProvider.notifier).setHover(false),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
