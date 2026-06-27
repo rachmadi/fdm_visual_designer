@@ -1,0 +1,44 @@
+# Daftar Tugas (Task Checklist): FDM Visual Designer
+
+## [1.0.0] - Fondasi Utama (Lengkap & Terverifikasi)
+
+- [x] Inisialisasi Proyek Flutter Web
+  - [x] Scaffold folder dan setup file config
+  - [x] Menambahkan dependensi Riverpod dan FilePicker
+  - [x] Mengatur aset dan icon Material Design
+- [x] Metamodel & State Management (Iterasi 1)
+  - [x] Menulis tipe data FDM di `lib/core/metamodel.dart`
+  - [x] Membangun state diagram notifier dengan stack Undo/Redo di `lib/core/state.dart`
+- [x] Tampilan Node & Canvas (Iterasi 1)
+  - [x] Implementasi folder-tab `StructuralNodeWidget`
+  - [x] Implementasi rounded-card `EntityNodeWidget`
+  - [x] Membangun grid workspace `CanvasView` dengan zoom/pan
+- [x] Relasi Horizontal & Edges (Iterasi 2)
+  - [x] Menggambar relasi hierarchy
+  - [x] Menggambar relasi referencing dengan dashed line & asterisk (*)
+  - [x] Menggambar relasi denormalization dengan double arrowhead & inline label
+  - [x] Membuat relation builder untuk menyambungkan properti ke node target
+- [x] Mesin Validasi 8 Well-Formedness Rules (Iterasi 3)
+  - [x] Menulis 8 rule semantik di `lib/engine/validator.dart`
+  - [x] Mengintegrasikan validator reaktif dengan Riverpod state
+  - [x] Menulis 8 unit test di `test/validator_test.dart` dan lolos `flutter test`
+  - [x] Menampilkan badge error/warning di canvas node
+- [x] Physical Guardrails & Query Vectors (Iterasi 4)
+  - [x] Menambahkan toggles unbounded (⚠️ 1MB) dan high frequency (⚡ >1/s)
+  - [x] Merender physical badges otomatis pada node
+  - [x] Membuat panel Query Vector & estimator Composite Index di sidebar kanan
+- [x] Security Boundaries & Mode RTDB (Iterasi 5)
+  - [x] Implementasi resizable `SecurityBoundaryWidget` (PUBLIC & PRIVATE/OWNER)
+  - [x] Integrasi rule 6 (validasi overlap boundary)
+  - [x] Toggle RTDB mode di toolbar (menonaktifkan alternation rule R1, mengizinkan nested maps)
+- [x] Ekspor/Impor & Polishing (Iterasi 6)
+  - [x] Ekspor & Impor skema diagram JSON FDM v1
+  - [x] Ekspor gambar resolusi tinggi 2x (PNG) via RepaintBoundary
+  - [x] Menyusun panel lapor kesalahan (Validation Report) di sidebar kanan
+  - [x] Memperbaiki seluruh error kompilasi dan sukses build produksi (`flutter build web`)
+
+## Rencana Selanjutnya (Peningkatan Masa Depan)
+
+- [ ] Integrasi Algoritma Auto-Layout otomatis berbasis Dagre (Dart port)
+- [ ] Penambahan visual Minimap di sudut kanan bawah canvas
+- [ ] Penambahan Shortcut keyboard global (Ctrl+Z, Ctrl+Y, Delete)

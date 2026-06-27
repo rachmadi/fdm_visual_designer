@@ -1,0 +1,378 @@
+import 'dart:math' as math;
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/metamodel.dart';
+import '../../core/state.dart';
+
+class SidebarLeft extends ConsumerStatefulWidget {
+  const SidebarLeft({super.key});
+
+  @override
+  ConsumerState<SidebarLeft> createState() => _SidebarLeftState();
+}
+
+class _SidebarLeftState extends ConsumerState<SidebarLeft> {
+  String? _selectedSourceNodeId;
+  String? _selectedSourcePropKey;
+  EdgeType _selectedEdgeType = EdgeType.hierarchy;
+  String? _selectedTargetNodeId;
+  bool _isOneToMany = false;
+  final TextEditingController _labelController = TextEditingController();
+
+  @override
+  void dispose() {
+    _labelController.dispose();
+    super.dispose();
+  }
+
+  void _createNode(NodeType type) {
+    final rand = math.Random();
+    // Spawn near center of 3000x3000px canvas
+    final pos = Offset(1400.0 + rand.nextInt(100), 1400.0 + rand.nextInt(100));
+    final id = 'node_${DateTime.now().millisecondsSinceEpoch}';
+    final name = type == NodeType.structural ? 'new_collection' : 'NewEntity';
+    final path = type == NodeType.structural ? '/new_collection' : '/new_collection/\$id';
+
+    final newNode = FDMNode(
+      id: id,
+      type: type,
+      name: name,
+      path: path,
+      isDynamic: type == NodeType.entity,
+      queryVector: QueryVector(),
+      position: pos,
+    );
+
+    ref.read(diagramProvider.notifier).addNode(newNode);
+  }
+
+  void _createBoundary() {
+    final rand = math.Random();
+    final id = 'boundary_${DateTime.now().millisecondsSinceEpoch}';
+    final rect = Rect.fromLTWH(1350.0 + rand.nextInt(50), 1350.0 + rand.nextInt(50), 300, 250);
+    
+    final boundary = SecurityBoundary(
+      id: id,
+      accessLevel: 'public',
+      enclosedNodeIds: [],
+      rect: rect,
+    );
+
+    ref.read(diagramProvider.notifier).addBoundary(boundary);
+  }
+
+  void _connectNodes() {
+    if (_selectedSourceNodeId == null || _selectedTargetNodeId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select source and target nodes.')),
+      );
+      return;
+    }
+
+    if (_selectedSourceNodeId == _selectedTargetNodeId) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Source and target nodes must be different.')),
+      );
+      return;
+    }
+
+    final id = 'edge_${DateTime.now().millisecondsSinceEpoch}';
+    final edge = FDMEdge(
+      id: id,
+      type: _selectedEdgeType,
+      sourceNodeId: _selectedSourceNodeId!,
+      sourcePropertyKey: _selectedEdgeType == EdgeType.hierarchy ? null : _selectedSourcePropKey,
+      targetNodeId: _selectedTargetNodeId!,
+      isOneToMany: _isOneToMany,
+      label: _selectedEdgeType == EdgeType.denormalization ? _labelController.text : null,
+    );
+
+    ref.read(diagramProvider.notifier).addEdge(edge);
+
+    // Reset relation builder state
+    setState(() {
+      _selectedSourcePropKey = null;
+      _labelController.clear();
+      _isOneToMany = false;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Connection created successfully!')),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(diagramProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
+    final sidebarBg = isDark ? const Color(0xFF0F172A) : Colors.white;
+    final borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
+    final sectionBg = isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9);
+    final textCol = isDark ? Colors.white : const Color(0xFF1E293B);
+
+    final entityNodes = state.nodes.where((n) => n.type == NodeType.entity).toList();
+    final sourceNode = state.nodes.firstWhere((n) => n.id == _selectedSourceNodeId, orElse: () => state.nodes.first);
+    final sourceProps = _selectedSourceNodeId != null ? sourceNode.properties : <PropertyNode>[];
+
+    return Container(
+      width: 280,
+      decoration: BoxDecoration(
+        color: sidebarBg,
+        border: Border(right: BorderSide(color: borderColor, width: 1)),
+      ),
+      padding: const EdgeInsets.all(16),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Palette section
+            Text(
+              'NODE PALETTE',
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
+                color: textCol.withOpacity(0.6),
+                letterSpacing: 1.2,
+              ),
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton.icon(
+              onPressed: () => _createNode(NodeType.structural),
+              icon: const Icon(Icons.create_new_folder, size: 16),
+              label: const Text('Add Structural Node'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFEBF4FF),
+                foregroundColor: const Color(0xFF1A3A5C),
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  side: const BorderSide(color: Color(0xFF2E75B6)),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton.icon(
+              onPressed: () => _createNode(NodeType.entity),
+              icon: const Icon(Icons.note_add, size: 16),
+              label: const Text('Add Entity Node'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF2E75B6),
+                foregroundColor: Colors.white,
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton.icon(
+              onPressed: _createBoundary,
+              icon: const Icon(Icons.security, size: 16),
+              label: const Text('Add Security Boundary'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isDark ? const Color(0xFF065F46) : const Color(0xFFD1FAE5),
+                foregroundColor: isDark ? Colors.green.shade100 : const Color(0xFF065F46),
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  side: BorderSide(color: isDark ? const Color(0xFF047857) : const Color(0xFF34D399)),
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Divider(),
+            const SizedBox(height: 16),
+            
+            // Relation Builder section
+            Text(
+              'RELATION BUILDER',
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
+                color: textCol.withOpacity(0.6),
+                letterSpacing: 1.2,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: sectionBg,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Source Dropdown
+                  const Text('Source Node:', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 4),
+                  DropdownButtonFormField<String>(
+                    isExpanded: true,
+                    value: _selectedSourceNodeId,
+                    hint: const Text('Select Source', style: TextStyle(fontSize: 12)),
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      border: OutlineInputBorder(),
+                    ),
+                    items: state.nodes.map((node) {
+                      return DropdownMenuItem<String>(
+                        value: node.id,
+                        child: Text('${node.name} (${node.type == NodeType.structural ? "Structural" : "Entity"})', style: const TextStyle(fontSize: 12)),
+                      );
+                    }).toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        _selectedSourceNodeId = val;
+                        _selectedSourcePropKey = null;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 8),
+
+                  // If not hierarchy edge, show property selector
+                  if (_selectedEdgeType != EdgeType.hierarchy && _selectedSourceNodeId != null && sourceNode.type == NodeType.entity) ...[
+                    const Text('Source Property:', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
+                    const SizedBox(height: 4),
+                    DropdownButtonFormField<String>(
+                      isExpanded: true,
+                      value: _selectedSourcePropKey,
+                      hint: const Text('Select Property', style: TextStyle(fontSize: 12)),
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        border: OutlineInputBorder(),
+                      ),
+                      items: sourceProps.map((prop) {
+                        return DropdownMenuItem<String>(
+                          value: prop.key,
+                          child: Text('${prop.key}: ${prop.dataType.nameString}', style: const TextStyle(fontSize: 12)),
+                        );
+                      }).toList(),
+                      onChanged: (val) {
+                        setState(() {
+                          _selectedSourcePropKey = val;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+
+                  // Relationship Type Selector
+                  const Text('Relation Type:', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 4),
+                  DropdownButtonFormField<EdgeType>(
+                    value: _selectedEdgeType,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      border: OutlineInputBorder(),
+                    ),
+                    items: const [
+                      DropdownMenuItem(
+                        value: EdgeType.hierarchy,
+                        child: Text('Hierarchy (SN ⇄ EN)', style: TextStyle(fontSize: 12)),
+                      ),
+                      DropdownMenuItem(
+                        value: EdgeType.referencing,
+                        child: Text('Referencing (Pointer)', style: TextStyle(fontSize: 12)),
+                      ),
+                      DropdownMenuItem(
+                        value: EdgeType.denormalization,
+                        child: Text('Denormalization (Sync)', style: TextStyle(fontSize: 12)),
+                      ),
+                    ],
+                    onChanged: (val) {
+                      setState(() {
+                        _selectedEdgeType = val ?? EdgeType.hierarchy;
+                        _selectedSourcePropKey = null;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Target Dropdown
+                  const Text('Target Node:', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 4),
+                  DropdownButtonFormField<String>(
+                    isExpanded: true,
+                    value: _selectedTargetNodeId,
+                    hint: const Text('Select Target', style: TextStyle(fontSize: 12)),
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      border: OutlineInputBorder(),
+                    ),
+                    items: state.nodes.map((node) {
+                      return DropdownMenuItem<String>(
+                        value: node.id,
+                        child: Text('${node.name} (${node.type == NodeType.structural ? "Structural" : "Entity"})', style: const TextStyle(fontSize: 12)),
+                      );
+                    }).toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        _selectedTargetNodeId = val;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Specific settings based on relation type
+                  if (_selectedEdgeType == EdgeType.referencing) ...[
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: _isOneToMany,
+                          onChanged: (val) {
+                            setState(() {
+                              _isOneToMany = val ?? false;
+                            });
+                          },
+                        ),
+                        const Expanded(
+                          child: Text(
+                            'One-to-Many (*) Cardinality',
+                            style: TextStyle(fontSize: 11),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+
+                  if (_selectedEdgeType == EdgeType.denormalization) ...[
+                    const Text('Label (Replication sync path):', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
+                    const SizedBox(height: 4),
+                    TextField(
+                      controller: _labelController,
+                      style: const TextStyle(fontSize: 12),
+                      decoration: const InputDecoration(
+                        hintText: 'e.g. sender_name',
+                        contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                  ],
+
+                  ElevatedButton(
+                    onPressed: _connectNodes,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                      foregroundColor: textCol,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                    ),
+                    child: const Text('Connect Nodes', style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
