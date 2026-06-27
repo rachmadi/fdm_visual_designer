@@ -59,31 +59,9 @@ class StructuralNodeWidget extends ConsumerWidget {
     const Color fillCol = Color(0xFFEBF4FF);
     const Color textCol = Color(0xFF1A3A5C);
 
-    return GestureDetector(
-      onTap: () {
-        final isConnecting = ref.read(diagramProvider).isConnecting;
-        if (isConnecting) {
-          ref.read(diagramProvider.notifier).completeConnection(node.id);
-        } else {
-          ref.read(diagramProvider.notifier).selectNode(node.id);
-        }
-      },
-      onPanStart: (_) {
-        ref.read(diagramProvider.notifier).selectNode(node.id);
-      },
-      onPanUpdate: (details) {
-        // Dragging the node
-        final notifier = ref.read(diagramProvider.notifier);
-        notifier.updateNodePosition(node.id, node.position + details.delta);
-      },
-      onPanEnd: (_) {
-        ref.read(diagramProvider.notifier).finishDragging();
-      },
-      child: MouseRegion(
-        cursor: SystemMouseCursors.move,
-        onEnter: (_) => ref.read(nodeHoverProvider.notifier).setHover(true),
-        onExit: (_) => ref.read(nodeHoverProvider.notifier).setHover(false),
-        child: SizedBox(
+    return MouseRegion(
+      cursor: SystemMouseCursors.move,
+      child: SizedBox(
           width: 200,
           height: 80,
           child: Stack(
@@ -104,7 +82,7 @@ class StructuralNodeWidget extends ConsumerWidget {
                           const SizedBox(width: 6),
                           Expanded(
                             child: Text(
-                              '${node.name} (${node.id.length > 6 ? node.id.substring(node.id.length - 6) : node.id})',
+                              node.name,
                               style: const TextStyle(
                                 color: textCol,
                                 fontWeight: FontWeight.bold,
@@ -210,7 +188,6 @@ class StructuralNodeWidget extends ConsumerWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

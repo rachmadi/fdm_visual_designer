@@ -80,49 +80,33 @@ class SecurityBoundaryWidget extends ConsumerWidget {
           Positioned(
             top: -12,
             left: 10,
-            child: GestureDetector(
-              onTap: () {
-                ref.read(diagramProvider.notifier).selectBoundary(boundary.id);
-              },
-              onPanUpdate: (details) {
-                // Drag the entire boundary
-                final notifier = ref.read(diagramProvider.notifier);
-                final newRect = boundary.rect.shift(details.delta);
-                notifier.updateBoundaryRect(boundary.id, newRect);
-              },
-              onPanEnd: (_) {
-                ref.read(diagramProvider.notifier).finishDragging();
-              },
-              child: MouseRegion(
-                cursor: SystemMouseCursors.move,
-                onEnter: (_) => ref.read(nodeHoverProvider.notifier).setHover(true),
-                onExit: (_) => ref.read(nodeHoverProvider.notifier).setHover(false),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: color,
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: borderColor, width: 1.5),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        isPublic ? Icons.lock_open : Icons.lock,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.move,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(color: borderColor, width: 1.5),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      isPublic ? Icons.lock_open : Icons.lock,
+                      color: Colors.white,
+                      size: 10,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      isPublic ? 'PUBLIC' : 'PRIVATE/OWNER',
+                      style: const TextStyle(
                         color: Colors.white,
-                        size: 10,
+                        fontSize: 9,
+                        fontWeight: FontWeight.bold,
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        isPublic ? 'PUBLIC' : 'PRIVATE/OWNER',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 9,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -156,38 +140,19 @@ class SecurityBoundaryWidget extends ConsumerWidget {
           Positioned(
             right: -6,
             bottom: -6,
-            child: GestureDetector(
-              onPanUpdate: (details) {
-                final notifier = ref.read(diagramProvider.notifier);
-                final newWidth = math.max(100.0, boundary.rect.width + details.delta.dx);
-                final newHeight = math.max(80.0, boundary.rect.height + details.delta.dy);
-                notifier.updateBoundaryRect(
-                  boundary.id,
-                  Rect.fromLTWH(
-                    boundary.rect.left,
-                    boundary.rect.top,
-                    newWidth,
-                    newHeight,
-                  ),
-                );
-              },
-              onPanEnd: (_) {
-                ref.read(diagramProvider.notifier).finishDragging();
-              },
-              child: MouseRegion(
-                cursor: SystemMouseCursors.resizeLeftRight,
-                child: Container(
-                  width: 12,
-                  height: 12,
-                  decoration: BoxDecoration(
-                    color: borderColor,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.open_in_full,
-                    size: 8,
-                    color: Colors.white,
-                  ),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.resizeLeftRight,
+              child: Container(
+                width: 12,
+                height: 12,
+                decoration: BoxDecoration(
+                  color: borderColor,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.open_in_full,
+                  size: 8,
+                  color: Colors.white,
                 ),
               ),
             ),

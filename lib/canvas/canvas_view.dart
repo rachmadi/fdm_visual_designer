@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/state.dart';
 import '../../core/metamodel.dart';
@@ -38,9 +39,18 @@ class CanvasView extends ConsumerStatefulWidget {
 }
 
 class _CanvasViewState extends ConsumerState<CanvasView> {
-  final TransformationController _transformationController = TransformationController();
   final double _canvasWidth = 3000.0;
   final double _canvasHeight = 3000.0;
+
+  // Manual pan/zoom state
+  Offset _canvasOffset = Offset.zero;
+  double _scale = 1.0;
+  
+  // Drag tracking
+  String? _draggingNodeId;
+  String? _draggingBoundaryId;
+  bool _isPanning = false;
+  Offset _lastPointerPosition = Offset.zero;
 
   @override
   void initState() {
@@ -48,17 +58,140 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
     // Center the viewport inside the 3000x3000 canvas
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final size = MediaQuery.of(context).size;
-      final initialX = (_canvasWidth - size.width) / 2;
-      final initialY = (_canvasHeight - size.height) / 2;
-      _transformationController.value = Matrix4.identity()
-        ..translate(-initialX, -initialY);
+      setState(() {
+        _canvasOffset = Offset(
+          -(_canvasWidth - size.width) / 2,
+          -(_canvasHeight - size.height) / 2,
+        );
+      });
     });
+  }
+
+  /// Convert screen position to canvas coordinates
+  Offset _screenToCanvas(Offset screenPos) {
+    return (screenPos - _canvasOffset) / _scale;
+  }
+
+  /// Hit test: find which node is at the given canvas position
+  String? _hitTestNode(Offset canvasPos) {
+    final state = ref.read(diagramProvider);
+    // Iterate in reverse so topmost (last drawn) node is hit first
+    for (int i = state.nodes.length - 1; i >= 0; i--) {
+      final node = state.nodes[i];
+      final double w = node.type == NodeType.structural ? 200 : 220;
+      final double h = node.type == NodeType.structural ? 80 : 200; // approximate
+      final rect = Rect.fromLTWH(node.position.dx, node.position.dy, w, h);
+      if (rect.contains(canvasPos)) {
+        return node.id;
+      }
+    }
+    return null;
+  }
+
+  /// Hit test: find which boundary is at the given canvas position
+  String? _hitTestBoundary(Offset canvasPos) {
+    final state = ref.read(diagramProvider);
+    for (int i = state.boundaries.length - 1; i >= 0; i--) {
+      final b = state.boundaries[i];
+      // Check the label area (top-left corner of boundary)
+      final labelRect = Rect.fromLTWH(b.rect.left + 10, b.rect.top - 12, 80, 24);
+      if (labelRect.contains(canvasPos)) {
+        return b.id;
+      }
+    }
+    return null;
+  }
+
+  void _onPointerDown(PointerDownEvent event) {
+    final canvasPos = _screenToCanvas(event.localPosition);
+    _lastPointerPosition = event.localPosition;
+    
+    // Try to hit a node first
+    final nodeId = _hitTestNode(canvasPos);
+    if (nodeId != null) {
+      _draggingNodeId = nodeId;
+      final isConnecting = ref.read(diagramProvider).isConnecting;
+      if (isConnecting) {
+        ref.read(diagramProvider.notifier).completeConnection(nodeId);
+      } else {
+        ref.read(diagramProvider.notifier).selectNode(nodeId);
+      }
+      return;
+    }
+
+    // Try to hit a boundary
+    final boundaryId = _hitTestBoundary(canvasPos);
+    if (boundaryId != null) {
+      _draggingBoundaryId = boundaryId;
+      ref.read(diagramProvider.notifier).selectBoundary(boundaryId);
+      return;
+    }
+
+    // Empty space: start canvas panning
+    _isPanning = true;
+    ref.read(diagramProvider.notifier).selectNode(null);
+  }
+
+  void _onPointerMove(PointerMoveEvent event) {
+    final delta = event.localPosition - _lastPointerPosition;
+    _lastPointerPosition = event.localPosition;
+
+    if (_draggingNodeId != null) {
+      // Move node (delta adjusted for zoom scale)
+      final scaledDelta = delta / _scale;
+      final node = ref.read(diagramProvider).nodes.firstWhere((n) => n.id == _draggingNodeId);
+      ref.read(diagramProvider.notifier).updateNodePosition(
+        _draggingNodeId!, 
+        node.position + scaledDelta,
+      );
+    } else if (_draggingBoundaryId != null) {
+      // Move boundary
+      final scaledDelta = delta / _scale;
+      final boundary = ref.read(diagramProvider).boundaries.firstWhere((b) => b.id == _draggingBoundaryId);
+      ref.read(diagramProvider.notifier).updateBoundaryRect(
+        _draggingBoundaryId!,
+        boundary.rect.shift(scaledDelta),
+      );
+    } else if (_isPanning) {
+      // Pan the canvas
+      setState(() {
+        _canvasOffset += delta;
+      });
+    }
+  }
+
+  void _onPointerUp(PointerUpEvent event) {
+    if (_draggingNodeId != null) {
+      ref.read(diagramProvider.notifier).finishDragging();
+    }
+    if (_draggingBoundaryId != null) {
+      ref.read(diagramProvider.notifier).finishDragging();
+    }
+    _draggingNodeId = null;
+    _draggingBoundaryId = null;
+    _isPanning = false;
+  }
+
+  void _onPointerSignal(PointerSignalEvent event) {
+    if (event is PointerScrollEvent) {
+      // Mouse wheel zoom
+      setState(() {
+        final oldScale = _scale;
+        if (event.scrollDelta.dy < 0) {
+          _scale = (_scale * 1.1).clamp(0.1, 3.0);
+        } else {
+          _scale = (_scale / 1.1).clamp(0.1, 3.0);
+        }
+        // Zoom toward pointer position
+        final pointerPos = event.localPosition;
+        _canvasOffset = pointerPos - (pointerPos - _canvasOffset) * (_scale / oldScale);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(diagramProvider);
-    final isPanDisabled = state.selectedNodeId != null || state.selectedBoundaryId != null;
     
     // Determine colors based on Theme (supporting both light and dark mode base backgrounds)
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -67,102 +200,71 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
 
     return Container(
       color: bgColor,
-      child: GestureDetector(
-        onTap: () {
-          // Deselect everything when clicking on empty canvas
-          ref.read(diagramProvider.notifier).selectNode(null);
-        },
+      child: Listener(
+        onPointerDown: _onPointerDown,
+        onPointerMove: _onPointerMove,
+        onPointerUp: _onPointerUp,
+        onPointerSignal: _onPointerSignal,
+        behavior: HitTestBehavior.opaque,
         child: Stack(
           children: [
             Positioned.fill(
               child: ClipRect(
-                child: InteractiveViewer(
-                  transformationController: _transformationController,
-                  boundaryMargin: const EdgeInsets.all(1000.0),
-                  minScale: 0.1,
-                  maxScale: 2.0,
-                  panEnabled: !isPanDisabled, // Disable canvas panning when a node/boundary is selected
+                child: Transform(
+                  transform: Matrix4.identity()
+                    ..translate(_canvasOffset.dx, _canvasOffset.dy)
+                    ..scale(_scale),
                   child: RepaintBoundary(
                     key: ref.watch(canvasKeyProvider),
                     child: SizedBox(
                       width: _canvasWidth,
                       height: _canvasHeight,
                       child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    // Grid Background
-                    CustomPaint(
-                      size: Size(_canvasWidth, _canvasHeight),
-                      painter: GridPainter(gridColor: gridColor),
-                    ),
+                        clipBehavior: Clip.none,
+                        children: [
+                          // Grid Background
+                          CustomPaint(
+                            size: Size(_canvasWidth, _canvasHeight),
+                            painter: GridPainter(gridColor: gridColor),
+                          ),
 
-                    // Edges (drawn under nodes)
-                    CustomPaint(
-                      size: Size(_canvasWidth, _canvasHeight),
-                      painter: EdgesPainter(
-                        nodes: state.nodes,
-                        edges: state.edges,
-                        selectedEdgeId: state.selectedEdgeId,
+                          // Edges (drawn under nodes)
+                          CustomPaint(
+                            size: Size(_canvasWidth, _canvasHeight),
+                            painter: EdgesPainter(
+                              nodes: state.nodes,
+                              edges: state.edges,
+                              selectedEdgeId: state.selectedEdgeId,
+                            ),
+                          ),
+
+                          // Security Boundaries
+                          for (final boundary in state.boundaries)
+                            SecurityBoundaryWidget(
+                              key: ValueKey(boundary.id),
+                              boundary: boundary,
+                            ),
+
+                          // Nodes
+                          for (final node in state.nodes)
+                            Positioned(
+                              key: ValueKey(node.id),
+                              left: node.position.dx,
+                              top: node.position.dy,
+                              child: node.type == NodeType.structural
+                                  ? StructuralNodeWidget(node: node)
+                                  : EntityNodeWidget(node: node),
+                            ),
+                        ],
                       ),
                     ),
-
-                    // Security Boundaries
-                    for (final boundary in state.boundaries)
-                      SecurityBoundaryWidget(
-                        key: ValueKey(boundary.id),
-                        boundary: boundary,
-                      ),
-
-                    // Nodes
-                    for (final node in state.nodes)
-                      Positioned(
-                        key: ValueKey(node.id),
-                        left: node.position.dx,
-                        top: node.position.dy,
-                        child: node.type == NodeType.structural
-                            ? StructuralNodeWidget(node: node)
-                            : EntityNodeWidget(node: node),
-                      ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
-        Positioned(
-          left: 16,
-          top: 16,
-          child: IgnorePointer(
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.75),
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: Colors.amber, width: 1.5),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    'DEBUG COORDINATES',
-                    style: TextStyle(color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 10),
-                  ),
-                  const SizedBox(height: 4),
-                  for (final n in state.nodes)
-                    Text(
-                      '${n.name} (${n.id.length > 5 ? n.id.substring(n.id.length - 5) : n.id}): (${n.position.dx.toStringAsFixed(0)}, ${n.position.dy.toStringAsFixed(0)})',
-                      style: const TextStyle(color: Colors.white, fontSize: 10, fontFamily: 'monospace'),
-                    ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),
-  ),
-);
+    );
   }
 }

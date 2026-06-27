@@ -38,6 +38,7 @@
   - [x] Ekspor gambar resolusi tinggi 2x (PNG) via RepaintBoundary
   - [x] Menyusun panel lapor kesalahan (Validation Report) di sidebar kanan
   - [x] Memperbaiki seluruh error kompilasi dan sukses build produksi (`flutter build web`)
+  - [x] Resolusi Bug Penyeretan Node & Konflik Gesture Arena (Final)
 
 ## Rencana Selanjutnya (Peningkatan Masa Depan)
 

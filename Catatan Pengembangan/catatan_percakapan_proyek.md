@@ -100,8 +100,28 @@
      * *Penyebab*: Penggunaan ID generator berbasis `millisecondsSinceEpoch` mentah memicu tabrakan ID jika klik terjadi dalam milidetik yang sama atau berturut-turut cepat di web browser.
      * *Solusi*: Memodifikasi ID generator di [sidebar_left.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/ui/sidebar_left.dart) dan [state.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/core/state.dart) dengan menambahkan suffix acak `_${math.Random().nextInt(1000000)}` untuk menjamin keunikan identitas global node baru.
      * *Hasil*: Seluruh node dapat diseret secara mandiri dan terpisah sempurna. Komit di-*push* ke remote GitHub.
-   * **Penyelesaian Konflik Gesture Drag & Pan Canvas**:
-     * *Masalah*: Menyeret node baru membuat semua node ikut bergeser secara visual di layar, sementara koordinat angka di panel DEBUG COORDINATES tidak berubah.
-     * *Penyebab*: Klik-dan-seret pada area node dirampas oleh gesture penyeretan kanvas (`InteractiveViewer`), sehingga pengguna sebenarnya sedang melakukan pan kanvas, bukan menggeser node.
-     * *Solusi*: Membuat `nodeHoverProvider` untuk melacak status hover mouse di atas node/boundary. Mengatur `panEnabled: !isHovering` pada `InteractiveViewer` di [canvas_view.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/canvas_view.dart) untuk menonaktifkan panning kanvas saat kursor berada di atas node, memastikan gesture sepenuhnya ditangani oleh `onPanUpdate` node.
-     * *Hasil*: Penyeretan node berjalan lancar secara individu tanpa menggeser kanvas. Komit di-*push* ke remote GitHub.
+   * **Penyelesaian Konflik Gesture Drag & Pan Canvas (Final — ~1 jam debugging)**:
+     * *Masalah*: Menyeret node baru membuat semua node ikut bergeser secara visual di layar, sementara koordinat angka di panel DEBUG COORDINATES tidak berubah. Node baru tidak bisa dipindahkan secara individu.
+     * *Penyebab Akar*: `InteractiveViewer` milik Flutter memiliki gesture recognizer internal yang **selalu memenangkan** kompetisi di Flutter Gesture Arena melawan `GestureDetector` pada widget child. Setiap usaha menyeret di atas node selalu dirampas oleh `InteractiveViewer` untuk melakukan canvas panning.
+     * *Pendekatan yang Dicoba & Gagal*:
+       1. `nodeHoverProvider` + `panEnabled: !isHovering` → Hover state tidak cukup cepat bereaksi.
+       2. `panEnabled: !isPanDisabled` berbasis selection state + `onPanStart` → `InteractiveViewer` masih merampas gesture sebelum `onPanStart` sempat dipanggil.
+       3. `EagerPanGestureRecognizer` via `RawGestureDetector` yang langsung `resolve(GestureDisposition.accepted)` → `InteractiveViewer` tetap memenangkan arena.
+     * *Solusi Final*: **Menghapus `InteractiveViewer` sepenuhnya** dan menggantinya dengan sistem pan/zoom/drag manual berbasis `Listener` (raw pointer events) dan widget `Transform`.
+       - `Listener.onPointerDown`: Hit-testing manual untuk menentukan apakah pointer mengenai node (drag node) atau area kosong (pan kanvas).
+       - `Listener.onPointerMove`: Menggeser node individual atau menggeser kanvas berdasarkan hasil hit-test.
+       - `Listener.onPointerSignal`: Zoom scroll mouse dengan skala terpusat pada posisi pointer.
+       - File yang dimodifikasi: [canvas_view.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/canvas_view.dart), [entity_node.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/entity_node.dart), [structural_node.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/structural_node.dart), [security_boundary.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/security_boundary.dart).
+     * *Hasil*: Setiap node dapat diseret secara mandiri dan independen. Canvas panning bekerja di area kosong. Zoom scroll mouse berfungsi. Komit di-*push* ke remote GitHub.
+
+## Durasi Sesi Pengembangan
+
+| Tahap | Waktu Mulai (WIB) | Waktu Selesai (WIB) | Durasi |
+|---|---|---|---|
+| Inisialisasi & Implementasi Inti | 11:10 | 11:40 | ~30 menit |
+| Testing E2E & Perbaikan Bug | 11:40 | 12:08 | ~28 menit |
+| Penyajian Web & Perbaikan Import JSON | 12:08 | 12:22 | ~14 menit |
+| Debugging Masalah Drag Node (ID collision) | 12:22 | 12:37 | ~15 menit |
+| Debugging Masalah Drag Node (Gesture Arena) | 12:37 | 13:13 | ~36 menit |
+| Pembersihan Kode & Pembaruan Catatan | 13:13 | 13:17 | ~4 menit |
+| **Total Sesi** | **11:10** | **~13:17** | **~2 jam 7 menit** |
