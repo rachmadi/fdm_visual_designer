@@ -100,3 +100,8 @@
      * *Penyebab*: Penggunaan ID generator berbasis `millisecondsSinceEpoch` mentah memicu tabrakan ID jika klik terjadi dalam milidetik yang sama atau berturut-turut cepat di web browser.
      * *Solusi*: Memodifikasi ID generator di [sidebar_left.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/ui/sidebar_left.dart) dan [state.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/core/state.dart) dengan menambahkan suffix acak `_${math.Random().nextInt(1000000)}` untuk menjamin keunikan identitas global node baru.
      * *Hasil*: Seluruh node dapat diseret secara mandiri dan terpisah sempurna. Komit di-*push* ke remote GitHub.
+   * **Penyelesaian Konflik Gesture Drag & Pan Canvas**:
+     * *Masalah*: Menyeret node baru membuat semua node ikut bergeser secara visual di layar, sementara koordinat angka di panel DEBUG COORDINATES tidak berubah.
+     * *Penyebab*: Klik-dan-seret pada area node dirampas oleh gesture penyeretan kanvas (`InteractiveViewer`), sehingga pengguna sebenarnya sedang melakukan pan kanvas, bukan menggeser node.
+     * *Solusi*: Membuat `nodeHoverProvider` untuk melacak status hover mouse di atas node/boundary. Mengatur `panEnabled: !isHovering` pada `InteractiveViewer` di [canvas_view.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/canvas_view.dart) untuk menonaktifkan panning kanvas saat kursor berada di atas node, memastikan gesture sepenuhnya ditangani oleh `onPanUpdate` node.
+     * *Hasil*: Penyeretan node berjalan lancar secara individu tanpa menggeser kanvas. Komit di-*push* ke remote GitHub.
