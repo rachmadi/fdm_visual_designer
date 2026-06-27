@@ -103,11 +103,15 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
 
                     // Security Boundaries
                     for (final boundary in state.boundaries)
-                      SecurityBoundaryWidget(boundary: boundary),
+                      SecurityBoundaryWidget(
+                        key: ValueKey(boundary.id),
+                        boundary: boundary,
+                      ),
 
                     // Nodes
                     for (final node in state.nodes)
                       Positioned(
+                        key: ValueKey(node.id),
                         left: node.position.dx,
                         top: node.position.dy,
                         child: node.type == NodeType.structural
