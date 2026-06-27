@@ -74,3 +74,21 @@ Seluruh kesalahan berikut diidentifikasi saat kompilasi proyek dan diselesaikan 
 * **Progres Iterasi 1**: 100% Selesai.
 * **Progres Keseluruhan Proyek**: ~70% Selesai. 
   *(Catatan: Fondasi utama seperti metamodel, state manager Riverpod, mesin validasi 8 rule WFR, serialization JSON, ekspor PNG resolusi tinggi, serta visualisasi custom node/boundary/edges telah selesai dibangun dan teruji lulus compile & unit test, sehingga mengurangi beban kerja iterasi berikutnya).*
+
+---
+
+### 8. Log Hasil Pengujian (Test Results Log)
+Berikut adalah log keluaran eksekusi pengujian otomatis (`flutter test`) yang memverifikasi 8 aturan semantik (R1–R8) pada akhir iterasi ini:
+
+```bash
+00:00 +0: loading E:/rachmadi/Antigravity/fdm_visual_designer/test/validator_test.dart
+00:00 +0: FDM Well-Formedness Rules (WFR) Validator Engine Tests Rule 1: Firestore Strict Alternation (SN -> EN -> SN)
+00:00 +1: FDM Well-Formedness Rules (WFR) Validator Engine Tests Rule 2: Referencing target must exist and be an Entity Node
+00:00 +2: FDM Well-Formedness Rules (WFR) Validator Engine Tests Rule 3: Denormalized Property source property key link
+00:00 +3: FDM Well-Formedness Rules (WFR) Validator Engine Tests Rule 4: Dynamic path must use $ wildcard prefix or {} brackets
+00:00 +4: FDM Well-Formedness Rules (WFR) Validator Engine Tests Rule 5: Query Vector references defined properties
+00:00 +5: FDM Well-Formedness Rules (WFR) Validator Engine Tests Rule 6: Security Boundary partial overlap
+00:00 +6: FDM Well-Formedness Rules (WFR) Validator Engine Tests Rule 7: Physical warning - unbounded complex type (1MB limit)
+00:00 +7: FDM Well-Formedness Rules (WFR) Validator Engine Tests Rule 8: Physical warning - high frequency writes (>1/s limit)
+00:00 +8: All tests passed!
+```
