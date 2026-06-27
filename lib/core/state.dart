@@ -13,6 +13,10 @@ class DiagramState {
   final bool isFirestoreMode;
   final List<ValidationResult> validationResults;
   final bool showValidationReport;
+  final String? pendingSourceNodeId;
+  final String? pendingSourcePropertyKey;
+  final EdgeType connectionMode;
+  final bool isConnecting;
 
   // Stacks for undo/redo
   final List<Map<String, dynamic>> undoStack;
@@ -28,6 +32,10 @@ class DiagramState {
     this.isFirestoreMode = true,
     this.validationResults = const [],
     this.showValidationReport = true,
+    this.pendingSourceNodeId,
+    this.pendingSourcePropertyKey,
+    this.connectionMode = EdgeType.referencing,
+    this.isConnecting = false,
     this.undoStack = const [],
     this.redoStack = const [],
   });
@@ -36,12 +44,16 @@ class DiagramState {
     List<FDMNode>? nodes,
     List<FDMEdge>? edges,
     List<SecurityBoundary>? boundaries,
-    String? selectedNodeId,
-    String? selectedBoundaryId,
-    String? selectedEdgeId,
+    String? selectedNodeId = _undefined,
+    String? selectedBoundaryId = _undefined,
+    String? selectedEdgeId = _undefined,
     bool? isFirestoreMode,
     List<ValidationResult>? validationResults,
     bool? showValidationReport,
+    String? pendingSourceNodeId = _undefined,
+    String? pendingSourcePropertyKey = _undefined,
+    EdgeType? connectionMode,
+    bool? isConnecting,
     List<Map<String, dynamic>>? undoStack,
     List<Map<String, dynamic>>? redoStack,
   }) {
@@ -55,6 +67,10 @@ class DiagramState {
       isFirestoreMode: isFirestoreMode ?? this.isFirestoreMode,
       validationResults: validationResults ?? this.validationResults,
       showValidationReport: showValidationReport ?? this.showValidationReport,
+      pendingSourceNodeId: pendingSourceNodeId == _undefined ? this.pendingSourceNodeId : pendingSourceNodeId,
+      pendingSourcePropertyKey: pendingSourcePropertyKey == _undefined ? this.pendingSourcePropertyKey : pendingSourcePropertyKey,
+      connectionMode: connectionMode ?? this.connectionMode,
+      isConnecting: isConnecting ?? this.isConnecting,
       undoStack: undoStack ?? this.undoStack,
       redoStack: redoStack ?? this.redoStack,
     );
@@ -261,6 +277,79 @@ class DiagramNotifier extends Notifier<DiagramState> {
     _saveToUndoStack();
     final newEdges = List<FDMEdge>.from(state.edges)..add(edge);
     state = state.copyWith(edges: newEdges);
+    _runValidation();
+  }
+
+  void setConnectionMode(EdgeType mode) {
+    state = state.copyWith(connectionMode: mode);
+  }
+
+  void startConnection(String sourceId, String? propKey) {
+    state = state.copyWith(
+      pendingSourceNodeId: sourceId,
+      pendingSourcePropertyKey: propKey,
+      isConnecting: true,
+    );
+  }
+
+  void cancelConnection() {
+    state = state.copyWith(
+      pendingSourceNodeId: null,
+      pendingSourcePropertyKey: null,
+      isConnecting: false,
+    );
+  }
+
+  void completeConnection(String targetId) {
+    if (state.pendingSourceNodeId == null || state.pendingSourceNodeId == targetId) {
+      cancelConnection();
+      return;
+    }
+
+    _saveToUndoStack();
+
+    final sourceNode = state.nodes.firstWhere((n) => n.id == state.pendingSourceNodeId);
+    
+    // Determine target node exists
+    final targetNodeExists = state.nodes.any((n) => n.id == targetId);
+    if (!targetNodeExists) {
+      cancelConnection();
+      return;
+    }
+
+    final id = 'edge_${DateTime.now().millisecondsSinceEpoch}';
+    String? sourceProp = state.pendingSourcePropertyKey;
+    String label = '';
+    bool isOneToMany = false;
+
+    if (state.connectionMode == EdgeType.referencing) {
+      if (sourceProp != null && sourceNode.type == NodeType.entity) {
+        final prop = sourceNode.properties.firstWhere((p) => p.key == sourceProp);
+        if (prop.dataType == DataType.array) {
+          isOneToMany = true;
+        }
+      }
+    } else if (state.connectionMode == EdgeType.denormalization) {
+      label = sourceProp ?? 'replicated';
+    }
+
+    final newEdge = FDMEdge(
+      id: id,
+      sourceNodeId: state.pendingSourceNodeId!,
+      targetNodeId: targetId,
+      type: state.connectionMode,
+      sourcePropertyKey: sourceProp,
+      label: label,
+      isOneToMany: isOneToMany,
+    );
+
+    final newEdges = List<FDMEdge>.from(state.edges)..add(newEdge);
+    state = state.copyWith(
+      edges: newEdges,
+      pendingSourceNodeId: null,
+      pendingSourcePropertyKey: null,
+      isConnecting: false,
+    );
     _runValidation();
   }
 

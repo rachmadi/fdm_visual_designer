@@ -198,6 +198,73 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
               ),
             ),
             const SizedBox(height: 12),
+            if (state.isConnecting) ...[
+              Container(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(bottom: 12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFEF3C7),
+                  border: Border.all(color: const Color(0xFFF59E0B)),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.link, color: Color(0xFFD97706), size: 16),
+                        const SizedBox(width: 8),
+                        const Expanded(
+                          child: Text(
+                            'Click Target Node on Canvas',
+                            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF92400E)),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'Connecting from: ${state.nodes.any((n) => n.id == state.pendingSourceNodeId) ? state.nodes.firstWhere((n) => n.id == state.pendingSourceNodeId).name : "Unknown"}'
+                      '${state.pendingSourcePropertyKey != null ? " .${state.pendingSourcePropertyKey}" : ""}',
+                      style: const TextStyle(fontSize: 10, color: Color(0xFF92400E)),
+                    ),
+                    const SizedBox(height: 8),
+                    ElevatedButton(
+                      onPressed: () => ref.read(diagramProvider.notifier).cancelConnection(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFEF4444),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        minimumSize: const Size(0, 24),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                      ),
+                      child: const Text('Cancel Connection', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+                    ),
+                  ],
+                ),
+              ),
+            ] else ...[
+              Container(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(bottom: 12),
+                decoration: BoxDecoration(
+                  color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.info_outline, size: 14, color: textCol.withOpacity(0.6)),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Tip: Click any circular handle on the canvas nodes to link them directly!',
+                        style: TextStyle(fontSize: 10, color: textCol.withOpacity(0.7)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -288,6 +355,7 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
                         _selectedEdgeType = val ?? EdgeType.hierarchy;
                         _selectedSourcePropKey = null;
                       });
+                      ref.read(diagramProvider.notifier).setConnectionMode(val ?? EdgeType.hierarchy);
                     },
                   ),
                   const SizedBox(height: 8),

@@ -24,7 +24,12 @@ class EntityNodeWidget extends ConsumerWidget {
 
     return GestureDetector(
       onTap: () {
-        ref.read(diagramProvider.notifier).selectNode(node.id);
+        final isConnecting = ref.read(diagramProvider).isConnecting;
+        if (isConnecting) {
+          ref.read(diagramProvider.notifier).completeConnection(node.id);
+        } else {
+          ref.read(diagramProvider.notifier).selectNode(node.id);
+        }
       },
       onPanUpdate: (details) {
         final notifier = ref.read(diagramProvider.notifier);
@@ -217,12 +222,24 @@ class EntityNodeWidget extends ConsumerWidget {
                                   Positioned(
                                     right: -12,
                                     top: 10,
-                                    child: Container(
-                                      width: 8,
-                                      height: 8,
-                                      decoration: BoxDecoration(
-                                        color: isComplex ? const Color(0xFFE07B00) : primaryCol,
-                                        shape: BoxShape.circle,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        final currentMode = ref.read(diagramProvider).connectionMode;
+                                        if (currentMode == EdgeType.hierarchy) {
+                                          ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.referencing);
+                                        }
+                                        ref.read(diagramProvider.notifier).startConnection(node.id, prop.key);
+                                      },
+                                      child: MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        child: Container(
+                                          width: 8,
+                                          height: 8,
+                                          decoration: BoxDecoration(
+                                            color: isComplex ? const Color(0xFFE07B00) : primaryCol,
+                                            shape: BoxShape.circle,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -250,12 +267,21 @@ class EntityNodeWidget extends ConsumerWidget {
               Positioned(
                 bottom: -4,
                 left: 106,
-                child: Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: primaryCol,
-                    shape: BoxShape.circle,
+                child: GestureDetector(
+                  onTap: () {
+                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: const BoxDecoration(
+                        color: primaryCol,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
                   ),
                 ),
               ),
