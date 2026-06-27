@@ -71,18 +71,21 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
           // Deselect everything when clicking on empty canvas
           ref.read(diagramProvider.notifier).selectNode(null);
         },
-        child: ClipRect(
-          child: InteractiveViewer(
-            transformationController: _transformationController,
-            boundaryMargin: const EdgeInsets.all(1000.0),
-            minScale: 0.1,
-            maxScale: 2.0,
-            child: RepaintBoundary(
-              key: ref.watch(canvasKeyProvider),
-              child: SizedBox(
-                width: _canvasWidth,
-                height: _canvasHeight,
-                child: Stack(
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: ClipRect(
+                child: InteractiveViewer(
+                  transformationController: _transformationController,
+                  boundaryMargin: const EdgeInsets.all(1000.0),
+                  minScale: 0.1,
+                  maxScale: 2.0,
+                  child: RepaintBoundary(
+                    key: ref.watch(canvasKeyProvider),
+                    child: SizedBox(
+                      width: _canvasWidth,
+                      height: _canvasHeight,
+                      child: Stack(
                   clipBehavior: Clip.none,
                   children: [
                     // Grid Background
@@ -125,6 +128,39 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
           ),
         ),
       ),
-    );
+        Positioned(
+          left: 16,
+          top: 16,
+          child: IgnorePointer(
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.75),
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: Colors.amber, width: 1.5),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'DEBUG COORDINATES',
+                    style: TextStyle(color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 10),
+                  ),
+                  const SizedBox(height: 4),
+                  for (final n in state.nodes)
+                    Text(
+                      '${n.name} (${n.id.length > 5 ? n.id.substring(n.id.length - 5) : n.id}): (${n.position.dx.toStringAsFixed(0)}, ${n.position.dy.toStringAsFixed(0)})',
+                      style: const TextStyle(color: Colors.white, fontSize: 10, fontFamily: 'monospace'),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  ),
+);
   }
 }
