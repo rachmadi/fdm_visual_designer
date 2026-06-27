@@ -19,6 +19,7 @@
   - [x] Menggambar relasi denormalization dengan double arrowhead & inline label
   - [x] Membuat relation builder untuk menyambungkan properti ke node target
   - [x] Implementasi interaktif Click-to-Connect menggunakan handle bulat di canvas
+  - [x] Penulisan dan eksekusi E2E Integration Testing (non-headless) menggunakan ChromeDriver
 - [x] Mesin Validasi 8 Well-Formedness Rules (Iterasi 3)
   - [x] Menulis 8 rule semantik di `lib/engine/validator.dart`
   - [x] Mengintegrasikan validator reaktif dengan Riverpod state

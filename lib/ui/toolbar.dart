@@ -110,14 +110,14 @@ class Toolbar extends ConsumerWidget {
         color: bgColor,
         border: Border(bottom: BorderSide(color: borderColor, width: 1)),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
           // Logo / Title
           Row(
             children: [
               const Icon(Icons.hub, color: Color(0xFF2E75B6), size: 24),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
               Text(
                 'FDM Visual Designer',
                 style: TextStyle(
@@ -127,7 +127,7 @@ class Toolbar extends ConsumerWidget {
                   letterSpacing: 0.5,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 6),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
@@ -176,9 +176,9 @@ class Toolbar extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(width: 24),
+          const SizedBox(width: 10),
           const VerticalDivider(width: 1, indent: 16, endIndent: 16),
-          const SizedBox(width: 24),
+          const SizedBox(width: 10),
 
           // Undo / Redo
           IconButton(
@@ -222,9 +222,9 @@ class Toolbar extends ConsumerWidget {
               );
             },
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 8),
           const VerticalDivider(width: 1, indent: 16, endIndent: 16),
-          const SizedBox(width: 16),
+          const SizedBox(width: 8),
 
           // Import / Export
           ElevatedButton.icon(

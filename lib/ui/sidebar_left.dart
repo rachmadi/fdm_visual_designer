@@ -112,8 +112,10 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
     final textCol = isDark ? Colors.white : const Color(0xFF1E293B);
 
     final entityNodes = state.nodes.where((n) => n.type == NodeType.entity).toList();
-    final sourceNode = state.nodes.firstWhere((n) => n.id == _selectedSourceNodeId, orElse: () => state.nodes.first);
-    final sourceProps = _selectedSourceNodeId != null ? sourceNode.properties : <PropertyNode>[];
+    final sourceNode = state.nodes.any((n) => n.id == _selectedSourceNodeId)
+        ? state.nodes.firstWhere((n) => n.id == _selectedSourceNodeId)
+        : (state.nodes.isNotEmpty ? state.nodes.first : null);
+    final sourceProps = (_selectedSourceNodeId != null && sourceNode != null) ? sourceNode.properties : <PropertyNode>[];
 
     return Container(
       width: 280,
@@ -301,7 +303,7 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
                   const SizedBox(height: 8),
 
                   // If not hierarchy edge, show property selector
-                  if (_selectedEdgeType != EdgeType.hierarchy && _selectedSourceNodeId != null && sourceNode.type == NodeType.entity) ...[
+                  if (_selectedEdgeType != EdgeType.hierarchy && _selectedSourceNodeId != null && sourceNode != null && sourceNode.type == NodeType.entity) ...[
                     const Text('Source Property:', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 4),
                     DropdownButtonFormField<String>(

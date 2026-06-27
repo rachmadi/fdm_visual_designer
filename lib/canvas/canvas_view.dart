@@ -64,9 +64,9 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
     final bgColor = isDark ? const Color(0xFF1E293B) : const Color(0xFFF8FAFC);
     final gridColor = isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
 
-    return Scaffold(
-      backgroundColor: bgColor,
-      body: GestureDetector(
+    return Container(
+      color: bgColor,
+      child: GestureDetector(
         onTap: () {
           // Deselect everything when clicking on empty canvas
           ref.read(diagramProvider.notifier).selectNode(null);
@@ -74,7 +74,7 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
         child: ClipRect(
           child: InteractiveViewer(
             transformationController: _transformationController,
-            boundaryMargin: const EdgeInsets.all(double.infinity),
+            boundaryMargin: const EdgeInsets.all(1000.0),
             minScale: 0.1,
             maxScale: 2.0,
             child: RepaintBoundary(

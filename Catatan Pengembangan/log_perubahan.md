@@ -44,7 +44,12 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - State tracking pending connection (`pendingSourceNodeId`, `pendingSourcePropertyKey`, `connectionMode`, dan `isConnecting`) pada `DiagramState`.
   - Aksi `startConnection`, `cancelConnection`, dan `completeConnection` di notifier.
   - Banner panduan visual dinamis pada sidebar kiri saat mode penyambungan aktif.
+- **Pengujian E2E Otomatis / Integration Testing (`integration_test/app_test.dart` & `test_driver/integration_test.dart`)**:
+  - Setup pengujian integration test berbasis Flutter Driver dan ChromeDriver untuk menguji alur interaktif aplikasi secara non-headless di Google Chrome.
 
 ### Fixed (Perbaikan Bug)
 - Mengatasi crash instansiasi objek fallback `FDMNode` pada banner sidebar kiri dengan memanfaatkan pengecekan aman `state.nodes.any(...)`.
 - Memperbaiki metode `copyWith` di `DiagramState` agar menggunakan nilai default `= _undefined` untuk menjaga agar seleksi node/boundary tidak terhapus (ter-reset ke `null`) saat parameter tidak dikirimkan.
+- **Crash StateError `SidebarLeft` di Awal Aplikasi**: Menambahkan penanganan aman untuk memilih node default ketika daftar node masih kosong agar tidak melempar eksepsi `StateError: No element`.
+- **RenderFlex Layout Overflow di Toolbar**: Mengurangi ukuran horizontal spacing dan padding pada `lib/ui/toolbar.dart` agar Toolbar pas sempurna pada ukuran layar minimum tanpa terjadi overflow 51 piksel.
+- **RenderFlex Layout Overflow di Canvas (Test Mode)**: Mengubah `boundaryMargin` di `InteractiveViewer` dari `double.infinity` ke `1000.0` serta mengganti nested `Scaffold` di `CanvasView` dengan `Container` agar penentuan batas layout pada testing environment berjalan normal.

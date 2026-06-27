@@ -68,8 +68,23 @@
    * **Masalah**: Nilai seleksi (`selectedNodeId`, dll.) diatur ulang ke `null` saat memanggil `copyWith` tanpa argumen karena tidak adanya nilai default parameter di tanda tangan metode `copyWith`.
      * *Solusi*: Memperbaiki tanda tangan `copyWith` dengan menambahkan nilai default `= _undefined` untuk parameter yang berkaitan dengan seleksi.
 
-3. **Hasil Pengujian**:
+3. **Pengujian E2E non-headless di Browser**:
+   * User meminta pengujian fitur yang telah dibuat langsung di browser secara interaktif (non-headless).
+   * Membuat skrip driver `test_driver/integration_test.dart` dan skrip pengujian E2E `integration_test/app_test.dart`.
+   * Menjalankan ChromeDriver di latar belakang dan mengeksekusi `flutter drive` dengan target browser Chrome.
+
+4. **Masalah Teknis Pengujian & Solusi**:
+   * **Masalah**: Terjadi crash `StateError: No element` di `SidebarLeft` saat diagram kosong di awal startup karena memanggil `state.nodes.first` sebagai default sourceNode.
+     * *Solusi*: Menambahkan pemeriksaan keamanan `state.nodes.isNotEmpty` dan `state.nodes.any(...)` sebelum memanggil `first` atau `firstWhere`.
+   * **Masalah**: Kesalahan rendering `RenderFlex overflowed by 99391 pixels` yang disebabkan oleh penentuan `boundaryMargin` bernilai `double.infinity` pada `InteractiveViewer` serta adanya nested `Scaffold` di `CanvasView` saat berjalan dalam mode testing.
+     * *Solusi*: Mengubah `boundaryMargin` menjadi `1000.0` (batas aman panning) dan mengganti `Scaffold` canvas dengan `Container`.
+   * **Masalah**: Kesalahan duplicate widget finder di `app_test.dart` karena teks `new_collection` dan `NewEntity` muncul di canvas sekaligus di form edit sidebar kanan saat terpilih.
+     * *Solusi*: Menggunakan `.first` pada finder dan menggunakan ekspektasi `findsAtLeastNWidgets(1)`.
+   * **Masalah**: Kesalahan rendering `RenderFlex overflowed by 51 pixels` di `Toolbar` karena ukuran layar minimum browser test lebih kecil dari total lebar gabungan tombol toolbar.
+     * *Solusi*: Mengurangi fixed horizontal spacing (misal `SizedBox` width 24 menjadi 10) dan margin padding luar agar pas dalam viewport sempit.
+
+5. **Hasil Pengujian Akhir**:
    * Analisis statis bersih (0 error).
-   * Lulus semua unit test semantik (`flutter test`).
-   * Sukses build produksi web (`flutter build web`).
-   * Sinkronisasi ke repositori GitHub berhasil dilakukan.
+   * Seluruh unit test semantik lulus (`flutter test`).
+   * **Seluruh E2E Integration Test sukses dijalankan dan lulus 100% di browser Chrome (`All tests passed!`)**.
+   * Sinkronisasi repositori ke remote GitHub diselesaikan.

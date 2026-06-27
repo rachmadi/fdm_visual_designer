@@ -66,15 +66,10 @@ class WorkspaceScreen extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Sidebar Left (Node Palette & Connection Builder)
                   const SidebarLeft(),
-                  
-                  // Canvas (main workspace)
                   const Expanded(
                     child: CanvasView(),
                   ),
-                  
-                  // Sidebar Right (Properties Editor & Query Vector & Validation Report)
                   const SidebarRight(),
                 ],
               ),
