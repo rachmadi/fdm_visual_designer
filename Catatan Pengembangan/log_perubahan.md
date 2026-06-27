@@ -35,3 +35,16 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
 - Memperbaiki class `DiagramNotifier` agar mewarisi `Notifier` (Riverpod) untuk mengatasi error getter `state`.
 - Mengubah syntax `FilePicker.platform.pickFiles` menjadi `FilePicker.pickFiles` untuk mencocokkan API static terbaru.
 - Menghapus parameter `dense: true` pada widget `Chip` yang tidak didukung.
+
+## [1.1.0] - 2026-06-27 (Iterasi 2)
+
+### Added (Penambahan Fitur)
+- **Koneksi Node Interaktif (Click-to-Connect)**:
+  - Dukungan alur penyambungan langsung pada canvas menggunakan handle konektor bulat.
+  - State tracking pending connection (`pendingSourceNodeId`, `pendingSourcePropertyKey`, `connectionMode`, dan `isConnecting`) pada `DiagramState`.
+  - Aksi `startConnection`, `cancelConnection`, dan `completeConnection` di notifier.
+  - Banner panduan visual dinamis pada sidebar kiri saat mode penyambungan aktif.
+
+### Fixed (Perbaikan Bug)
+- Mengatasi crash instansiasi objek fallback `FDMNode` pada banner sidebar kiri dengan memanfaatkan pengecekan aman `state.nodes.any(...)`.
+- Memperbaiki metode `copyWith` di `DiagramState` agar menggunakan nilai default `= _undefined` untuk menjaga agar seleksi node/boundary tidak terhapus (ter-reset ke `null`) saat parameter tidak dikirimkan.

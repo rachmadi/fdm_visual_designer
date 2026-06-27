@@ -53,3 +53,23 @@
    * Analisis statis bersih tanpa error.
    * Sukses build produksi web via `flutter build web`.
    * Sukses uji coba unit test via `flutter test` (semua 8 pengujian WFR lulus 100%).
+
+## Iterasi 2: Relasi Horizontal (Referencing & Denormalization)
+
+1. **Pengembangan Interaksi Hubungan (Click-to-Connect)**:
+   * Menambahkan state `pendingSourceNodeId`, `pendingSourcePropertyKey`, `connectionMode`, dan `isConnecting` pada `DiagramState` di [state.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/core/state.dart).
+   * Menulis aksi `startConnection`, `cancelConnection`, dan `completeConnection` untuk mempermudah penyambungan antar node/properti secara interaktif.
+   * Menghubungkan output handle di bagian bawah node structural/entity dan handle properti di sisi kanan entity card untuk memicu alur penyambungan.
+   * Menambahkan banner panduan interaktif di sidebar kiri (`SidebarLeft`) saat proses penyambungan sedang aktif.
+
+2. **Masalah Teknis & Solusi**:
+   * **Masalah**: Kesalahan argumen wajib `path` dan `queryVector` saat pembuatan objek fallback `FDMNode` pada banner sidebar kiri.
+     * *Solusi*: Mengganti instansiasi fallback `FDMNode` dengan pengecekan aman `state.nodes.any(...)` menggunakan operator ternary.
+   * **Masalah**: Nilai seleksi (`selectedNodeId`, dll.) diatur ulang ke `null` saat memanggil `copyWith` tanpa argumen karena tidak adanya nilai default parameter di tanda tangan metode `copyWith`.
+     * *Solusi*: Memperbaiki tanda tangan `copyWith` dengan menambahkan nilai default `= _undefined` untuk parameter yang berkaitan dengan seleksi.
+
+3. **Hasil Pengujian**:
+   * Analisis statis bersih (0 error).
+   * Lulus semua unit test semantik (`flutter test`).
+   * Sukses build produksi web (`flutter build web`).
+   * Sinkronisasi ke repositori GitHub berhasil dilakukan.
