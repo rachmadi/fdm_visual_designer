@@ -31,6 +31,9 @@ class EntityNodeWidget extends ConsumerWidget {
           ref.read(diagramProvider.notifier).selectNode(node.id);
         }
       },
+      onPanStart: (_) {
+        ref.read(diagramProvider.notifier).selectNode(node.id);
+      },
       onPanUpdate: (details) {
         final notifier = ref.read(diagramProvider.notifier);
         notifier.updateNodePosition(node.id, node.position + details.delta);

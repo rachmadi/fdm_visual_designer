@@ -58,7 +58,7 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(diagramProvider);
-    final isHovering = ref.watch(nodeHoverProvider);
+    final isPanDisabled = state.selectedNodeId != null || state.selectedBoundaryId != null;
     
     // Determine colors based on Theme (supporting both light and dark mode base backgrounds)
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -81,7 +81,7 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
                   boundaryMargin: const EdgeInsets.all(1000.0),
                   minScale: 0.1,
                   maxScale: 2.0,
-                  panEnabled: !isHovering, // Disable canvas panning when dragging/hovering over a node
+                  panEnabled: !isPanDisabled, // Disable canvas panning when a node/boundary is selected
                   child: RepaintBoundary(
                     key: ref.watch(canvasKeyProvider),
                     child: SizedBox(

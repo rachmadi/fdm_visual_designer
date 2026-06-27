@@ -68,6 +68,9 @@ class StructuralNodeWidget extends ConsumerWidget {
           ref.read(diagramProvider.notifier).selectNode(node.id);
         }
       },
+      onPanStart: (_) {
+        ref.read(diagramProvider.notifier).selectNode(node.id);
+      },
       onPanUpdate: (details) {
         // Dragging the node
         final notifier = ref.read(diagramProvider.notifier);
