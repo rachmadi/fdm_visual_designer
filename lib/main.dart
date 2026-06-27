@@ -5,6 +5,8 @@ import 'ui/toolbar.dart';
 import 'ui/sidebar_left.dart';
 import 'panels/sidebar_right.dart';
 
+final GlobalKey globalScreenKey = GlobalKey();
+
 void main() {
   runApp(
     const ProviderScope(
@@ -52,29 +54,36 @@ class WorkspaceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final dividerColor = isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
 
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Top Toolbar (full width)
-            const Toolbar(),
-            
-            // Middle section containing SidebarLeft, Canvas, and SidebarRight
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SidebarLeft(),
-                  const Expanded(
-                    child: CanvasView(),
-                  ),
-                  const SidebarRight(),
-                ],
+      body: RepaintBoundary(
+        key: globalScreenKey,
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Top Toolbar (full width)
+              const Toolbar(),
+              
+              // Middle section containing SidebarLeft, Canvas, and SidebarRight
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Sidebar Left (Node Palette & Connection Builder)
+                    const SidebarLeft(),
+                    
+                    // Canvas (main workspace)
+                    const Expanded(
+                      child: CanvasView(),
+                    ),
+                    
+                    // Sidebar Right (Properties Editor & Query Vector & Validation Report)
+                    const SidebarRight(),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
