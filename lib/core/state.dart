@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 import 'metamodel.dart';
 import '../engine/validator.dart';
 
@@ -317,7 +318,8 @@ class DiagramNotifier extends Notifier<DiagramState> {
       return;
     }
 
-    final id = 'edge_${DateTime.now().millisecondsSinceEpoch}';
+    final rand = math.Random();
+    final id = 'edge_${DateTime.now().millisecondsSinceEpoch}_${rand.nextInt(1000000)}';
     String? sourceProp = state.pendingSourcePropertyKey;
     String label = '';
     bool isOneToMany = false;

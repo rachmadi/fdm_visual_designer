@@ -24,12 +24,11 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
     _labelController.dispose();
     super.dispose();
   }
-
   void _createNode(NodeType type) {
     final rand = math.Random();
     // Spawn near center of 3000x3000px canvas
     final pos = Offset(1400.0 + rand.nextInt(100), 1400.0 + rand.nextInt(100));
-    final id = 'node_${DateTime.now().millisecondsSinceEpoch}';
+    final id = 'node_${DateTime.now().millisecondsSinceEpoch}_${rand.nextInt(1000000)}';
     final name = type == NodeType.structural ? 'new_collection' : 'NewEntity';
     final path = type == NodeType.structural ? '/new_collection' : '/new_collection/\$id';
 
@@ -48,7 +47,7 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
 
   void _createBoundary() {
     final rand = math.Random();
-    final id = 'boundary_${DateTime.now().millisecondsSinceEpoch}';
+    final id = 'boundary_${DateTime.now().millisecondsSinceEpoch}_${rand.nextInt(1000000)}';
     final rect = Rect.fromLTWH(1350.0 + rand.nextInt(50), 1350.0 + rand.nextInt(50), 300, 250);
     
     final boundary = SecurityBoundary(
@@ -76,7 +75,8 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
       return;
     }
 
-    final id = 'edge_${DateTime.now().millisecondsSinceEpoch}';
+    final rand = math.Random();
+    final id = 'edge_${DateTime.now().millisecondsSinceEpoch}_${rand.nextInt(1000000)}';
     final edge = FDMEdge(
       id: id,
       type: _selectedEdgeType,
@@ -88,7 +88,6 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
     );
 
     ref.read(diagramProvider.notifier).addEdge(edge);
-
     // Reset relation builder state
     setState(() {
       _selectedSourcePropKey = null;
