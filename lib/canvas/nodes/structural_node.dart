@@ -99,7 +99,7 @@ class StructuralNodeWidget extends ConsumerWidget {
                           const SizedBox(width: 6),
                           Expanded(
                             child: Text(
-                              node.name,
+                              '${node.name} (${node.id.length > 6 ? node.id.substring(node.id.length - 6) : node.id})',
                               style: const TextStyle(
                                 color: textCol,
                                 fontWeight: FontWeight.bold,
