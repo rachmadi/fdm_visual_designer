@@ -114,7 +114,7 @@
        - File yang dimodifikasi: [canvas_view.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/canvas_view.dart), [entity_node.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/entity_node.dart), [structural_node.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/structural_node.dart), [security_boundary.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/security_boundary.dart).
      * *Hasil*: Setiap node dapat diseret secara mandiri dan independen. Canvas panning bekerja di area kosong. Zoom scroll mouse berfungsi. Komit di-*push* ke remote GitHub.
 
-## Durasi Sesi Pengembangan
+## Durasi Sesi Pengembangan & Pengujian
 
 | Tahap | Waktu Mulai (WIB) | Waktu Selesai (WIB) | Durasi |
 |---|---|---|---|
@@ -123,5 +123,7 @@
 | Penyajian Web & Perbaikan Import JSON | 12:08 | 12:22 | ~14 menit |
 | Debugging Masalah Drag Node (ID collision) | 12:22 | 12:37 | ~15 menit |
 | Debugging Masalah Drag Node (Gesture Arena) | 12:37 | 13:13 | ~36 menit |
-| Pembersihan Kode & Pembaruan Catatan | 13:13 | 13:17 | ~4 menit |
-| **Total Sesi** | **11:10** | **~13:17** | **~2 jam 7 menit** |
+| Pembersihan Kode & Pembaruan Catatan Awal | 13:13 | 13:17 | ~4 menit |
+| Pengujian Ulang E2E (tanpa IgnorePointer) & Git Push | 13:17 | 13:21 | ~4 menit |
+| **Total Sesi** | **11:10** | **13:21** | **~2 jam 11 menit** |
+
