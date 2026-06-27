@@ -46,6 +46,9 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Banner panduan visual dinamis pada sidebar kiri saat mode penyambungan aktif.
 - **Pengujian E2E Otomatis / Integration Testing (`integration_test/app_test.dart` & `test_driver/integration_test.dart`)**:
   - Setup pengujian integration test berbasis Flutter Driver dan ChromeDriver untuk menguji alur interaktif aplikasi secara non-headless di Google Chrome.
+- **Smart Database JSON Importer Fallback (`lib/export/serializer.dart`)**:
+  - Dukungan fallback cerdas untuk langsung mengimpor data mentah ekspor database Firebase (seperti data Map `users` dan `products`).
+  - Sistem mendeteksi koleksi, melakukan inspeksi dokumen pertama untuk menentukan tipe data properti secara otomatis, serta merender Structural Nodes, Entity Nodes, dan hierarchy edges secara dinamis di kanvas.
 
 ### Fixed (Perbaikan Bug)
 - Mengatasi crash instansiasi objek fallback `FDMNode` pada banner sidebar kiri dengan memanfaatkan pengecekan aman `state.nodes.any(...)`.
@@ -53,3 +56,4 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
 - **Crash StateError `SidebarLeft` di Awal Aplikasi**: Menambahkan penanganan aman untuk memilih node default ketika daftar node masih kosong agar tidak melempar eksepsi `StateError: No element`.
 - **RenderFlex Layout Overflow di Toolbar**: Mengurangi ukuran horizontal spacing dan padding pada `lib/ui/toolbar.dart` agar Toolbar pas sempurna pada ukuran layar minimum tanpa terjadi overflow 51 piksel.
 - **RenderFlex Layout Overflow di Canvas (Test Mode)**: Mengubah `boundaryMargin` di `InteractiveViewer` dari `double.infinity` ke `1000.0` serta mengganti nested `Scaffold` di `CanvasView` dengan `Container` agar penentuan batas layout pada testing environment berjalan normal.
+- **Perbaikan Pembacaan File Web (Bytes Null)**: Menambahkan opsi `withData: true` pada `FilePicker` dan menggunakan penanganan cast aman `Map<String, dynamic>.from(e as Map)` agar pembacaan byte JSON web tidak bernilai null atau memicu type cast exception di runtime.

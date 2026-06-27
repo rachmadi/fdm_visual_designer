@@ -103,8 +103,8 @@ class PropertyNode {
 
   factory PropertyNode.fromJson(Map<String, dynamic> json) {
     return PropertyNode(
-      key: json['key'] as String,
-      dataType: DataTypeExtension.fromString(json['dataType'] as String),
+      key: json['key'] as String? ?? '',
+      dataType: DataTypeExtension.fromString(json['dataType'] as String? ?? 'string'),
       isUnbounded: json['isUnbounded'] as bool? ?? false,
       isReferencing: json['isReferencing'] as bool? ?? false,
     );
@@ -159,7 +159,7 @@ class SortField {
 
   factory SortField.fromJson(Map<String, dynamic> json) {
     return SortField(
-      field: json['field'] as String,
+      field: json['field'] as String? ?? '',
       direction: json['direction'] as String? ?? 'asc',
     );
   }
@@ -197,9 +197,11 @@ class QueryVector {
   }
 
   factory QueryVector.fromJson(Map<String, dynamic> json) {
+    final filters = json['filterFields'] as List<dynamic>?;
+    final sorts = json['sortFields'] as List<dynamic>?;
     return QueryVector(
-      filterFields: (json['filterFields'] as List<dynamic>?)?.map((e) => e as String).toList() ?? [],
-      sortFields: (json['sortFields'] as List<dynamic>?)?.map((e) => SortField.fromJson(e as Map<String, dynamic>)).toList() ?? [],
+      filterFields: filters?.map((e) => e.toString()).toList() ?? [],
+      sortFields: sorts?.map((e) => SortField.fromJson(Map<String, dynamic>.from(e as Map))).toList() ?? [],
       estimatedIndexes: EstimatedIndexExtension.fromString(json['estimatedIndexes'] as String? ?? 'none'),
     );
   }
@@ -267,18 +269,24 @@ class FDMNode {
   }
 
   factory FDMNode.fromJson(Map<String, dynamic> json) {
-    final posJson = json['position'] as Map<String, dynamic>;
-    final typeStr = json['type'] as String;
+    final posJson = json['position'] as Map<dynamic, dynamic>?;
+    final typeStr = json['type'] as String? ?? 'entity';
+    final x = posJson != null ? (posJson['x'] as num?)?.toDouble() ?? 0.0 : 0.0;
+    final y = posJson != null ? (posJson['y'] as num?)?.toDouble() ?? 0.0 : 0.0;
+    
+    final props = json['properties'] as List<dynamic>?;
+    final qv = json['queryVector'] as Map<dynamic, dynamic>?;
+
     return FDMNode(
-      id: json['id'] as String,
+      id: json['id'] as String? ?? '',
       type: typeStr == 'structural' ? NodeType.structural : NodeType.entity,
-      name: json['name'] as String,
-      path: json['path'] as String,
+      name: json['name'] as String? ?? 'Unnamed',
+      path: json['path'] as String? ?? '',
       isDynamic: json['isDynamic'] as bool? ?? false,
       isHighFrequency: json['isHighFrequency'] as bool? ?? false,
-      properties: (json['properties'] as List<dynamic>?)?.map((e) => PropertyNode.fromJson(e as Map<String, dynamic>)).toList() ?? [],
-      queryVector: json['queryVector'] != null ? QueryVector.fromJson(json['queryVector'] as Map<String, dynamic>) : QueryVector(),
-      position: Offset((posJson['x'] as num).toDouble(), (posJson['y'] as num).toDouble()),
+      properties: props?.map((e) => PropertyNode.fromJson(Map<String, dynamic>.from(e as Map))).toList() ?? [],
+      queryVector: qv != null ? QueryVector.fromJson(Map<String, dynamic>.from(qv)) : QueryVector(),
+      position: Offset(x, y),
     );
   }
 }
@@ -343,7 +351,7 @@ class FDMEdge {
   }
 
   factory FDMEdge.fromJson(Map<String, dynamic> json) {
-    final typeStr = json['type'] as String;
+    final typeStr = json['type'] as String? ?? 'hierarchy';
     EdgeType typeVal = EdgeType.hierarchy;
     if (typeStr == 'referencing') {
       typeVal = EdgeType.referencing;
@@ -351,11 +359,11 @@ class FDMEdge {
       typeVal = EdgeType.denormalization;
     }
     return FDMEdge(
-      id: json['id'] as String,
+      id: json['id'] as String? ?? '',
       type: typeVal,
-      sourceNodeId: json['sourceNodeId'] as String,
+      sourceNodeId: json['sourceNodeId'] as String? ?? '',
       sourcePropertyKey: json['sourcePropertyKey'] as String?,
-      targetNodeId: json['targetNodeId'] as String,
+      targetNodeId: json['targetNodeId'] as String? ?? '',
       isOneToMany: json['isOneToMany'] as bool? ?? false,
       label: json['label'] as String?,
     );
@@ -404,17 +412,18 @@ class SecurityBoundary {
   }
 
   factory SecurityBoundary.fromJson(Map<String, dynamic> json) {
-    final bounds = json['bounds'] as Map<String, dynamic>;
+    final bounds = json['bounds'] as Map<dynamic, dynamic>?;
+    final bx = bounds != null ? (bounds['x'] as num?)?.toDouble() ?? 0.0 : 0.0;
+    final by = bounds != null ? (bounds['y'] as num?)?.toDouble() ?? 0.0 : 0.0;
+    final bw = bounds != null ? (bounds['width'] as num?)?.toDouble() ?? 100.0 : 100.0;
+    final bh = bounds != null ? (bounds['height'] as num?)?.toDouble() ?? 100.0 : 100.0;
+    
+    final nodes = json['enclosedNodeIds'] as List<dynamic>?;
     return SecurityBoundary(
-      id: json['id'] as String,
-      accessLevel: json['accessLevel'] as String,
-      enclosedNodeIds: (json['enclosedNodeIds'] as List<dynamic>?)?.map((e) => e as String).toList() ?? [],
-      rect: Rect.fromLTWH(
-        (bounds['x'] as num).toDouble(),
-        (bounds['y'] as num).toDouble(),
-        (bounds['width'] as num).toDouble(),
-        (bounds['height'] as num).toDouble(),
-      ),
+      id: json['id'] as String? ?? '',
+      accessLevel: json['accessLevel'] as String? ?? 'public',
+      enclosedNodeIds: nodes?.map((e) => e.toString()).toList() ?? [],
+      rect: Rect.fromLTWH(bx, by, bw, bh),
     );
   }
 }

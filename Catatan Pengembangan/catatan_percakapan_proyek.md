@@ -87,4 +87,11 @@
    * Analisis statis bersih (0 error).
    * Seluruh unit test semantik lulus (`flutter test`).
    * **Seluruh E2E Integration Test sukses dijalankan dan lulus 100% di browser Chrome (`All tests passed!`)**.
-   * Sinkronisasi repositori ke remote GitHub diselesaikan.
+   * Sinkronisasi repositori ke remote GitHub berhasil dilakukan.
+
+6. **Penyajian di Server Lokal & Penyempurnaan Impor JSON**:
+   * Menjalankan server lokal via `npx serve` pada port `5555` agar pengguna dapat memantau dan mencoba aplikasi web secara langsung.
+   * **Masalah**: Pengguna mengimpor file data mentah Firebase JSON ekspor (users/products) tetapi tidak terjadi apa-apa karena byte pembacaan file bernilai null di web.
+     * *Solusi*: Memperbaiki parameter `FilePicker.pickFiles` dengan menambahkan `withData: true` dan menyusun `Map<String, dynamic>.from(e as Map)` agar terhindar dari platform-specific type cast crash.
+   * **Inovasi Cerdas**: Menulis parser fallback reaktif di [serializer.dart](file:///e:/rachmadi/Antigravity/fdm_visual_designer/lib/export/serializer.dart) untuk mendeteksi data mentah Firebase JSON. Jika pengguna mengunggah data database biasa, sistem secara otomatis mengekstrak properti, menentukan tipe data, membuat Structural Node (Koleksi), Entity Node (Dokumen), dan menyusun relasi hierarchy secara dinamis di kanvas.
+   * **Hasil**: Tampilan kanvas FDM Designer berhasil ter-load sempurna dan memvisualisasikan data `users` dan `products` langsung di monitor pengguna. Repositori berhasil disinkronkan ke remote GitHub.

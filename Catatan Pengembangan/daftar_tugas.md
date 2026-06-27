@@ -34,7 +34,7 @@
   - [x] Integrasi rule 6 (validasi overlap boundary)
   - [x] Toggle RTDB mode di toolbar (menonaktifkan alternation rule R1, mengizinkan nested maps)
 - [x] Ekspor/Impor & Polishing (Iterasi 6)
-  - [x] Ekspor & Impor skema diagram JSON FDM v1
+  - [x] Ekspor & Impor skema diagram JSON FDM v1 (serta parser pintar fallback impor data database mentah)
   - [x] Ekspor gambar resolusi tinggi 2x (PNG) via RepaintBoundary
   - [x] Menyusun panel lapor kesalahan (Validation Report) di sidebar kanan
   - [x] Memperbaiki seluruh error kompilasi dan sukses build produksi (`flutter build web`)

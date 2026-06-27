@@ -19,6 +19,7 @@ class Toolbar extends ConsumerWidget {
       final result = await FilePicker.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['json'],
+        withData: true, // Force loading file bytes into memory
       );
 
       if (result != null && result.files.isNotEmpty) {
@@ -41,6 +42,10 @@ class Toolbar extends ConsumerWidget {
               const SnackBar(content: Text('Invalid FDM Diagram Schema JSON.')),
             );
           }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Failed to read file bytes.')),
+          );
         }
       }
     } catch (e) {
