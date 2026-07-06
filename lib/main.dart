@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:math' as math;
+import 'dart:html' as html; // Used to intercept browser shortcut conflicts
 import 'canvas/canvas_view.dart';
 import 'ui/toolbar.dart';
 import 'ui/sidebar_left.dart';
@@ -25,6 +26,15 @@ final themeModeProvider = NotifierProvider<ThemeModeNotifier, ThemeMode>(() {
 });
 
 void main() {
+  // Prevent browser default behaviors for conflicting shortcuts (Ctrl+D, Ctrl+E, Ctrl+L)
+  html.window.onKeyDown.listen((html.KeyboardEvent event) {
+    final isCtrl = event.ctrlKey || event.metaKey;
+    final key = event.key?.toLowerCase();
+    if (isCtrl && (key == 'd' || key == 'e' || key == 'l')) {
+      event.preventDefault();
+    }
+  });
+
   runApp(
     const ProviderScope(
       child: FdmVisualDesignerApp(),
@@ -67,10 +77,99 @@ class FdmVisualDesignerApp extends ConsumerWidget {
   }
 }
 
-class WorkspaceScreen extends ConsumerWidget {
+class WorkspaceScreen extends ConsumerStatefulWidget {
   const WorkspaceScreen({super.key});
 
-  void _createNodeViaShortcut(WidgetRef ref, NodeType type) {
+  @override
+  ConsumerState<WorkspaceScreen> createState() => _WorkspaceScreenState();
+}
+
+class _WorkspaceScreenState extends ConsumerState<WorkspaceScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Register global hardware keyboard event listener to bypass focus tree issues
+    HardwareKeyboard.instance.addHandler(_handleKeyEvent);
+  }
+
+  @override
+  void dispose() {
+    HardwareKeyboard.instance.removeHandler(_handleKeyEvent);
+    super.dispose();
+  }
+
+  bool _handleKeyEvent(KeyEvent event) {
+    if (event is! KeyDownEvent) return false;
+
+    final isCtrl = HardwareKeyboard.instance.isControlPressed ||
+        HardwareKeyboard.instance.isMetaPressed;
+    final isShift = HardwareKeyboard.instance.isShiftPressed;
+
+    final state = ref.read(diagramProvider);
+    final notifier = ref.read(diagramProvider.notifier);
+
+    // 1. Undo: Ctrl/Cmd + Z
+    if (isCtrl && !isShift && event.logicalKey == LogicalKeyboardKey.keyZ) {
+      notifier.undo();
+      return true;
+    }
+
+    // 2. Redo: Ctrl/Cmd + Shift + Z
+    if (isCtrl && isShift && event.logicalKey == LogicalKeyboardKey.keyZ) {
+      notifier.redo();
+      return true;
+    }
+
+    // 3. Toggle Dark/Light Mode: Ctrl/Cmd + Shift + D
+    if (isCtrl && isShift && event.logicalKey == LogicalKeyboardKey.keyD) {
+      ref.read(themeModeProvider.notifier).toggle();
+      return true;
+    }
+
+    // 4. Delete/Backspace: Hapus yang dipilih
+    if (event.logicalKey == LogicalKeyboardKey.delete ||
+        event.logicalKey == LogicalKeyboardKey.backspace) {
+      if (state.selectedNodeId != null) {
+        notifier.deleteNode(state.selectedNodeId!);
+        return true;
+      } else if (state.selectedBoundaryId != null) {
+        notifier.deleteBoundary(state.selectedBoundaryId!);
+        return true;
+      } else if (state.selectedEdgeId != null) {
+        notifier.deleteEdge(state.selectedEdgeId!);
+        return true;
+      }
+    }
+
+    // 5. S: Add Structural Node in center viewport/grid
+    if (!isCtrl && !isShift && event.logicalKey == LogicalKeyboardKey.keyS) {
+      _createNodeViaShortcut(NodeType.structural);
+      return true;
+    }
+
+    // 6. E: Add Entity Node in center viewport/grid
+    if (!isCtrl && !isShift && event.logicalKey == LogicalKeyboardKey.keyE) {
+      _createNodeViaShortcut(NodeType.entity);
+      return true;
+    }
+
+    // 7. V: Toggle Validation Report panel
+    if (!isCtrl && !isShift && event.logicalKey == LogicalKeyboardKey.keyV) {
+      notifier.toggleValidationReport();
+      return true;
+    }
+
+    // 8. Escape: Cancel/Deselect
+    if (event.logicalKey == LogicalKeyboardKey.escape) {
+      notifier.selectNode(null);
+      notifier.cancelConnection();
+      return true;
+    }
+
+    return false;
+  }
+
+  void _createNodeViaShortcut(NodeType type) {
     final rand = math.Random();
     final existingNodes = ref.read(diagramProvider).nodes;
     final count = existingNodes.length;
@@ -109,108 +208,35 @@ class WorkspaceScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: Focus(
-        autofocus: true,
-        onKeyEvent: (FocusNode focusNode, KeyEvent event) {
-          if (event is! KeyDownEvent) return KeyEventResult.ignored;
-
-          final isCtrl = HardwareKeyboard.instance.isControlPressed ||
-              HardwareKeyboard.instance.isMetaPressed;
-          final isShift = HardwareKeyboard.instance.isShiftPressed;
-
-          final state = ref.read(diagramProvider);
-          final notifier = ref.read(diagramProvider.notifier);
-
-          // 1. Undo: Ctrl/Cmd + Z
-          if (isCtrl && !isShift && event.logicalKey == LogicalKeyboardKey.keyZ) {
-            notifier.undo();
-            return KeyEventResult.handled;
-          }
-
-          // 2. Redo: Ctrl/Cmd + Shift + Z
-          if (isCtrl && isShift && event.logicalKey == LogicalKeyboardKey.keyZ) {
-            notifier.redo();
-            return KeyEventResult.handled;
-          }
-
-          // 3. Toggle Dark/Light Mode: Ctrl/Cmd + Shift + D
-          if (isCtrl && isShift && event.logicalKey == LogicalKeyboardKey.keyD) {
-            ref.read(themeModeProvider.notifier).toggle();
-            return KeyEventResult.handled;
-          }
-
-          // 4. Delete/Backspace: Hapus yang dipilih
-          if (event.logicalKey == LogicalKeyboardKey.delete ||
-              event.logicalKey == LogicalKeyboardKey.backspace) {
-            if (state.selectedNodeId != null) {
-              notifier.deleteNode(state.selectedNodeId!);
-              return KeyEventResult.handled;
-            } else if (state.selectedBoundaryId != null) {
-              notifier.deleteBoundary(state.selectedBoundaryId!);
-              return KeyEventResult.handled;
-            } else if (state.selectedEdgeId != null) {
-              notifier.deleteEdge(state.selectedEdgeId!);
-              return KeyEventResult.handled;
-            }
-          }
-
-          // 5. S: Add Structural Node in center viewport/grid
-          if (!isCtrl && !isShift && event.logicalKey == LogicalKeyboardKey.keyS) {
-            _createNodeViaShortcut(ref, NodeType.structural);
-            return KeyEventResult.handled;
-          }
-
-          // 6. E: Add Entity Node in center viewport/grid
-          if (!isCtrl && !isShift && event.logicalKey == LogicalKeyboardKey.keyE) {
-            _createNodeViaShortcut(ref, NodeType.entity);
-            return KeyEventResult.handled;
-          }
-
-          // 7. V: Toggle Validation Report panel
-          if (!isCtrl && !isShift && event.logicalKey == LogicalKeyboardKey.keyV) {
-            notifier.toggleValidationReport();
-            return KeyEventResult.handled;
-          }
-
-          // 8. Escape: Cancel/Deselect
-          if (event.logicalKey == LogicalKeyboardKey.escape) {
-            notifier.selectNode(null);
-            notifier.cancelConnection();
-            return KeyEventResult.handled;
-          }
-
-          return KeyEventResult.ignored;
-        },
-        child: RepaintBoundary(
-          key: globalScreenKey,
-          child: SafeArea(
-            child: Column(
-              children: [
-                // Top Toolbar (full width)
-                const Toolbar(),
-                
-                // Middle section containing SidebarLeft, Canvas, and SidebarRight
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // Sidebar Left (Node Palette & Connection Builder)
-                      const SidebarLeft(),
-                      
-                      // Canvas (main workspace)
-                      const Expanded(
-                        child: CanvasView(),
-                      ),
-                      
-                      // Sidebar Right (Properties Editor & Query Vector & Validation Report)
-                      const SidebarRight(),
-                    ],
-                  ),
+      body: RepaintBoundary(
+        key: globalScreenKey,
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Top Toolbar (full width)
+              const Toolbar(),
+              
+              // Middle section containing SidebarLeft, Canvas, and SidebarRight
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Sidebar Left (Node Palette & Connection Builder)
+                    const SidebarLeft(),
+                    
+                    // Canvas (main workspace)
+                    const Expanded(
+                      child: CanvasView(),
+                    ),
+                    
+                    // Sidebar Right (Properties Editor & Query Vector & Validation Report)
+                    const SidebarRight(),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
