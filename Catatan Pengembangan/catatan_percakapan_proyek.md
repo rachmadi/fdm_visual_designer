@@ -283,11 +283,180 @@
 *   **Dynamic 4-Sided Connection Anchors**: Saat mengimplementasikan sistem koneksi relasi node (Iterasi 1b/2a), titik koneksi (anchor points) pada setiap node harus mencakup **4 sisi** (atas, bawah, kiri, kanan), bukan hanya atas dan bawah.
 *   **Automatic Anchor Switching**: Titik koneksi harus berpindah secara otomatis memilih sisi terdekat (closest distance) secara dinamis ketika salah satu node digeser ke arah koordinat yang berbeda relatif terhadap node pasangannya.
 
+---
 
+## Sesi Pengembangan — 2026-07-06 (Sesi 2, Checkpoint 14+)
 
+### Fitur yang Diimplementasikan: 4 Titik Koneksi Dinamis & Bézier Routing
 
+**Durasi Implementasi:**
 
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| Review kode eksisting (RTM, nodes, edges_painter) | 15:34 | 15:36 | ~2 menit |
+| Implementasi `edges_painter.dart` (dynamic anchor + Bézier) | 15:36 | 15:37 | ~1 menit |
+| Implementasi 4 handle pada `entity_node.dart` | 15:37 | 15:38 | ~1 menit |
+| Implementasi 4 handle pada `structural_node.dart` | 15:38 | 15:39 | ~1 menit |
+| Flutter analyze | 15:39 | 15:40 | ~1 menit |
+| Update integration test (3 stages) | 15:40 | 15:41 | ~1 menit |
+| Jalankan ChromeDriver + flutter drive | 15:41 | 15:42 | ~1 menit |
+| Tunggu & verifikasi E2E test (All Passed) | 15:42 | 15:43 | ~1 menit |
+| Update dokumentasi | 15:43 | 15:45 | ~2 menit |
+| **Total Sesi** | **15:34** | **15:45** | **~11 menit** |
 
+### Keputusan Teknis
 
+**D-003: Dynamic Anchor berdasarkan perbandingan |dx| vs |dy|**
+- Perbandingan `|toCenter.dx - fromCenter.dx|` vs `|toCenter.dy - fromCenter.dy|` menentukan orientasi koneksi.
+- Jika lebih horizontal (`|dx| > |dy|`): source menggunakan anchor kiri/kanan.
+- Jika lebih vertikal: source menggunakan anchor atas/bawah.
+- Target selalu menggunakan sisi berlawanan dari source.
+
+**D-004: Bézier tension proportional terhadap jarak**
+- Tension = `max(60.0, distance * 0.5)` untuk kurva yang adaptif berdasarkan jarak antar node.
+- Kurva lebih flat untuk node yang berdekatan, lebih melengkung untuk node yang jauh.
+
+**D-005: Dashed path menggunakan `Path.computeMetrics()`**
+- Metode ini mengikuti kurva Bézier secara akurat, berbeda dengan implementasi sebelumnya yang hanya menggambar segmen lurus berulang.
+
+### Hasil E2E Integration Test
+
+```
+✅ Stage 1 passed: Layout, node creation, and selection verified
+✅ Stage 2 passed: Drag and zoom interaction verified  
+✅ Stage 3 passed: 4 connection handles visible on both node types
+All tests passed.
+Screenshots: 1_launch_screen, 2_added_nodes_grid, 3_selected_node_properties,
+             4_zoomed_out_canvas, 5_dragged_node_zoomed_out, 6_nodes_with_4_handles
+```
+
+---
+
+## Sesi Pengembangan — 2026-07-06 (Sesi 3, Penyempurnaan Headed Non-Headless Test Terlihat di Layar & Ditahan)
+
+### Aktivitas Utama:
+- Mengidentifikasi bahwa pemisahan test case ke dalam 3 block `testWidgets` terpisah menyebabkan browser Chrome menutup dan membuka kembali berkali-kali di layar user, serta menutup langsung di akhir Stage 3 tanpa memberikan kesempatan bagi user untuk mengamati hasilnya.
+- **Menggabungkan 3 Tahapan Test**: Menggabungkan seluruh tahapan (Stage 1: Layouting, Stage 2: Zoom & Drag, Stage 3: 4-Point Handles) ke dalam **satu single flow `testWidgets`** di [`integration_test/app_test.dart`](file:///E:/rachmadi/Antigravity/fdm_visual_designer/integration_test/app_test.dart).
+- **Menahan Jendela Browser**: Menambahkan delay penahanan `await Future.delayed(const Duration(seconds: 35))` di akhir test block agar browser tetap terbuka di layar desktop user selama 35 detik penuh.
+- **Eksekusi Sukses**: Scheduled Task `FlutterHeadedTest` berhasil dieksekusi secara interaktif. Browser Google Chrome fisik muncul di layar monitor desktop user (Session 1), menjalankan seluruh visual flow secara berurutan tanpa interupsi tutup/buka, dan tetap terbuka selama 35 detik di akhir test untuk inspeksi visual user.
+- Seluruh pengujian lulus 100%. Hasil screenshot visual disimpan di folder `integration_test/screenshots` dan disalin ke folder `artifacts`.
+
+**Tabel Durasi Pengerjaan & Pengujian:**
+
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| Identifikasi masalah browser menutup (multiple testWidgets) | 16:07 | 16:09 | ~2 menit |
+| Menggabungkan 3 block test & menambahkan delay 35s di `app_test.dart` | 16:09 | 16:11 | ~2 menit |
+| Pembersihan total proses lama & registrasi ulang Scheduled Task | 16:11 | 16:13 | ~2 menit |
+| Eksekusi ChromeDriver (Session 0) + Flutter Drive (Session 1) | 16:13 | 16:18 | ~5 menit |
+| Pengamatan interaktif browser di monitor & verifikasi penahanan 35s | 16:18 | 16:20 | ~2 menit |
+| Penyalinan screenshot hasil pengujian ke direktori artifacts | 16:20 | 16:22 | ~2 menit |
+| **Total Sesi** | **16:07** | **16:22** | **~15 menit** |
+
+### Hasil Pengujian Headed Non-Headless Akhir (Debug Mode - Combined Flow)
+
+```
+Launching integration_test\app_test.dart on Chrome in debug mode...
+Waiting for connection from debug service on Chrome...
+This app is linked to the debug service: ws://127.0.0.1:53492/uc8Lv55QrRs=/ws
+Debug service listening on ws://127.0.0.1:53492/uc8Lv55QrRs=/ws
+Starting application from main method...
+
+00:00 +0: FDM Visual Designer E2E Integration Tests Run Combined E2E Flow (Stage 1 to 3)
+=== Memulai Stage 1: Layout & Pembuatan Node ===
+✅ Stage 1 Selesai
+=== Memulai Stage 2: Zoom & Drag ===
+✅ Stage 2 Selesai
+=== Memulai Stage 3: 4 Titik Koneksi Dinamis ===
+✅ Stage 3 Selesai
+=== Menahan jendela browser selama 35 detik... ===
+All tests passed.
+
+Screenshot saved: 1_launch_screen.png
+Screenshot saved: 2_added_nodes_grid.png
+Screenshot saved: 3_selected_node_properties.png
+Screenshot saved: 4_zoomed_out_canvas.png
+Screenshot saved: 5_dragged_node_zoomed_out.png
+Screenshot saved: 6_nodes_with_4_handles.png
+Application finished.
+```
+
+---
+
+## Sesi Pengembangan — 2026-07-06 (Sesi 4, Kustomisasi Simbol UML & Visibilitas Grid)
+
+### Aktivitas Utama:
+- **Penyelarasan Simbol Collection ke UML Package**:
+  - Mengubah bentuk tab pada `FolderPainter` di [`structural_node.dart`](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/structural_node.dart) dari miring (slanted) menjadi persegi panjang tegak (`rectangular tab`), menyerupai simbol package standard UML.
+  - Memindahkan label nama Structural Node (`node.name`) yang semula berada di main body ke kotak tab bagian atas dengan ukuran font 10px tebal.
+  - Menampilkan ikon `folder_open` beserta `node.path` di bagian main body secara estetis.
+- **Peningkatan Kontras Grid di Dark Mode**:
+  - Mengubah ketebalan garis grid `strokeWidth` pada `GridPainter` di [`canvas_view.dart`](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/canvas_view.dart) dari `0.5` ke `1.0` agar tetap terlihat jelas saat zoom out.
+  - Mengubah warna grid pada dark mode menjadi abu-abu medium yang lebih terang (`const Color(0xFF5A6A80)`) untuk memberikan kontras yang pas dan nyaman dipandang pada latar belakang gelap.
+- **Verifikasi Headed E2E Test**:
+  - Menjalankan kembali suite E2E test di monitor fisik desktop user.
+  - Verifikasi: **Lulus 100% (PASS)**, screenshot visual diperbarui dan disalin ke folder `artifacts`.
+
+**Tabel Durasi Pengerjaan & Pengujian:**
+
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| Refaktor bentuk tab FolderPainter ke rectangular UML package tab | 16:12 | 16:15 | ~3 menit |
+| Re-layout penempatan label nama Structural Node ke tab atas & path ke body | 16:15 | 16:18 | ~3 menit |
+| Penyesuaian ketebalan & kontras grid pada dark mode di `canvas_view.dart` | 16:18 | 16:21 | ~3 menit |
+| Eksekusi visual E2E headed test (ChromeDriver Session 0 + Drive Session 1) | 16:21 | 16:26 | ~5 menit |
+| Pengamatan browser di monitor (tab atas terisi nama, grid tetap terlihat saat zoom out) | 16:26 | 16:27 | ~1 menit |
+| Sinkronisasi dokumentasi log perubahan dan daftar tugas | 16:27 | 16:29 | ~2 menit |
+| **Total Sesi** | **16:12** | **16:29** | **~17 menit** |
+
+### Hasil Pengujian Headed Non-Headless Akhir (Debug Mode - Combined Flow)
+
+```
+Launching integration_test\app_test.dart on Chrome in debug mode...
+Waiting for connection from debug service on Chrome...
+This app is linked to the debug service: ws://127.0.0.1:49868/ZjEbIdvj02g=/ws
+Debug service listening on ws://127.0.0.1:49868/ZjEbIdvj02g=/ws
+Starting application from main method...
+
+00:00 +0: FDM Visual Designer E2E Integration Tests Run Combined E2E Flow (Stage 1 to 3)
+=== Memulai Stage 1: Layout & Pembuatan Node ===
+✅ Stage 1 Selesai
+=== Memulai Stage 2: Zoom & Drag ===
+✅ Stage 2 Selesai
+=== Memulai Stage 3: 4 Titik Koneksi Dinamis ===
+✅ Stage 3 Selesai
+=== Menahan jendela browser selama 35 detik... ===
+All tests passed.
+
+Screenshot saved: 1_launch_screen.png
+Screenshot saved: 2_added_nodes_grid.png
+Screenshot saved: 3_selected_node_properties.png
+Screenshot saved: 4_zoomed_out_canvas.png
+Screenshot saved: 5_dragged_node_zoomed_out.png
+Screenshot saved: 6_nodes_with_4_handles.png
+Application finished.
+```
+
+---
+
+## Sesi Pengembangan — 2026-07-06 (Sesi 5, Proteksi Browser Pengguna & Aturan Clean Up)
+
+### Aktivitas Utama:
+- **Aturan Proteksi Browser Pengguna**:
+  - Menyepakati aturan penting bahwa selama pengujian visual (headed test), agen **dilarang keras** menggunakan perintah `taskkill /F /IM chrome.exe /T` yang menutup seluruh jendela Chrome aktif pengguna, karena mengganggu pekerjaan mereka.
+  - Menambahkan aturan ini secara permanen ke [`.agents/AGENTS.md`](file:///E:/rachmadi/Antigravity/.agents/AGENTS.md) sebagai panduan wajib pengerjaan untuk agen di masa mendatang.
+- **Pembersihan Skrip Usang**:
+  - Menghapus file skrip sementara (`run_test.bat` dan `run_local_test.ps1`) di folder `scratch/` yang berisi baris kode `taskkill chrome.exe` untuk menghindari eksekusi tidak sengaja yang merugikan pengguna di masa depan.
+  - Untuk cleanup, pembersihan proses kini dibatasi hanya pada `chromedriver.exe` dan `dart.exe`.
+
+**Tabel Durasi Pengerjaan & Pengujian:**
+
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| Analisis dampak taskkill chrome & perumusan aturan baru | 16:24 | 16:26 | ~2 menit |
+| Pembaruan aturan proteksi browser di `.agents/AGENTS.md` | 16:26 | 16:28 | ~2 menit |
+| Menghapus skrip pembersih paksa (force-kill) usang di folder scratch | 16:28 | 16:30 | ~2 menit |
+| Pembaruan catatan percakapan proyek dan log perubahan | 16:30 | 16:32 | ~2 menit |
+| **Total Sesi** | **16:24** | **16:32** | **~8 menit** |
 
 

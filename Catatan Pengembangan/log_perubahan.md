@@ -121,3 +121,54 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
 - **Dark Mode Canvas & Opacity Node (Section 5)**:
   - Mengubah canvas background di dark mode agar secara dinamis mengikuti `Theme.of(context).colorScheme.surface`.
   - Menerapkan opacity `0.92` pada background warna putih untuk Entity Node di dark mode untuk meningkatkan visual dark aesthetics.
+
+## [1.4.0] - 2026-07-06 (Iterasi 1b — Node Interaction)
+
+### Added (Penambahan Fitur)
+- **Panel Panduan Pintasan Keyboard (Keyboard Shortcuts)**:
+  - Menyediakan panel panduan kustom di bagian kiri bawah sidebar yang menunjukkan daftar pintasan keyboard yang terdaftar secara interaktif.
+  - Memvisualisasikan tombol fisik cap tombol keyboard (key caps) kustom yang reaktif terhadap perubahan tema gelap/terang.
+
+### Fixed (Perbaikan Bug & Tes)
+- **Penyempurnaan E2E Integration Test**:
+  - Mengatasi duplicate widget finder error pada integration test (`app_test.dart`) akibat kesamaan teks tombol "Add Structural Node" dan "Add Entity Node" dengan teks panduan kustom pada panel baru, dengan memanfaatkan filter `.first` pada selector finder.
+  - Berhasil mengeksekusi E2E headed Chrome integration test 100% lulus (PASS) secara visual di layar monitor desktop user.
+
+## [1.5.0] - 2026-07-06 (4 Titik Koneksi Dinamis & Bézier Routing)
+
+### Added (Penambahan Fitur)
+- **4 Titik Koneksi Dinamis (Dynamic Anchor Switching)**:
+  - Menambahkan 4 titik koneksi interaktif (atas, bawah, kiri, kanan) pada `StructuralNodeWidget` dan `EntityNodeWidget`.
+  - Handle titik koneksi baru berukuran 10x10px dengan efek glow shadow dan border putih kontras untuk keterbacaan yang lebih baik.
+  - Handle kiri (hollow/putih) menunjukkan titik masuk (input), handle terisi biru menunjukkan titik keluaran (output).
+  - Seluruh 4 handle pada kedua node dapat memicu aksi `startConnection` via `GestureDetector.onTap`.
+  
+- **Dynamic Anchor Switching di `edges_painter.dart`**:
+  - Implementasi algoritma pemilihan sisi anchor otomatis (`_getDynamicAnchor`) yang membandingkan posisi pusat node sumber dan target.
+  - Jika perbedaan horizontal `|dx| > |dy|`, koneksi menggunakan sisi kiri/kanan; jika vertikal, menggunakan sisi atas/bawah.
+  - Anchor berpindah otomatis saat pengguna menggeser node ke arah yang berbeda — tanpa perlu konfigurasi manual.
+  
+- **Bézier Cubic Curve Routing (`_buildBezierPath`)**:
+  - Semua tipe edge (hierarchy, referencing, denormalization) kini menggunakan routing kurva Bézier cubic yang elegan, menggantikan routing polyline L-shape sebelumnya.
+  - Titik kontrol kurva dihitung secara dinamis berdasarkan arah exit anchor (tension proportional terhadap jarak antar node, minimal 60px).
+  - Dashed path untuk edge referencing diimplementasikan menggunakan `Path.computeMetrics()` untuk mengikuti kurva Bézier secara akurat.
+  
+- **Titik Anchor Visual**:
+  - Menambahkan lingkaran kecil (`_drawAnchorDot`) di ujung awal edge hierarchy untuk menunjukkan dengan jelas titik keluaran koneksi.
+  - `strokeCap: StrokeCap.round` pada semua edge untuk tampilan yang lebih halus dan profesional.
+
+- **Penyelarasan Simbol Collection ke UML Package**:
+  - Mengubah bentuk tab pada `FolderPainter` di `structural_node.dart` dari miring (slanted) menjadi persegi panjang tegak (`rectangular tab`), menyerupai simbol package standard UML.
+  - Memposisikan label nama Structural Node di kotak tab bagian atas dengan ukuran font 10px tebal, dan path di main body.
+
+- **Peningkatan Kontras Grid & Zoom Out**:
+  - Meningkatkan ketebalan garis grid `strokeWidth` pada `GridPainter` di `canvas_view.dart` dari `0.5` menjadi `1.0` agar tetap terlihat jelas saat zoom out.
+  - Mengubah warna grid pada dark mode menjadi abu-abu medium yang lebih terang (`#5A6A80`) untuk memberikan kontras yang pas dan nyaman dipandang pada latar belakang gelap.
+
+### Fixed (Perbaikan Bug & Tes)
+- **Resolusi Eksekusi Headed E2E Test di Layar Desktop & Penahanan Visual**:
+  - Menggabungkan 3 block `testWidgets` terpisah menjadi satu flow tunggal untuk mencegah browser Chrome menutup dan membuka kembali berulang kali selama pengujian visual.
+  - Menambahkan penundaan `35 detik` di akhir test case untuk menahan agar browser tetap terbuka di layar sehingga user dapat mengamati visual 4 titik koneksi, kurva Bézier, dan interaksi grid secara detail.
+  - Menetapkan aturan **larangan menutup browser pengguna** (no `taskkill /F /IM chrome.exe`) di [`.agents/AGENTS.md`](file:///E:/rachmadi/Antigravity/.agents/AGENTS.md) agar tidak mengganggu aktivitas kerja pengguna yang sedang berjalan.
+  - Menghapus skrip cleanup usang di folder `scratch/` yang berpotensi memicu penutupan paksa chrome.exe. Pembersihan proses kini dibatasi hanya pada `chromedriver.exe` dan `dart.exe`.
+  - Menjalankan tes interaktif headed (`--no-headless`) melalui Scheduled Task interaktif (`LogonType Interactive`) lintas sesi ke ChromeDriver Session 0. Jendela browser Google Chrome fisik muncul di layar monitor desktop user secara nyata dan visual, menjalankan seluruh skenario hingga selesai, dan bertahan selama 35 detik sebelum menutup secara otomatis. Semua stage lulus 100% (PASS).

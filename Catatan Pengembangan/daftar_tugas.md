@@ -50,10 +50,17 @@
   - [x] Implementasi Pintasan Keyboard Global (Ctrl+Z, Ctrl+Shift+Z, Delete/Backspace, S, E, V, Escape)
   - [x] Pencegahan Konflik Pintasan Keyboard dengan Aksi Default Browser (Ctrl+D, Ctrl+E, Ctrl+L)
   - [x] Implementasi Mode Tema Dinamis Light/Dark Mode reaktif (Ctrl+Shift+D) & Opacity Node Gelap
+  - [x] Penambahan Panel Panduan Pintasan Keyboard (Keyboard Shortcuts) di sidebar kiri bawah
+  - [x] Penyempurnaan E2E Integration Test dengan Finder selektif (.first) untuk mendeteksi tombol palette secara akurat
+  - [x] Implementasi 4 titik koneksi (atas, bawah, kiri, kanan) interaktif pada StructuralNode & EntityNode
+  - [x] Dynamic Anchor Switching — anchor berpindah otomatis berdasarkan posisi relatif node saat digeser
+  - [x] Bézier Cubic Curve Routing untuk semua tipe edge (hierarchy, referencing, denormalization)
+  - [x] Dashed Bézier path untuk edge referencing menggunakan Path.computeMetrics()
+  - [x] Kustomisasi simbol Structural Node (Collection) menjadi rectangular UML package tab
+  - [x] Penempatan label nama Structural Node di kotak tab bagian atas
+  - [x] Peningkatan visibilitas & kontras garis grid pada dark mode saat zoom out (strokeWidth = 1.0)
 
 ## Rencana Selanjutnya (Peningkatan Masa Depan)
 
 - [ ] Integrasi Algoritma Auto-Layout otomatis berbasis Dagre (Dart port)
 - [ ] Penambahan visual Minimap di sudut kanan bawah canvas
-- [ ] Pengaktifan 4 titik koneksi (atas, bawah, kiri, kanan) pada node dengan pergeseran dinamis otomatis (dynamic anchor switching) ketika node dipindahkan
-

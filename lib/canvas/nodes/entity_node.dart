@@ -237,22 +237,10 @@ class EntityNodeWidget extends ConsumerWidget {
                   ),
                 ],
               ),
-              // Connection input handle (centered at top)
+              // ── 4 Titik Koneksi Dinamis ──
+              // Atas: input handle (hierarchy)
               Positioned(
-                top: -4,
-                left: 106,
-                child: Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: primaryCol,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-              // Connection output handle (centered at bottom)
-              Positioned(
-                bottom: -4,
+                top: -5,
                 left: 106,
                 child: GestureDetector(
                   onTap: () {
@@ -262,11 +250,79 @@ class EntityNodeWidget extends ConsumerWidget {
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: Container(
-                      width: 8,
-                      height: 8,
-                      decoration: const BoxDecoration(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
                         color: primaryCol,
                         shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 1.5),
+                        boxShadow: [BoxShadow(color: primaryCol.withOpacity(0.5), blurRadius: 4)],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // Bawah: output handle (hierarchy)
+              Positioned(
+                bottom: -5,
+                left: 106,
+                child: GestureDetector(
+                  onTap: () {
+                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: primaryCol,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 1.5),
+                        boxShadow: [BoxShadow(color: primaryCol.withOpacity(0.5), blurRadius: 4)],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // Kiri: side input handle (referencing target)
+              Positioned(
+                left: -5,
+                top: 30,
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Container(
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: primaryCol, width: 2),
+                      boxShadow: [BoxShadow(color: primaryCol.withOpacity(0.3), blurRadius: 4)],
+                    ),
+                  ),
+                ),
+              ),
+              // Kanan: side output handle (hierarchy/referencing)
+              Positioned(
+                right: -5,
+                top: 30,
+                child: GestureDetector(
+                  onTap: () {
+                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: primaryCol,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 1.5),
+                        boxShadow: [BoxShadow(color: primaryCol.withOpacity(0.5), blurRadius: 4)],
                       ),
                     ),
                   ),

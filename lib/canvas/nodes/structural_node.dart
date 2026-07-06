@@ -12,11 +12,11 @@ class FolderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final path = Path();
-    path.moveTo(0, 16);
+    path.moveTo(0, 22);
     path.lineTo(0, 0);
-    path.lineTo(70, 0);
-    path.lineTo(90, 16);
-    path.lineTo(size.width, 16);
+    path.lineTo(110, 0);
+    path.lineTo(110, 22);
+    path.lineTo(size.width, 22);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
     path.close();
@@ -70,23 +70,49 @@ class StructuralNodeWidget extends ConsumerWidget {
               CustomPaint(
                 size: const Size(200, 80),
                 painter: FolderPainter(strokeColor: borderCol, fillColor: fillCol),
+              ),
+              // Tab label (UML package name)
+              Positioned(
+                top: 2,
+                left: 8,
+                width: 94,
+                height: 18,
+                child: Center(
+                  child: Text(
+                    node.name,
+                    style: const TextStyle(
+                      color: textCol,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+              // Main body content (Folder Icon + Path)
+              Positioned(
+                top: 22,
+                left: 0,
+                width: 200,
+                height: 58,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.folder, size: 14, color: textCol),
+                          const Icon(Icons.folder_open, size: 14, color: textCol),
                           const SizedBox(width: 6),
                           Expanded(
                             child: Text(
-                              node.name,
-                              style: const TextStyle(
-                                color: textCol,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
+                              node.path,
+                              style: TextStyle(
+                                color: textCol.withOpacity(0.7),
+                                fontFamily: 'monospace',
+                                fontSize: 10,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -94,38 +120,15 @@ class StructuralNodeWidget extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 2),
-                      Text(
-                        node.path,
-                        style: TextStyle(
-                          color: textCol.withOpacity(0.7),
-                          fontFamily: 'monospace',
-                          fontSize: 10,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
                     ],
                   ),
                 ),
               ),
-              // Connection input handle (centered at top)
+              // ── 4 Titik Koneksi Dinamis ──
+              // Atas: input handle (hierarchy)
               Positioned(
-                top: -4,
-                left: 98,
-                child: Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF2E75B6),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-              // Connection output handle (centered at bottom)
-              Positioned(
-                bottom: -4,
-                left: 98,
+                top: -5,
+                left: 97,
                 child: GestureDetector(
                   onTap: () {
                     ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
@@ -134,11 +137,85 @@ class StructuralNodeWidget extends ConsumerWidget {
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: Container(
-                      width: 8,
-                      height: 8,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF2E75B6),
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2E75B6),
                         shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 1.5),
+                        boxShadow: [BoxShadow(color: const Color(0xFF2E75B6).withOpacity(0.5), blurRadius: 4)],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // Bawah: output handle (hierarchy)
+              Positioned(
+                bottom: -5,
+                left: 97,
+                child: GestureDetector(
+                  onTap: () {
+                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2E75B6),
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 1.5),
+                        boxShadow: [BoxShadow(color: const Color(0xFF2E75B6).withOpacity(0.5), blurRadius: 4)],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // Kiri: side handle
+              Positioned(
+                left: -5,
+                top: 37,
+                child: GestureDetector(
+                  onTap: () {
+                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: const Color(0xFF2E75B6), width: 2),
+                        boxShadow: [BoxShadow(color: const Color(0xFF2E75B6).withOpacity(0.3), blurRadius: 4)],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // Kanan: side handle
+              Positioned(
+                right: -5,
+                top: 37,
+                child: GestureDetector(
+                  onTap: () {
+                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2E75B6),
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 1.5),
+                        boxShadow: [BoxShadow(color: const Color(0xFF2E75B6).withOpacity(0.5), blurRadius: 4)],
                       ),
                     ),
                   ),

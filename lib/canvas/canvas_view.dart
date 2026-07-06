@@ -19,7 +19,7 @@ class GridPainter extends CustomPainter {
     if (!showGrid) return;
     final paint = Paint()
       ..color = gridColor
-      ..strokeWidth = 0.5;
+      ..strokeWidth = 1.0;
 
     const double step = 20.0; // Spec: 20px grid cell size
     for (double x = 0; x < size.width; x += step) {
@@ -239,7 +239,7 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
     final bgColor =
         isDark ? Theme.of(context).colorScheme.surface : const Color(0xFFF8FAFC);
     final gridColor =
-        isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
+        isDark ? const Color(0xFF5A6A80) : const Color(0xFFE2E8F0);
     final modeColor = state.isFirestoreMode
         ? const Color(0xFF2E75B6)
         : const Color(0xFF00897B);

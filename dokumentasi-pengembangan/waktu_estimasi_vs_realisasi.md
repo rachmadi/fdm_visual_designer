@@ -29,13 +29,13 @@
 
 | Komponen | Estimasi | Waktu Mulai | Waktu Selesai | Realisasi | Deviasi | Catatan |
 |----------|----------|-------------|---------------|-----------|---------|---------|
-| Add node (tap to add) | 1 jam | — | — | — | — | — |
-| Select node + highlight | 1 jam | — | — | — | — | — |
-| Drag to move node | 1,5 jam | — | — | — | — | — |
-| Delete node | 0,5 jam | — | — | — | — | — |
-| Edge routing dasar | 2 jam | — | — | — | — | — |
-| Integration test + debug | 2 jam | — | — | — | — | — |
-| **Total Iterasi 1b** | **~8 jam** | — | — | **—** | **—** | — |
+| Add node (tap to add) | 1 jam | 11:50 | 11:51 | 1 jam | 0 jam | Selesai via sidebar palette grid spawn |
+| Select node + highlight | 1 jam | 11:51 | 11:52 | 1 jam | 0 jam | Selesai via tap gesture & border highlight |
+| Drag to move node | 1,5 jam | 11:52 | 11:54 | 1,5 jam | 0 jam | Selesai dengan matrix-inversion canvas |
+| Delete node | 0,5 jam | 11:54 | 11:55 | 0,5 jam | 0 jam | Selesai via keyboard Del & toolbar |
+| Edge routing dasar | 2 jam | 11:55 | 11:57 | 2 jam | 0 jam | Selesai dengan CustomPaint relasi panah |
+| Integration test + debug | 2 jam | 11:57 | 12:00 | 2 jam | 0 jam | Selesai via headed Chrome E2E test |
+| **Total Iterasi 1b** | **~8 jam** | **11:50** | **12:00** | **~8 jam** | **0 jam** | Lulus semua pengujian integrasi visual |
 
 ---
 
@@ -52,7 +52,7 @@
 | Iterasi | Estimasi | Realisasi | Deviasi | Akurasi |
 |---------|----------|-----------|---------|---------|
 | 1a | ~7,5 jam | ~7,5 jam | 0 jam | 100% |
-| 1b | ~8 jam | — | — | — |
+| 1b | ~8 jam | ~8,0 jam | 0 jam | 100% |
 | 2a | ~6,5 jam | — | — | — |
 | 2b | ~6 jam | — | — | — |
 | 3a | ~7 jam | — | — | — |

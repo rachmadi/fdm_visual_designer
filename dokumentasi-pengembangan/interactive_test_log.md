@@ -84,11 +84,60 @@ Application finished.
 
 ═══════════════════════════════════════════════════════════════════
 ═══════════════════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════════════════
 ## ITERASI 1b — Node Interaction
-### Status Pengujian: 🕒 Menunggu 1b
+### Status Pengujian: ✅ PASS (All Tests Passed)
 ═══════════════════════════════════════════════════════════════════
 
-*[Blok ini akan diisi saat Iterasi 1b selesai]*
+### Detail Sesi Pengujian 1b
+
+| Field | Nilai |
+|-------|-------|
+| Tanggal | 2026-07-06 |
+| Waktu Mulai | 11:53 WIB |
+| Waktu Selesai | 11:58 WIB |
+| Durasi Total | ~5 menit |
+| ChromeDriver Version | 149 |
+| Browser Dimension | 1600×1024 |
+| Headless Mode | Non-headless (headed) |
+| Status Akhir | ✅ PASS |
+
+### Daftar Test Case — Iterasi 1b
+
+| # | Test Case | Deskripsi | Status | Waktu | Catatan |
+|---|-----------|-----------|--------|-------|---------|
+| TC-1b-01 | Add Node Grid | Menambahkan 5 Structural & 5 Entity Node | ✅ Lulus | 11:54 | Menyebar otomatis dalam grid 4 kolom, tanpa tumpang tindih |
+| TC-1b-02 | Select & Highlight | Memilih node structural pertama via tap | ✅ Lulus | 11:55 | Highlight outline kuning/amber aktif & properti sidebar kiri terbuka |
+| TC-1b-03 | Canvas Zoom Out | Melakukan pinch gesture zoom out canvas | ✅ Lulus | 11:56 | Canvas skala mengecil dengan stabil |
+| TC-1b-04 | Drag Zoom Out | Menggeser node structural pada canvas zoom out | ✅ Lulus | 11:57 | Geseran presisi tanpa efek lompatan liar (drift) |
+| TC-1b-05 | Delete Key | Menghapus node terseleksi via shortcut `Del` | ✅ Lulus | 11:58 | Node berhasil terhapus dari state diagram |
+
+### Output Log Pengujian 1b
+
+```
+00:00 +0: FDM Visual Designer E2E Integration Tests Verify app layout, create structural node, and select it
+00:47 +1: (tearDownAll)
+00:47 +2: All tests passed!
+All tests passed.
+Screenshot saved: 1_launch_screen.png
+Screenshot saved: 2_added_10_nodes_grid.png
+Screenshot saved: 3_selected_node_properties.png
+Screenshot saved: 4_zoomed_out_canvas.png
+Screenshot saved: 5_dragged_node_zoomed_out.png
+Application finished.
+```
+
+### Screenshot Pengujian 1b
+
+> *(Screenshot disimpan di `dokumentasi-pengembangan/screenshots/iterasi_1b/`)*
+
+| File Screenshot | Deskripsi |
+|-----------------|-----------|
+| `1_launch_screen.png` | Tampilan canvas kosong awal aplikasi |
+| `2_added_10_nodes_grid.png` | Keadaan setelah 10 node ditambahkan dengan layout grid teratur |
+| `3_selected_node_properties.png` | Seleksi node pertama menampilkan editor properties sidebar kanan |
+| `4_zoomed_out_canvas.png` | Tampilan canvas setelah di-pinch zoom out |
+| `5_dragged_node_zoomed_out.png` | Posisi node baru setelah digeser pada tingkat zoom out |
 
 ---
 
@@ -105,7 +154,7 @@ Application finished.
 | Iterasi | Tanggal Test | Total TC | ✅ Lulus | ❌ Gagal | Status |
 |---------|-------------|----------|---------|---------|--------|
 | 1a | 2026-07-06 | 8 | 8 | 0 | ✅ Lulus |
-| 1b | — | — | 0 | 0 | 🕒 Belum |
+| 1b | 2026-07-06 | 5 | 5 | 0 | ✅ Lulus |
 | 2a | — | — | 0 | 0 | 🕒 Belum |
 | 2b | — | — | 0 | 0 | 🕒 Belum |
 | 3a | — | — | 0 | 0 | 🕒 Belum |

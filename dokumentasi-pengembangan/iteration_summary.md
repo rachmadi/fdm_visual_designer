@@ -53,13 +53,22 @@
 
 ═══════════════════════════════════════════════════════════════════
 ## ITERASI 1b — Node Interaction
-### Status: 🔄 Sedang berjalan
+### Status: ✅ Selesai
 ═══════════════════════════════════════════════════════════════════
 
 - **Tanggal Mulai**: 2026-07-06
-- **Tanggal Selesai**: (in progress)
-- **Status Akhir**: 🔄 Sedang berjalan
+- **Tanggal Selesai**: 2026-07-06
+- **Status Akhir**: ✅ Selesai
+- **Durasi Aktual**: ~8 jam
 - **Target**: Add, Select, Move, Delete Node, and basic Edge routing.
+- **Hasil Utama**: 
+  - Fungsionalitas pembuatan node (SN & EN) via sidebar palette dengan grid-based spawn layout.
+  - Penyeretan/geser node yang stabil pada semua tingkat zoom menggunakan matriks inversi canvas space.
+  - Seleksi node via tap dengan outline highlight kuning/amber, serta deseleksi via tap area kosong canvas.
+  - Penghapusan node terseleksi via Keyboard Shortcuts (`Del`) atau toolbar.
+  - Edge routing dasar berupa garis hubung relasi lurus berarah panah.
+- **E2E Test**: ✅ PASS (Headed Chrome E2E Test lulus 100%).
+- **Lesson Learned**: Duplikasi teks antara tombol palette utama dan teks penjelasan pintasan keyboard kustom menyebabkan finder ambigu pada E2E test, diselesaikan dengan menggunakan pencarian selektif `.first`.
 
 ---
 
@@ -76,7 +85,7 @@
 | Iterasi | Status | Durasi Aktual | REQ Ditutup | Test |
 |---------|--------|---------------|-------------|------|
 | 1a | ✅ Selesai | ~7.5 jam | 9/9 | PASS |
-| 1b | 🔄 Sedang | — | 0/5 | — |
+| 1b | ✅ Selesai | ~8.0 jam | 5/5 | PASS |
 | 2a | 🕒 Belum | — | 0/3 | — |
 | 2b | 🕒 Belum | — | 0/2 | — |
 | 3a | 🕒 Belum | — | 0/4 | — |
