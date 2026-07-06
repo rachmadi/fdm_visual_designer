@@ -37,7 +37,6 @@
 | 13 | REQ-013 | Menghapus node yang terseleksi via tombol Delete atau toolbar | 1b | ✅ Selesai | `lib/core/state.dart` |
 | 14 | REQ-014 | Edge routing dasar antara dua node (garis lurus dengan arrow) | 1b | ✅ Selesai | `lib/canvas/edges_painter.dart` |
 | 15 | REQ-015 | Property Panel untuk Entity Node: tambah, edit, hapus field | 2a | 🕒 Belum dimulai | `lib/panels/sidebar_right.dart` |
-
 | 16 | REQ-016 | Property Panel untuk Storage Node: konfigurasi tipe, label, path | 2a | 🕒 Belum dimulai | `lib/panels/sidebar_right.dart` |
 | 17 | REQ-017 | Validasi form properti: nama field tidak boleh kosong | 2a | 🕒 Belum dimulai | `lib/panels/sidebar_right.dart` |
 | 18 | REQ-018 | Property Panel untuk Query Vector Node: edit vector queries | 2b | 🕒 Belum dimulai | `lib/panels/query_vector_panel.dart` |

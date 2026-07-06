@@ -21,14 +21,14 @@ Satu blok per kejadian drift.
 ═══════════════════════════════════════════════════════════════════
 
 ### CD-001
-- **Waktu Terdeteksi**: —
-- **Lokasi**: —
+- **Waktu Terdeteksi**: 2026-07-06 10:29 WIB
+- **Lokasi**: `lib/canvas/canvas_view.dart`
 - **Spesifikasi Asli**: InteractiveViewer + inversi matriks untuk transformasi koordinat
-- **Implementasi Aktual**: —
-- **Penyebab Drift**: —
-- **Dampak**: —
-- **Resolusi**: —
-- **Status**: 🕒 Belum terjadi
+- **Implementasi Aktual**: Sempat menggunakan `Listener` gesture manual untuk mengontrol zoom/pan secara kustom.
+- **Penyebab Drift**: Kekhawatiran awal mengenai tabrakan event gesture antara penyeretan node dan canvas panning.
+- **Dampak**: Pengelolaan koordinat menjadi kompleks, rentan bug hit-test, dan tidak sesuai spesifikasi dasar.
+- **Resolusi**: Di-refaktor kembali ke arsitektur `InteractiveViewer` + `TransformationController` + inversi matriks (`Matrix4.inverted()`) dengan penonaktifan `panEnabled`/`scaleEnabled` dinamis saat drag.
+- **Status**: ✅ Teratasi / Kembali ke spesifikasi asli
 
 ---
 
