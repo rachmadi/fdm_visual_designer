@@ -11,7 +11,7 @@
 ```
 ### D-XXX: [Judul Keputusan]
 - **Tanggal**: YYYY-MM-DD
-- **Dibuat oleh**: [Pengguna / Agen / Bersama]
+- **Dibuat oleh**: [Intent Architect / Agen / Bersama]
 - **Konteks**: [Mengapa keputusan ini perlu diambil?]
 - **Keputusan**: [Apa yang diputuskan?]
 - **Alternatif yang Ditolak**: [Opsi lain yang dipertimbangkan]
@@ -22,151 +22,173 @@
 
 ---
 
-═══════════════════════════════════════════════════════════════════
+## ═══════════════════════════════════════════════════════════════════
 ## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
-### Tanggal: 2026-07-06
-═══════════════════════════════════════════════════════════════════
+## ═══════════════════════════════════════════════════════════════════
 
-### D-001: Gunakan `InteractiveViewer` + Inversi Matriks
-
-- **Tanggal**: 2026-07-06
-- **Dibuat oleh**: Spesifikasi Revisi 3 Final (dikonfirmasi pengguna)
-- **Konteks**: Diperlukan mekanisme pan/zoom yang akurat untuk canvas diagram. Pendekatan awal menggunakan `GestureDetector` + `Listener` manual menghasilkan offset koordinat yang tidak akurat saat zoom level berubah, terutama saat mendeteksi posisi tap pada node.
-- **Keputusan**: Gunakan `InteractiveViewer` bawaan Flutter sebagai wrapper canvas utama. Transformasi koordinat dari screen-space ke canvas-space dilakukan dengan **inversi matriks transformasi** (`Matrix4.tryInvert`) yang diperoleh dari `TransformationController`.
-- **Alternatif yang Ditolak**:
-  - `GestureDetector` manual dengan offset kalkulasi manual
-  - `Listener` manual dengan state `_scale` dan `_offset` terpisah
-- **Alasan Pemilihan**: `InteractiveViewer` menyediakan built-in bounded pan/zoom yang smooth, dan inversi matriks adalah satu-satunya cara yang matematis benar untuk mengkonversi koordinat saat zoom berubah tanpa drift kumulatif.
-- **Dampak**: Semua gesture handler (tap, drag) harus mengkonversi koordinat menggunakan `_transformationController.toScene(localPosition)` atau ekuivalen inversi matriks sebelum diproses.
-- **Iterasi Terdampak**: 1a, 1b, dan semua iterasi yang melibatkan gesture pada canvas
+### D-001: Migrasi Arsitektur Stack Teknologi ke Flutter Web
+- **Tanggal**: 2026-06-27
+- **Dibuat oleh**: Bersama (Intent Architect & Agen)
+- **Konteks**: Rencana awal proyek menggunakan React/TS + React Flow. Intent Architect meminta opsi implementasi lintas platform (mobile-friendly).
+- **Keputusan**: Mengubah seluruh platform pengembangan ke Flutter Web dengan kustomisasi kanvas menggunakan CustomPainter dan InteractiveViewer.
+- **Alternatif yang Ditolak**: Mempertahankan React Flow (karena keterbatasan porting mobile native kelak).
+- **Alasan Pemilihan**: Flutter Web memberikan kemudahan berbagi basis kode yang sama (single codebase) untuk porting aplikasi mobile native di masa mendatang.
+- **Dampak**: Pembersihan kode React dan inisialisasi ulang proyek Flutter Web baru.
+- **Iterasi Terdampak**: 1a
 
 ---
 
-### D-002: Revert dari Manual `Listener` ke `InteractiveViewer`
-
-- **Tanggal**: 2026-07-06
-- **Dibuat oleh**: Agen (berdasarkan deteksi context drift dari spesifikasi)
-- **Konteks**: Pada iterasi sebelumnya (sebelum Revisi 3), pernah ada percobaan mengganti `InteractiveViewer` dengan arsitektur manual menggunakan `Listener` widget dan state `_scale`/`_offset` custom. Ini menyebabkan berbagai bug: (1) koordinat node bergeser saat zoom, (2) edge rendering tidak sinkron, (3) boundary containment check gagal.
-- **Keputusan**: Kembalikan seluruh arsitektur canvas ke `InteractiveViewer` + `TransformationController` sesuai spesifikasi Revisi 3 Final. Hapus semua kode sisa `Listener` manual yang tidak sesuai spesifikasi.
-- **Alternatif yang Ditolak**:
-  - Mempertahankan arsitektur `Listener` manual dengan perbaikan parsial
-  - Hybrid approach (sebagian `InteractiveViewer`, sebagian manual)
-- **Alasan Pemilihan**: Konsistensi dengan spesifikasi Revisi 3 adalah prioritas utama. Arsitektur hybrid akan menciptakan technical debt yang sulit di-debug.
-- **Dampak**: Refactoring `canvas_view.dart` dan `canvas_controller.dart`. Semua koordinat gesture harus menggunakan `_transformationController.toScene()`.
-- **Iterasi Terdampak**: 1a (dan retroaktif membatalkan semua kode Listener manual sebelumnya)
+### D-002: Riverpod Notifier untuk State Management
+- **Tanggal**: 2026-06-27
+- **Dibuat oleh**: Agen
+- **Konteks**: Memerlukan state management diagram yang stabil dan modular. Versi Riverpod terbaru mendepresiasi `StateNotifier`.
+- **Keputusan**: Menerapkan kelas `Notifier<T>` dari Riverpod v3 modern untuk manajemen data diagram.
+- **Alternatif yang Ditolak**: Menggunakan `StateProvider` atau `ChangeNotifier` bawaan.
+- **Alasan Pemilihan**: Riverpod `Notifier` menjamin keamanan tipe (type-safety), performa rendering modular, dan kemudahan dalam penulisan aksi state.
+- **Dampak**: Penggunaan `ref.watch` dan akses mutable state harus dikelola via Notifier.
+- **Iterasi Terdampak**: 1a
 
 ---
 
-### D-003: Gunakan Riverpod `Notifier` (bukan `StateNotifier`)
-
-- **Tanggal**: 2026-07-06
-- **Dibuat oleh**: Agen (error kompilasi)
-- **Konteks**: `StateNotifier` dari Riverpod v2 tidak kompatibel dengan Riverpod v3 yang digunakan proyek ini. Getter `state` tidak dikenali oleh compiler.
-- **Keputusan**: Gunakan kelas `Notifier<T>` dari Riverpod v3 untuk semua state notifier diagram.
-- **Alternatif yang Ditolak**: Downgrade Riverpod ke v2 (risiko ketidakcocokan API lain)
-- **Alasan Pemilihan**: Mengikuti API Riverpod versi terbaru lebih sustainable untuk jangka panjang.
-- **Dampak**: Semua `StateNotifier` diganti dengan `Notifier`; `ref` dan `state` diakses secara berbeda.
-- **Iterasi Terdampak**: 1a dan semua iterasi yang menggunakan state management
+### D-003: Penggunaan Material Icons Bawaan
+- **Tanggal**: 2026-06-27
+- **Dibuat oleh**: Agen
+- **Konteks**: Dependensi library `lucide_icons` mengalami error fatal saat build karena mencoba meng-extend kelas `IconData` yang bersifat `final` di SDK Flutter terbaru.
+- **Keputusan**: Menghapus `lucide_icons` secara total dan menggunakan standard Material Icons bawaan Flutter.
+- **Alternatif yang Ditolak**: Mem-patch library Lucide secara manual (tidak berkelanjutan).
+- **Alasan Pemilihan**: Menghilangkan risiko dependensi pihak ketiga dan menjamin kelancaran build jangka panjang.
+- **Dampak**: Penggunaan kode ikon bermigrasi ke `Icons.*`.
+- **Iterasi Terdampak**: 1a
 
 ---
 
-### D-004: Ganti `lucide_icons` dengan Material Icons
-
+### D-004: Inversi Matriks Transformasi Koordinat Canvas
 - **Tanggal**: 2026-07-06
-- **Dibuat oleh**: Agen (error kompilasi)
-- **Konteks**: Package `lucide_icons` meng-extend kelas `IconData` yang dideklarasikan sebagai `final` di SDK Flutter terbaru, menyebabkan compile error.
-- **Keputusan**: Hapus dependensi `lucide_icons`, gunakan `Icons.xxx` dari Material Icons bawaan Flutter.
-- **Alternatif yang Ditolak**: Fork `lucide_icons` dan patch secara manual
-- **Alasan Pemilihan**: Material Icons sudah cukup lengkap dan tidak menambah dependensi eksternal yang berisiko.
-- **Dampak**: Semua icon di toolbar dan sidebar menggunakan `Icons.*`
-- **Iterasi Terdampak**: 1a, semua iterasi yang melibatkan UI icon
+- **Dibuat oleh**: Bersama (Spesifikasi Revisi 3 & Agen)
+- **Konteks**: Panning/zooming manual dengan Listener mengalami drift offset saat pengguna mengeklik atau menyeret node di canvas.
+- **Keputusan**: Menggunakan wrapper `InteractiveViewer` bawaan dan mengalikan koordinat pointer dengan inversi matriks transformasi (`Matrix4.inverted()`) untuk mengkonversi dari screen-space ke canvas-space secara akurat.
+- **Alternatif yang Ditolak**: Perhitungan offset manual terpisah (tidak akurat).
+- **Alasan Pemilihan**: Matematika inversi matriks menjamin konversi posisi pointer yang 100% akurat tanpa drift kumulatif pada tingkat zoom apa pun.
+- **Dampak**: Seluruh callback deteksi interaksi node wajib dikonversi via inversi matriks.
+- **Iterasi Terdampak**: 1a
 
 ---
 
 ### D-005: Single-Pointer Tracking untuk Menghindari Konflik Multi-Touch Zoom
-
 - **Tanggal**: 2026-07-06
-- **Dibuat oleh**: Agen (perbaikan bug zoom)
-- **Konteks**: Saat menggunakan pinch-to-zoom (dua jari) pada area canvas yang memiliki node, event pointer dari jari kedua dapat secara keliru memicu deteksi drag node. Ini menyebabkan node tergeser liar ke pojok bawah kanvas karena perubahan scale yang cepat dan pergerakan multi-pointer.
-- **Keputusan**: Implementasi **Single-Pointer Tracking** dengan `_activePointerId` di `canvas_view.dart`. Drag node hanya diproses jika pointer id cocok dengan yang memulai (`_activePointerId`). Jika pointer kedua menyentuh kanvas, sesi drag langsung dibatalkan (`_abortDrag()`) sehingga pengguna dapat melakukan pinch-to-zoom dengan aman tanpa memicu drag.
-- **Alternatif yang Ditolak**:
-  - Menonaktifkan zoom saat kursor berada di atas node (mengurangi kemudahan navigasi).
-  - Menyaring event drag berdasarkan jarak perpindahan minimum (masih rentan terpicu saat pinch cepat).
-- **Alasan Pemilihan**: Membatalkan drag saat multi-touch adalah pendekatan standar dalam diagram editor untuk memprioritaskan navigasi canvas (zoom/pan) saat lebih dari satu jari aktif.
-- **Dampak**: Navigasi zoom/pan stabil dan node tidak lagi melompat/drift.
+- **Dibuat oleh**: Agen
+- **Konteks**: Saat menggunakan pinch-to-zoom (dua jari), event pointer dari jari kedua memicu deteksi drag node secara salah, membuat node melayang liar.
+- **Keputusan**: Hanya memproses drag jika id kursor cocok dengan `_activePointerId` (pointer pertama). Drag dibatalkan otomatis (`_abortDrag()`) jika pointer kedua terdeteksi masuk.
+- **Alternatif yang Ditolak**: Menonaktifkan zoom saat kursor berada di atas node (mengurangi navigasi user).
+- **Alasan Pemilihan**: Standar industri untuk mengutamakan zoom/pan navigasi kanvas saat multi-touch aktif.
+- **Dampak**: Zoom/pan stabil dan node tidak lagi melompat liar.
 - **Iterasi Terdampak**: 1a
 
 ---
 
-### D-006: Grid-Based Spawn Layout untuk Mencegah Overlap Node
-
+### D-006: Grid-Based Spawn Layout
 - **Tanggal**: 2026-07-06
-- **Dibuat oleh**: Agen (laporan bug overlap)
-- **Konteks**: Posisi spawn node acak awal `(1350–1550)` membuat node yang ditambahkan berturut-turut saling menumpuk (overlap) secara visual, mengganggu keterbacaan diagram.
-- **Keputusan**: Gunakan **Grid-based Spawn Layout** (4 kolom, ukuran cell 280x220px) dengan jitter ringan (±20px) di `sidebar_left.dart` berdasarkan jumlah node yang sudah ada di kanvas.
-- **Alternatif yang Ditolak**: Spawn di koordinat statis `(0,0)` (tidak terlihat oleh viewport awal).
-- **Alasan Pemilihan**: Menjamin node terdistribusi dengan rapi dan otomatis saat ditambahkan, langsung berada dalam jangkauan viewport utama.
-- **Dampak**: Penambahan 10+ node berjalan lancar tanpa overlap visual.
+- **Dibuat oleh**: Agen
+- **Konteks**: Posisi spawn acak awal di tengah memicu penumpukan node-node baru secara berturut-turut.
+- **Keputusan**: Merancang grid spawn layout (4 kolom, ukuran cell 280x220px) dengan offset dinamis di `sidebar_left.dart`.
+- **Alternatif yang Ditolak**: Spawn di koordinat `(0,0)` statis.
+- **Alasan Pemilihan**: Menjamin visualisasi node terdistribusi rapi di area viewport saat ditambahkan.
+- **Dampak**: Penambahan 10+ node berjalan teratur dan rapi.
 - **Iterasi Terdampak**: 1a
 
 ---
 
-### D-007: Non-constrained Child on InteractiveViewer
-
+### D-007: Area Kanvas Non-Constrained (constrained: false)
 - **Tanggal**: 2026-07-06
-- **Dibuat oleh**: Agen (perbaikan bug drift viewport)
-- **Konteks**: Meskipun delta drag telah menggunakan inversi matriks canvas-space, node-node tetap melayang ke kanan bawah atau menghilang saat pengguna melakukan zoom in/out. Penyelidikan mendalam menemukan bahwa InteractiveViewer secara default membatasi (constrain) ukuran widget anak agar pas dengan viewport layar (misal 800x600), mengabaikan `SizedBox` canvas 4000x4000. Hal ini menyebabkan node yang diposisikan di koordinat besar (seperti 1200, 1300) dirender di luar batas widget anak, merusak hit-testing dan kalkulasi penskalaan relatif.
-- **Keputusan**: Tambahkan `constrained: false` secara eksplisit pada widget `InteractiveViewer` di [canvas_view.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/canvas_view.dart).
-- **Alternatif yang Ditolak**: Menggunakan ukuran canvas kecil (misal 1000x1000) yang pas dengan layar (membatasi area kerja diagram).
-- **Alasan Pemilihan**: Menghilangkan constraint adalah cara yang didokumentasikan di Flutter agar widget anak berukuran besar (canvas 4000x4000) ter-render penuh di dalam bounding box aslinya, sehingga seluruh transformasi Matrix4 berjalan presisi.
-- **Dampak**: Seluruh 4000x4000 canvas ter-render penuh dengan grid merata, dan penempatan/scale node sangat stabil.
+- **Dibuat oleh**: Agen
+- **Konteks**: Parameter `constrained: true` (default) pada `InteractiveViewer` memaksa area kanvas anak (4000x4000) menciut mengikuti layar.
+- **Keputusan**: Mengubah parameter secara eksplisit menjadi `constrained: false` pada `InteractiveViewer` di `canvas_view.dart`.
+- **Alternatif yang Ditolak**: Menggunakan ukuran canvas kecil (membatasi ruang kerja diagram).
+- **Alasan Pemilihan**: Membiarkan kanvas mempertahankan ukuran aslinya sehingga seluruh rendering grid dan koordinat node stabil.
+- **Dampak**: Grid kanvas ter-render merata dan koordinat bernilai besar berada di dalam batas hit-test yang valid.
 - **Iterasi Terdampak**: 1a
 
 ---
 
-### D-008: Global `HardwareKeyboard` untuk Pintasan Keyboard
+### D-008: Global HardwareKeyboard Handler
 - **Tanggal**: 2026-07-06
-- **Dibuat oleh**: Agen (perbaikan bug focus shortcuts)
-- **Konteks**: Widget `Focus` biasa kehilangan fokus input saat pengguna mengeklik kanvas luar, menonaktifkan seluruh pintasan keyboard.
-- **Keputusan**: Gunakan `HardwareKeyboard.instance.addHandler` secara terpusat di `WorkspaceScreen` tingkat root.
-- **Alternatif yang Ditolak**: Menggunakan `Focus` widget dengan requestFocus otomatis (tidak andal pada Flutter Web).
-- **Alasan Pemilihan**: `HardwareKeyboard` menangkap event input di tingkat services, tidak terpengaruh oleh status fokus pada widget tree.
-- **Dampak**: Pintasan keyboard selalu responsif kapan pun tombol ditekan.
+- **Dibuat oleh**: Agen
+- **Konteks**: Focus node keyboard pintasan (delete, undo/redo) hilang saat pengguna mengeklik kanvas kosong di luar node.
+- **Keputusan**: Mendaftarkan handler pintasan keyboard secara terpusat di `WorkspaceScreen` menggunakan `HardwareKeyboard.instance.addHandler`.
+- **Alternatif yang Ditolak**: Menggunakan widget `Focus` biasa dengan autofocus (tidak andal di web).
+- **Alasan Pemilihan**: `HardwareKeyboard` menangkap event input di tingkat services root, menjamin responsivitas pintasan.
+- **Dampak**: Pintasan keyboard selalu responsif di area mana pun.
 - **Iterasi Terdampak**: 1a
 
 ---
 
-### D-009: Intersepsi `onKeyDown` Browser (Prevent Default)
+### D-009: Intersepsi Browser KeyDown (Prevent Default)
 - **Tanggal**: 2026-07-06
-- **Dibuat oleh**: Agen (resolusi konflik pintasan browser)
-- **Konteks**: Pintasan `Ctrl+D` memicu bookmark browser, `Ctrl+E` mengarahkan fokus ke bar pencarian, mengganggu alur kerja aplikasi visual designer.
-- **Keputusan**: Menambahkan listener `html.window.onKeyDown` untuk memanggil `event.preventDefault()` pada tombol yang konflik.
-- **Alternatif yang Ditolak**: Mengganti pintasan keyboard ke tombol non-standar (misal `Alt + Shift + X`).
-- **Alasan Pemilihan**: Mengikuti standar pintasan industri (Figma/Miro) sembari mempertahankan integritas pengalaman pengguna di web.
-- **Dampak**: Pintasan browser dinonaktifkan khusus untuk kombinasi tombol tersebut selama aplikasi terbuka.
+- **Dibuat oleh**: Agen
+- **Konteks**: Pintasan diagram (Ctrl+D untuk delete properti, Ctrl+E untuk export) bentrok dengan bookmark dan search bar browser.
+- **Keputusan**: Memanggil `event.preventDefault()` menggunakan listener `html.window.onKeyDown`.
+- **Alternatif yang Ditolak**: Mengubah pintasan diagram ke tombol non-standar.
+- **Alasan Pemilihan**: Menjaga standar pengalaman pengguna (UX) industri diagram editor.
+- **Dampak**: Fungsi tombol bawaan browser diabaikan khusus selama aplikasi FDM terbuka.
 - **Iterasi Terdampak**: 1a
 
 ---
 
-### D-010: Riverpod `Notifier` untuk State Manajemen Tema
+## ═══════════════════════════════════════════════════════════════════
+## ITERASI 1b — Node Interaction & Style Polishing
+## ═══════════════════════════════════════════════════════════════════
+
+### D-010: Spline Bézier Cubic Curve untuk Edge Routing
 - **Tanggal**: 2026-07-06
-- **Dibuat oleh**: Agen (migrasi Riverpod v3)
-- **Konteks**: Kelas `StateProvider` didepresiasi dan dihapus pada versi Riverpod terbaru.
-- **Keputusan**: Migrasikan state tema ke notifier custom `ThemeModeNotifier` turunan dari `Notifier<ThemeMode>`.
-- **Alternatif yang Ditolak**: Tetap menggunakan package Riverpod versi lama.
-- **Alasan Pemilihan**: Mempertahankan kecocokan dengan seluruh codebase modern.
-- **Dampak**: Manajemen tema reaktif stabil dan aman dari deprecated warnings.
-- **Iterasi Terdampak**: 1a
+- **Dibuat oleh**: Agen
+- **Konteks**: Arah panah default berupa garis lurus kaku yang tumpang tindih dengan node, mengurangi kualitas estetika.
+- **Keputusan**: Mengubah rumus edges drawing menjadi kurva Bézier cubic (`Path.cubicTo`) dengan menghitung dua titik kontrol proporsional di depan sisi anchor.
+- **Alternatif yang Ditolak**: Routing polyline L-shape (terlalu kaku untuk model database non-relasional).
+- **Alasan Pemilihan**: Memberikan kesan modern, premium, dan memperjelas arah alur relasi.
+- **Dampak**: Tampilan visual edge berlekuk halus dan premium.
+- **Iterasi Terdampak**: 1b
 
 ---
 
-*[Blok ini akan diisi saat Iterasi 1b dimulai]*
+### D-011: Dynamic Anchor Switching (4 Connection Handles)
+- **Tanggal**: 2026-07-06
+- **Dibuat oleh**: Agen
+- **Konteks**: Ujung edge terkunci pada satu koordinat node saja, sehingga saat node digeser, garis panah menembus bodi node.
+- **Keputusan**: Memasang 4 connection handles (atas, bawah, kiri, kanan) dan melakukan kalkulasi jarak terdekat secara dinamis saat node digeser (*Dynamic Anchor Switching*).
+- **Alternatif yang Ditolak**: Koordinat anchor statis di tengah node.
+- **Alasan Pemilihan**: Menjamin ujung panah selalu menempel rapi di tepi bodi terdekat dari node tetangganya.
+- **Dampak**: Fleksibilitas pergeseran node sangat dinamis dan rapi.
+- **Iterasi Terdampak**: 1b
 
 ---
 
-═══════════════════════════════════════════════════════════════════
+### D-012: Kustomisasi Simbol Collection menjadi Rectangular UML Package
+- **Tanggal**: 2026-07-06
+- **Dibuat oleh**: Bersama (Intent Architect & Agen)
+- **Konteks**: Simbol structural node (collection) awal menggunakan folder biasa dengan garis miring (slanted). Intent Architect meminta diselaraskan agar serupa simbol package pada UML.
+- **Keputusan**: Mengubah path drawing pada `FolderPainter` menjadi tab persegi panjang tegak (`rectangular tab`), memposisikan nama secara absolut di tab atas (10px tebal), dan path di bodi utama.
+- **Alternatif yang Ditolak**: Mempertahankan ikon folder miring standar.
+- **Alasan Pemilihan**: Konsistensi dengan spesifikasi notasi UML standar industri untuk struktur package/collection.
+- **Dampak**: Tampilan visual structural node berubah menjadi simbol package UML yang presisi.
+- **Iterasi Terdampak**: 1b
+
+---
+
+### D-013: Peningkatan Ketebalan Grid & Kontras Warna Mode Gelap
+- **Tanggal**: 2026-07-06
+- **Dibuat oleh**: Agen
+- **Konteks**: Grid berukuran `0.5` stroke menghilang total saat canvas di-zoom out, dan garis grid kurang jelas terlihat saat dark mode diaktifkan.
+- **Keputusan**: Meningkatkan `strokeWidth` grid ke `1.0` dan mengubah warna grid gelap menjadi abu-abu medium kontras tinggi (`const Color(0xFF5A6A80)`).
+- **Alternatif yang Ditolak**: Menggunakan warna grid putih terang (merusak estetika kenyamanan dark mode).
+- **Alasan Pemilihan**: Menjaga visibilitas grid pada zoom level rendah tanpa mengorbankan kenyamanan mata dalam mode gelap.
+- **Dampak**: Grid tetap terlihat jelas saat di-zoom out pada dark mode.
+- **Iterasi Terdampak**: 1b
+
+---
+
+## ═══════════════════════════════════════════════════════════════════
 ## ITERASI 2a–7 — [Template]
-═══════════════════════════════════════════════════════════════════
+## ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*
 
