@@ -101,5 +101,14 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   3. Aksi penyeretan (drag) node di bawah level zoom yang diperkecil untuk memverifikasi akurasi delta koordinat canvas-space.
 - **Eksekusi Unsandboxed**: Pengujian integrasi headed Chrome dijalankan di luar terminal sandbox (`unsandboxed`) sehingga jendela browser fisik Chrome terbuka secara nyata di layar desktop pengguna dan proses interaksinya terlihat secara visual.
 
+## [1.3.4] - 2026-07-06 (Resolusi Eksekusi ChromeDriver Unsandboxed)
+
+### Fixed (Perbaikan Bug Sesi Pengujian)
+- **ChromeDriver Sandbox Session Isolation**: Memperbaiki masalah di mana jendela fisik browser Chrome headed tidak terbuka secara visual di desktop pengguna karena ChromeDriver sebelumnya berjalan sebagai task latar belakang *di dalam sandbox terminal* (Session 0).
+  - Menghentikan proses sandboxed ChromeDriver.
+  - Memindahkan eksekusi ChromeDriver ke luar sandbox (`unsandboxed` menggunakan `npx.cmd chromedriver@149`) sehingga ChromeDriver dapat berinteraksi dengan sesi login desktop aktif pengguna (Session 1).
+  - Hasilnya, jendela browser Chrome headed saat ini **terbuka secara fisik dan visual** di layar desktop pengguna selama integrasi test dijalankan.
+
+
 
 

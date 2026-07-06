@@ -227,6 +227,30 @@
 | Git Commit & Push | 11:35 | 11:37 | ~2 menit |
 | **Total Sesi** | **11:25** | **11:37** | **~12 menit** |
 
+### Sesi: Pengujian Integrasi Unsandboxed ChromeDriver (2026-07-06)
+
+**Ringkasan:**
+- **Analisis Permintaan**: Pengguna mengidentifikasi bahwa Chrome headed window tetap tidak terbuka secara fisik. Setelah diteliti, hal ini disebabkan karena instans background ChromeDriver sebelumnya dijalankan *di dalam sandbox terminal*, sehingga Chrome yang dispawn olehnya otomatis mewarisi lingkungan terisolasi Session 0 (background).
+- **Eksekusi Unsandboxed**: 
+  - Menghentikan proses sandboxed ChromeDriver yang berjalan pada port 4444.
+  - Meminta izin `unsandboxed` untuk perintah `npx.cmd` untuk menjalankan ChromeDriver di luar sandbox terminal.
+  - Menjalankan `npx.cmd chromedriver@149 --port=4444` secara unsandboxed di luar terminal sandbox.
+  - Menjalankan `flutter drive` secara unsandboxed untuk menghubungkan ke ChromeDriver yang berjalan di sesi desktop aktif (Session 1).
+- **Verifikasi Visual**:
+  - Jendela browser Chrome fisik akhirnya **terbuka secara nyata** di layar desktop pengguna dan melakukan simulasi interaktif hingga selesai (`All tests passed!`).
+  - Menyalin screenshot bukti pengujian interaktif visual ke `dokumentasi-pengembangan/screenshots/iterasi_1a/` dan repositori master.
+
+| Tahap | Waktu Mulai (WIB) | Waktu Selesai (WIB) | Durasi |
+|---|---|---|---|
+| Stop Sandboxed ChromeDriver | 11:37 | 11:38 | ~1 menit |
+| Request & Run Unsandboxed ChromeDriver | 11:38 | 11:41 | ~3 menit |
+| Run Unsandboxed headed E2E test | 11:41 | 11:45 | ~4 menit |
+| Verify & Sync Screenshots | 11:45 | 11:47 | ~2 menit |
+| Web Build & Deploy ke Vercel | 11:47 | 11:49 | ~2 menit |
+| Git Commit & Push | 11:49 | 11:51 | ~2 menit |
+| **Total Sesi** | **11:37** | **11:51** | **~14 menit** |
+
+
 
 
 

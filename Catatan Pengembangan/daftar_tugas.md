@@ -46,6 +46,8 @@
   - [x] Implementasi Grid-based Spawn Layout untuk mencegah penumpukan 10+ node baru
   - [x] Perbaikan bug viewport constraint (constrained: false) untuk menjaga kestabilan posisi node saat di-zoom/panning
   - [x] Eksekusi Unsandboxed Headed E2E Integration Test secara interaktif dan visual di layar desktop user
+  - [x] Eksekusi Unsandboxed ChromeDriver untuk memunculkan jendela browser Chrome fisik secara nyata di layar desktop user
+
 
 
 
