@@ -31,12 +31,13 @@
 | 7 | REQ-007 | `CustomPainter` untuk rendering node Entity (oval/elips berlabel) | 1a | ✅ Selesai | `lib/canvas/node_renderers.dart` |
 | 8 | REQ-008 | `CustomPainter` untuk rendering node Query Vector (dokumen berlabel) | 1a | ✅ Selesai | `lib/canvas/node_renderers.dart` |
 | 9 | REQ-009 | State management menggunakan Riverpod `StateNotifier` / `Notifier` | 1a | ✅ Selesai | `lib/core/state.dart` |
-| 10 | REQ-010 | Menambahkan node baru ke canvas via tap pada area kosong | 1b | 🕒 Belum dimulai | `lib/ui/sidebar_left.dart` |
-| 11 | REQ-011 | Menyeleksi node dengan tap; tampilkan highlight selection | 1b | 🕒 Belum dimulai | `lib/canvas/canvas_view.dart` |
-| 12 | REQ-012 | Memindahkan node dengan drag gesture | 1b | 🕒 Belum dimulai | `lib/canvas/canvas_view.dart` |
-| 13 | REQ-013 | Menghapus node yang terseleksi via tombol Delete atau toolbar | 1b | 🕒 Belum dimulai | `lib/core/state.dart` |
-| 14 | REQ-014 | Edge routing dasar antara dua node (garis lurus dengan arrow) | 1b | 🕒 Belum dimulai | `lib/canvas/edges_painter.dart` |
+| 10 | REQ-010 | Menambahkan node baru ke canvas via tap pada area kosong | 1b | 🔄 Sedang berjalan | `lib/ui/sidebar_left.dart` |
+| 11 | REQ-011 | Menyeleksi node dengan tap; tampilkan highlight selection | 1b | 🔄 Sedang berjalan | `lib/canvas/canvas_view.dart` |
+| 12 | REQ-012 | Memindahkan node dengan drag gesture | 1b | 🔄 Sedang berjalan | `lib/canvas/canvas_view.dart` |
+| 13 | REQ-013 | Menghapus node yang terseleksi via tombol Delete atau toolbar | 1b | 🔄 Sedang berjalan | `lib/core/state.dart` |
+| 14 | REQ-014 | Edge routing dasar antara dua node (garis lurus dengan arrow) | 1b | 🔄 Sedang berjalan | `lib/canvas/edges_painter.dart` |
 | 15 | REQ-015 | Property Panel untuk Entity Node: tambah, edit, hapus field | 2a | 🕒 Belum dimulai | `lib/panels/sidebar_right.dart` |
+
 | 16 | REQ-016 | Property Panel untuk Storage Node: konfigurasi tipe, label, path | 2a | 🕒 Belum dimulai | `lib/panels/sidebar_right.dart` |
 | 17 | REQ-017 | Validasi form properti: nama field tidak boleh kosong | 2a | 🕒 Belum dimulai | `lib/panels/sidebar_right.dart` |
 | 18 | REQ-018 | Property Panel untuk Query Vector Node: edit vector queries | 2b | 🕒 Belum dimulai | `lib/panels/query_vector_panel.dart` |
@@ -80,7 +81,7 @@
 | Iterasi | Total REQ | ✅ Selesai | 🔄 Berjalan | 🕒 Belum |
 |---------|-----------|-----------|------------|---------|
 | 1a | 9 | 9 | 0 | 0 |
-| 1b | 5 | 0 | 0 | 5 |
+| 1b | 5 | 0 | 5 | 0 |
 | 2a | 3 | 0 | 0 | 3 |
 | 2b | 2 | 0 | 0 | 2 |
 | 3a | 4 | 0 | 0 | 4 |
@@ -92,7 +93,8 @@
 | 6a | 2 | 0 | 0 | 2 |
 | 6b | 4 | 0 | 0 | 4 |
 | 7 | 1 | 0 | 0 | 1 |
-| **Total** | **50** | **9** | **0** | **41** |
+| **Total** | **50** | **9** | **5** | **36** |
+
 
 ---
 

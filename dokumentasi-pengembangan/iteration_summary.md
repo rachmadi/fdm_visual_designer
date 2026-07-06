@@ -53,10 +53,13 @@
 
 ═══════════════════════════════════════════════════════════════════
 ## ITERASI 1b — Node Interaction
-### Status: 🕒 Menunggu 1a
+### Status: 🔄 Sedang berjalan
 ═══════════════════════════════════════════════════════════════════
 
-*[Blok ini akan diisi saat Iterasi 1b selesai]*
+- **Tanggal Mulai**: 2026-07-06
+- **Tanggal Selesai**: (in progress)
+- **Status Akhir**: 🔄 Sedang berjalan
+- **Target**: Add, Select, Move, Delete Node, and basic Edge routing.
 
 ---
 
@@ -73,7 +76,7 @@
 | Iterasi | Status | Durasi Aktual | REQ Ditutup | Test |
 |---------|--------|---------------|-------------|------|
 | 1a | ✅ Selesai | ~7.5 jam | 9/9 | PASS |
-| 1b | 🕒 Belum | — | 0/5 | — |
+| 1b | 🔄 Sedang | — | 0/5 | — |
 | 2a | 🕒 Belum | — | 0/3 | — |
 | 2b | 🕒 Belum | — | 0/2 | — |
 | 3a | 🕒 Belum | — | 0/4 | — |
