@@ -63,14 +63,24 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
   @override
   void initState() {
     super.initState();
-    // Center the viewport on the canvas
+    // Center viewport on node spawn area (nodes spawn around 1400,1400)
+    // We use addPostFrameCallback to get actual render size
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      // Translate to center: start at canvas center
-      final m = Matrix4.translationValues(
-        -(_canvasWidth / 2 - 400), -(_canvasHeight / 2 - 300), 0.0);
-      _transformationController.value = m;
+      _centerViewport();
     });
+  }
+
+  void _centerViewport() {
+    if (!mounted) return;
+    final renderBox = context.findRenderObject() as RenderBox?;
+    final viewportSize = renderBox?.size ?? const Size(800, 600);
+    // Center the viewport at the node spawn area (canvas ~1450,1450)
+    const double spawnX = 1450.0;
+    const double spawnY = 1450.0;
+    final tx = viewportSize.width / 2 - spawnX;
+    final ty = viewportSize.height / 2 - spawnY;
+    _transformationController.value = Matrix4.translationValues(tx, ty, 0.0);
   }
 
   @override

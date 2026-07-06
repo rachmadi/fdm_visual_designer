@@ -26,8 +26,8 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
   }
   void _createNode(NodeType type) {
     final rand = math.Random();
-    // Spawn near center of 3000x3000px canvas
-    final pos = Offset(1400.0 + rand.nextInt(100), 1400.0 + rand.nextInt(100));
+    // Spawn near viewport center (synced with canvas init viewport at 1450,1450)
+    final pos = Offset(1350.0 + rand.nextInt(200), 1350.0 + rand.nextInt(200));
     final id = 'node_${DateTime.now().millisecondsSinceEpoch}_${rand.nextInt(1000000)}';
     final name = type == NodeType.structural ? 'new_collection' : 'NewEntity';
     final path = type == NodeType.structural ? '/new_collection' : '/new_collection/\$id';
