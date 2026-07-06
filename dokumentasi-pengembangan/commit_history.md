@@ -27,89 +27,27 @@
 ---
 
 ═══════════════════════════════════════════════════════════════════
-## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
+## Riwayat Git Commit Proyek (Iterasi 1a s.d. Iterasi 7)
 ═══════════════════════════════════════════════════════════════════
-
-### Commit Pra-Iterasi (Setup Dokumentasi)
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
-| (pending) | 2026-07-06 | Antigravity Agent | `docs: create IIDD documentation log files for Revision 3 Final` |
+| `1e7dd72` | 2026-07-06 | Antigravity | `docs: update requirement traceability matrix and summary files with actual completed progress` |
+| `cf84058` | 2026-07-06 | Antigravity | `fix: resolve browser shortcuts conflict and register global keyboard handler` |
+| `f43ba7a` | 2026-07-06 | Antigravity | `docs: update development notes for shortcuts and dark mode session` |
+| `b795425` | 2026-07-06 | Antigravity | `fix: finalize keyboard shortcuts and dark mode specifications in main and entity node` |
+| `d40e667` | 2026-07-06 | Antigravity | `fix: finalize scheduled interactive headed E2E test session` |
+| `d7b320d` | 2026-07-06 | Antigravity | `fix: finalize unsandboxed ChromeDriver headed integration test logs` |
+| `3b4b894` | 2026-07-06 | Antigravity | `fix: finalize web deployment with new unsandboxed gesture tests` |
+| `ebcc508` | 2026-07-06 | Antigravity | `fix: resolve InteractiveViewer viewport constraints causing node drift and sizing issue` |
+| `2cf3316` | 2026-07-06 | Antigravity | `fix: resolve multitouch zoom node drift and overlap spawning, update test logs and screenshots` |
+| `a22cd58` | 2026-07-06 | Antigravity | `fix: sync viewport init with node spawn area so nodes are visible on canvas` |
+| `3a5ce18` | 2026-07-06 | Antigravity | `feat: migrate canvas to InteractiveViewer+matrix inversion per Revisi3, init dokumentasi-pengembangan IIDD` |
+| `4922b1c` | 2026-07-06 | Antigravity | `chore: deploy to vercel and update development notes` |
+| `7f6899b` | 2026-07-06 | Antigravity | `Update time duration log in catatan_percakapan_proyek.md` |
+| `3234263` | 2026-06-27 | Antigravity | `Fix node dragging and canvas gesture arena conflict by using manual Listener and Transform` |
+| `f78c43a` | 2026-06-27 | Antigravity | `fix: resolve gesture conflict between InteractiveViewer pan and node drag using selection state` |
 
 ---
 
-### Commit Iterasi 1a
-
-| Hash | Tanggal | Author | Pesan Commit |
-|------|---------|--------|--------------|
-| (pending) | — | — | `feat(canvas): implement InteractiveViewer with matrix inversion for canvas` |
-| (pending) | — | — | `feat(metamodel): define StorageNode, EntityNode, QueryVectorNode models` |
-| (pending) | — | — | `feat(painter): add CustomPainter for three-node architecture` |
-| (pending) | — | — | `feat(state): implement Riverpod Notifier for diagram state management` |
-| (pending) | — | — | `test(integration): add headed integration test for canvas foundation` |
-
----
-
-*[Tambahkan commit baru di bawah ini saat iterasi 1a berlangsung]*
-
----
-
-═══════════════════════════════════════════════════════════════════
-## ITERASI 1b — [Template]
-═══════════════════════════════════════════════════════════════════
-
-*[Blok ini akan diisi saat Iterasi 1b selesai]*
-
----
-
-═══════════════════════════════════════════════════════════════════
-## ITERASI 2a — [Template]
-═══════════════════════════════════════════════════════════════════
-
-*[Blok ini akan diisi saat Iterasi 2a selesai]*
-
----
-
-═══════════════════════════════════════════════════════════════════
-## ITERASI 2b — [Template]
-═══════════════════════════════════════════════════════════════════
-
-*[Blok ini akan diisi saat Iterasi 2b selesai]*
-
----
-
-═══════════════════════════════════════════════════════════════════
-## ITERASI 3a — [Template]
-═══════════════════════════════════════════════════════════════════
-
-*[Blok ini akan diisi saat Iterasi 3a selesai]*
-
----
-
-═══════════════════════════════════════════════════════════════════
-## ITERASI 3b — [Template]
-═══════════════════════════════════════════════════════════════════
-
-*[Blok ini akan diisi saat Iterasi 3b selesai]*
-
----
-
-═══════════════════════════════════════════════════════════════════
-## ITERASI 4a–7 — [Template]
-═══════════════════════════════════════════════════════════════════
-
-*[Blok-blok ini akan diisi pada iterasi yang sesuai]*
-
----
-
-## Ringkasan Total Commit
-
-| Iterasi | Jumlah Commit | feat | fix | refactor | test | docs |
-|---------|---------------|------|-----|----------|------|------|
-| Setup | 1 | 0 | 0 | 0 | 0 | 1 |
-| 1a | 0 | 0 | 0 | 0 | 0 | 0 |
-| **Total** | **1** | **0** | **0** | **0** | **0** | **1** |
-
----
-
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap akhir iterasi*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap kali commit Git dilakukan*

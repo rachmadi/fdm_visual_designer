@@ -47,14 +47,11 @@
   - [x] Perbaikan bug viewport constraint (constrained: false) untuk menjaga kestabilan posisi node saat di-zoom/panning
   - [x] Eksekusi Unsandboxed Headed E2E Integration Test secara interaktif dan visual di layar desktop user
   - [x] Eksekusi Unsandboxed ChromeDriver untuk memunculkan jendela browser Chrome fisik secara nyata di layar desktop user
-
-
-
-
+  - [x] Implementasi Pintasan Keyboard Global (Ctrl+Z, Ctrl+Shift+Z, Delete/Backspace, S, E, V, Escape)
+  - [x] Pencegahan Konflik Pintasan Keyboard dengan Aksi Default Browser (Ctrl+D, Ctrl+E, Ctrl+L)
+  - [x] Implementasi Mode Tema Dinamis Light/Dark Mode reaktif (Ctrl+Shift+D) & Opacity Node Gelap
 
 ## Rencana Selanjutnya (Peningkatan Masa Depan)
 
 - [ ] Integrasi Algoritma Auto-Layout otomatis berbasis Dagre (Dart port)
 - [ ] Penambahan visual Minimap di sudut kanan bawah canvas
-- [ ] Penambahan Shortcut keyboard global (Ctrl+Z, Ctrl+Y, Delete)
-

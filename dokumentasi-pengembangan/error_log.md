@@ -176,11 +176,59 @@
 
 ---
 
-═══════════════════════════════════════════════════════════════════
-## ITERASI 1b–7 — [Template]
-═══════════════════════════════════════════════════════════════════
+### E-011: Constraint Viewport Default di InteractiveViewer
 
-*[Blok-blok ini akan diisi pada iterasi yang sesuai]*
+- **Iterasi**: 1a
+- **Tanggal**: 2026-07-06
+- **Jenis Error**: Logic
+- **Lokasi**: `lib/canvas/canvas_view.dart`
+- **Pesan Error**: Canvas 4000x4000 terpotong dan node-node di koordinat besar (seperti 1200, 1300) melayang saat di-zoom.
+- **Penyebab Root**: Parameter `constrained` pada `InteractiveViewer` default bernilai `true`, memaksa widget child menciut ke ukuran layar sehingga melanggar rendering koordinat aslinya.
+- **Langkah Resolusi**: Menambahkan `constrained: false` pada `InteractiveViewer`.
+- **Waktu Resolusi**: ~10 menit
+- **Status**: ✅ Resolved
+
+---
+
+### E-012: ChromeDriver Sandbox Session Isolation
+
+- **Iterasi**: 7
+- **Tanggal**: 2026-07-06
+- **Jenis Error**: Test Failure / Visibility
+- **Lokasi**: Sesi Pengujian E2E
+- **Pesan Error**: Jendela headed Chrome browser tidak muncul secara fisik di desktop pengguna.
+- **Penyebab Root**: Proses ChromeDriver berjalan di dalam sandbox terminal (Session 0) sehingga browser yang dispawn berjalan tersembunyi di background.
+- **Langkah Resolusi**: Menghentikan proses sandboxed dan menjalankan ChromeDriver serta `flutter drive` sebagai perintah `unsandboxed` via Task Scheduler.
+- **Waktu Resolusi**: ~15 menit
+- **Status**: ✅ Resolved
+
+---
+
+### E-013: StateProvider Undefined pada Riverpod 3.x
+
+- **Iterasi**: 7
+- **Tanggal**: 2026-07-06
+- **Jenis Error**: Compile
+- **Lokasi**: `lib/main.dart`
+- **Pesan Error**: `The function 'StateProvider' isn't defined.`
+- **Penyebab Root**: Riverpod v3 menghentikan dukungan terhadap kelas `StateProvider`.
+- **Langkah Resolusi**: Membuat kelas `ThemeModeNotifier` turunan dari `Notifier<ThemeMode>` dan menggunakan `NotifierProvider`.
+- **Waktu Resolusi**: ~10 menit
+- **Status**: ✅ Resolved
+
+---
+
+### E-014: Keyboard Shortcuts Kehilangan Fokus Input
+
+- **Iterasi**: 7
+- **Tanggal**: 2026-07-06
+- **Jenis Error**: Logic
+- **Lokasi**: `lib/main.dart`
+- **Pesan Error**: Tombol shortcut keyboard global tidak berfungsi setelah berinteraksi dengan kanvas.
+- **Penyebab Root**: Widget `Focus` kehilangan fokus input saat pengguna mengklik kanvas luar atau melakukan navigasi.
+- **Langkah Resolusi**: Mendaftarkan handler pintasan secara global di `HardwareKeyboard.instance.addHandler(...)` dan menghentikan propagasi dengan return `true`.
+- **Waktu Resolusi**: ~10 menit
+- **Status**: ✅ Resolved
 
 ---
 
@@ -188,13 +236,12 @@
 
 | Jenis Error | Total | Resolved | Workaround | Open |
 |-------------|-------|----------|------------|------|
-| Compile | 8 | 8 | 0 | 0 |
+| Compile | 9 | 9 | 0 | 0 |
 | Runtime | 0 | 0 | 0 | 0 |
-| Test Failure | 0 | 0 | 0 | 0 |
-| Logic | 2 | 2 | 0 | 0 |
-| **Total** | **10** | **10** | **0** | **0** |
+| Test Failure | 1 | 1 | 0 | 0 |
+| Logic | 4 | 4 | 0 | 0 |
+| **Total** | **14** | **14** | **0** | **0** |
 
 ---
 
 *Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap kali error ditemukan*
-

@@ -23,6 +23,9 @@
 |----|---------|-------|---------|----------------------|--------|-------|
 | 1 | 2026-06-27 | 11:15 | Pra-1a | Pengguna meminta migrasi dari React/TypeScript ke **Flutter Web** di tengah inisialisasi proyek | Pembersihan total file React; reinisialisasi proyek Flutter; penyusunan ulang rencana implementasi | Perubahan Stack |
 | 2 | 2026-07-06 | 10:30 | 1a (Setup) | Pengguna meminta pembuatan 13 file log dokumentasi IIDD sesuai spesifikasi Revisi 3 Final sebelum implementasi dimulai | Pembuatan folder `dokumentasi-pengembangan/` dan 13 file log; menunda implementasi kode utama | Permintaan Dokumentasi |
+| 3 | 2026-07-06 | 10:45 | 1a | Pengguna melaporkan bug zoom drift di mana 10 node berkumpul di kanan bawah saat di-zoom | Memperbaiki matrix inversi delta drag, membatalkan drag jika terdeteksi multi-touch, dan menonaktifkan constraint InteractiveViewer | Koreksi Teknis |
+| 4 | 2026-07-06 | 11:04 | 7 | Pengguna mengidentifikasi headed browser tidak muncul secara fisik di desktop | Memindahkan eksekusi ChromeDriver dan `flutter drive` menjadi `unsandboxed` agar tampil secara nyata | Koreksi Teknis |
+| 5 | 2026-07-06 | 11:30 | 7 | Pengguna melaporkan pintasan keyboard tidak berfungsi dan berbenturan dengan browser | Mendaftarkan handler `HardwareKeyboard` global dan mencegat event browser default pada `keydown` | Koreksi Teknis |
 
 ---
 
@@ -48,11 +51,11 @@
 | Perubahan Stack | 1 | Tinggi |
 | Perubahan Arsitektur | 0 | — |
 | Penambahan Requirement | 0 | — |
-| Koreksi Teknis | 0 | — |
+| Koreksi Teknis | 3 | Sedang |
 | Permintaan Dokumentasi | 1 | Rendah |
 | Perubahan Prioritas | 0 | — |
 | Pembatalan Fitur | 0 | — |
-| **Total** | **2** | — |
+| **Total** | **5** | — |
 
 ---
 

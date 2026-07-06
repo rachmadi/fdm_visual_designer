@@ -124,15 +124,45 @@
 
 ---
 
-*[Tambahkan keputusan baru di bawah ini saat iterasi 1a berlangsung]*
+═══════════════════════════════════════════════════════════════════
+## ITERASI 7 — Finalisasi & Polishing (Pintasan Keyboard & Ganti Tema)
+═══════════════════════════════════════════════════════════════════
 
-
+### D-008: Global `HardwareKeyboard` untuk Pintasan Keyboard
+- **Tanggal**: 2026-07-06
+- **Dibuat oleh**: Agen (perbaikan bug focus shortcuts)
+- **Konteks**: Widget `Focus` biasa kehilangan fokus input saat pengguna mengeklik kanvas luar, menonaktifkan seluruh pintasan keyboard.
+- **Keputusan**: Gunakan `HardwareKeyboard.instance.addHandler` secara terpusat di `WorkspaceScreen` tingkat root.
+- **Alternatif yang Ditolak**: Menggunakan `Focus` widget dengan requestFocus otomatis (tidak andal pada Flutter Web).
+- **Alasan Pemilihan**: `HardwareKeyboard` menangkap event input di tingkat services, tidak terpengaruh oleh status fokus pada widget tree.
+- **Dampak**: Pintasan keyboard selalu responsif kapan pun tombol ditekan.
+- **Iterasi Terdampak**: 7
 
 ---
 
-═══════════════════════════════════════════════════════════════════
-## ITERASI 1b — [Template]
-═══════════════════════════════════════════════════════════════════
+### D-009: Intersepsi `onKeyDown` Browser (Prevent Default)
+- **Tanggal**: 2026-07-06
+- **Dibuat oleh**: Agen (resolusi konflik pintasan browser)
+- **Konteks**: Pintasan `Ctrl+D` memicu bookmark browser, `Ctrl+E` mengarahkan fokus ke bar pencarian, mengganggu alur kerja aplikasi visual designer.
+- **Keputusan**: Menambahkan listener `html.window.onKeyDown` untuk memanggil `event.preventDefault()` pada tombol yang konflik.
+- **Alternatif yang Ditolak**: Mengganti pintasan keyboard ke tombol non-standar (misal `Alt + Shift + X`).
+- **Alasan Pemilihan**: Mengikuti standar pintasan industri (Figma/Miro) sembari mempertahankan integritas pengalaman pengguna di web.
+- **Dampak**: Pintasan browser dinonaktifkan khusus untuk kombinasi tombol tersebut selama aplikasi terbuka.
+- **Iterasi Terdampak**: 7
+
+---
+
+### D-010: Riverpod `Notifier` untuk State Manajemen Tema
+- **Tanggal**: 2026-07-06
+- **Dibuat oleh**: Agen (migrasi Riverpod v3)
+- **Konteks**: Kelas `StateProvider` didepresiasi dan dihapus pada versi Riverpod terbaru.
+- **Keputusan**: Migrasikan state tema ke notifier custom `ThemeModeNotifier` turunan dari `Notifier<ThemeMode>`.
+- **Alternatif yang Ditolak**: Tetap menggunakan package Riverpod versi lama.
+- **Alasan Pemilihan**: Mempertahankan kecocokan dengan seluruh codebase modern.
+- **Dampak**: Manajemen tema reaktif stabil dan aman dari deprecated warnings.
+- **Iterasi Terdampak**: 7
+
+---
 
 *[Blok ini akan diisi saat Iterasi 1b dimulai]*
 

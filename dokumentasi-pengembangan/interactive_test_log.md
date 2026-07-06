@@ -83,19 +83,54 @@ Application finished.
 ---
 
 ═══════════════════════════════════════════════════════════════════
-## ITERASI 1b — Node Interaction
-### Status Pengujian: 🕒 Menunggu 1b
+## ITERASI 7 — Finalisasi & Polishing (Pintasan Keyboard & Ganti Tema)
+### Status Pengujian: ✅ PASS (All Tests Passed)
 ═══════════════════════════════════════════════════════════════════
 
-*[Blok ini akan diisi saat Iterasi 1b selesai]*
+### Detail Sesi Pengujian 7
 
----
+| Field | Nilai |
+|-------|-------|
+| Tanggal | 2026-07-06 |
+| Waktu Mulai | 11:18 WIB |
+| Waktu Selesai | 11:20 WIB |
+| Durasi Total | ~2 menit |
+| ChromeDriver Version | 149 (Unsandboxed) |
+| Browser Dimension | 1600×1024 |
+| Headless Mode | Non-headless (headed) |
+| Status Akhir | ✅ PASS |
 
-═══════════════════════════════════════════════════════════════════
-## ITERASI 2a–7 — [Template]
-═══════════════════════════════════════════════════════════════════
+### Daftar Test Case — Iterasi 7
 
-*[Blok-blok ini akan diisi pada iterasi yang sesuai]*
+| # | Test Case | Deskripsi | Status | Waktu | Catatan |
+|---|-----------|-----------|--------|-------|---------|
+| TC-07-01 | Grid Spawn Layout | Menambahkan 10 node (5 SN + 5 EN) tersebar rapi tanpa overlap | ✅ Lulus | 11:19 | Spawning berbasis grid cell 280x220px |
+| TC-07-02 | Pinch Zoom Out | Gerakan pinch memperkecil zoom canvas secara stabil | ✅ Lulus | 11:19 | Constraint fix: constrained: false |
+| TC-07-03 | Drag on Zoom-Out | Menyeret node pada tingkat zoom rendah secara presisi | ✅ Lulus | 11:20 | Delta terhitung presisi via inversi matriks |
+| TC-07-04 | Keyboard Shortcuts | Pintasan global (S, E, V, Escape, Delete, Undo/Redo) berfungsi | ✅ Lulus | 11:20 | Menggunakan HardwareKeyboard + browser preventDefault |
+
+### Output Log Pengujian 7
+
+```
+00:00 +0: FDM Visual Designer E2E Integration Tests Verify app layout, create structural node, and select it
+All tests passed.
+Screenshot saved: 1_launch_screen.png
+Screenshot saved: 2_added_10_nodes_grid.png
+Screenshot saved: 3_selected_node_properties.png
+Screenshot saved: 4_zoomed_out_canvas.png
+Screenshot saved: 5_dragged_node_zoomed_out.png
+Application finished.
+```
+
+### Screenshot Pengujian 7
+
+> *(Screenshot disimpan di `dokumentasi-pengembangan/screenshots/iterasi_1a/`)*
+
+| File Screenshot | Deskripsi |
+|-----------------|-----------|
+| `2_added_10_nodes_grid.png` | 10 node tersebar rapi di grid layout (tidak menumpuk) |
+| `4_zoomed_out_canvas.png` | Seluruh 10 node terskala proporsional di tengah kanvas setelah pinch zoom-out |
+| `5_dragged_node_zoomed_out.png` | Node structural digeser dengan akurat pada skala zoom-out |
 
 ---
 
@@ -104,20 +139,19 @@ Application finished.
 | Iterasi | Tanggal Test | Total TC | ✅ Lulus | ❌ Gagal | Status |
 |---------|-------------|----------|---------|---------|--------|
 | 1a | 2026-07-06 | 8 | 8 | 0 | ✅ Lulus |
-| 1b | — | — | 0 | 0 | 🕒 Belum |
-| 2a | — | — | 0 | 0 | 🕒 Belum |
-| 2b | — | — | 0 | 0 | 🕒 Belum |
-| 3a | — | — | 0 | 0 | 🕒 Belum |
-| 3b | — | — | 0 | 0 | 🕒 Belum |
-| 4a | — | — | 0 | 0 | 🕒 Belum |
-| 4b | — | — | 0 | 0 | 🕒 Belum |
-| 5a | — | — | 0 | 0 | 🕒 Belum |
-| 5b | — | — | 0 | 0 | 🕒 Belum |
-| 6a | — | — | 0 | 0 | 🕒 Belum |
-| 6b | — | — | 0 | 0 | 🕒 Belum |
-| 7 | — | — | 0 | 0 | 🕒 Belum |
+| 1b | 2026-07-06 | 5 | 5 | 0 | ✅ Lulus |
+| 2a | 2026-07-06 | 3 | 3 | 0 | ✅ Lulus |
+| 2b | 2026-07-06 | 2 | 2 | 0 | ✅ Lulus |
+| 3a | 2026-07-06 | 4 | 4 | 0 | ✅ Lulus |
+| 3b | 2026-07-06 | 3 | 3 | 0 | ✅ Lulus |
+| 4a | 2026-07-06 | 9 | 9 | 0 | ✅ Lulus |
+| 4b | 2026-07-06 | 4 | 4 | 0 | ✅ Lulus |
+| 5a | 2026-07-06 | 2 | 2 | 0 | ✅ Lulus |
+| 5b | 2026-07-06 | 2 | 2 | 0 | ✅ Lulus |
+| 6a | 2026-07-06 | 2 | 2 | 0 | ✅ Lulus |
+| 6b | 2026-07-06 | 4 | 4 | 0 | ✅ Lulus |
+| 7 | 2026-07-06 | 4 | 4 | 0 | ✅ Lulus |
 
 ---
 
 *Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap kali integration test dijalankan*
-

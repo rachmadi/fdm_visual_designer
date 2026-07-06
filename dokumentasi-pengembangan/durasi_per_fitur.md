@@ -64,9 +64,9 @@ Kalkulasi durasi secara otomatis di akhir iterasi.
 
 | Rank | Fitur | Durasi | Iterasi | Catatan |
 |------|-------|--------|---------|---------|
-| 1 | — | — | — | — |
-| 2 | — | — | — | — |
-| 3 | — | — | — | — |
+| 1 | Penanganan Multi-touch Zoom & Bounded Viewport | ~2.5 jam | 1a | Menyelesaikan bug pergeseran liar koordinat saat gesture cubit |
+| 2 | Inversi Matriks Koordinat Screen-to-Canvas | ~1.5 jam | 1a | Formulasi matematis konversi posisi tap agar bebas drift |
+| 3 | Pintasan Keyboard Global & Intersepsi Browser | ~1.5 jam | 7 | Mencegah default action browser agar pintasan web berfungsi stabil |
 
 ---
 
