@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:math' as math;
 import 'canvas/canvas_view.dart';
 import 'ui/toolbar.dart';
 import 'ui/sidebar_left.dart';
 import 'panels/sidebar_right.dart';
+import 'core/metamodel.dart';
+import 'core/state.dart';
 
 final GlobalKey globalScreenKey = GlobalKey();
+
+class ThemeModeNotifier extends Notifier<ThemeMode> {
+  @override
+  ThemeMode build() => ThemeMode.dark;
+
+  void toggle() {
+    state = state == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+  }
+}
+
+final themeModeProvider = NotifierProvider<ThemeModeNotifier, ThemeMode>(() {
+  return ThemeModeNotifier();
+});
 
 void main() {
   runApp(
@@ -15,11 +32,13 @@ void main() {
   );
 }
 
-class FdmVisualDesignerApp extends StatelessWidget {
+class FdmVisualDesignerApp extends ConsumerWidget {
   const FdmVisualDesignerApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
+
     return MaterialApp(
       title: 'FDM Visual Designer',
       debugShowCheckedModeBanner: false,
@@ -38,51 +57,160 @@ class FdmVisualDesignerApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF2E75B6),
           brightness: Brightness.dark,
-          background: const Color(0xFF0F172A),
+          surface: const Color(0xFF0F172A),
         ),
         fontFamily: 'Roboto',
       ),
-      themeMode: ThemeMode.dark, // Defaulting to sleek dark mode for premium aesthetics
+      themeMode: themeMode,
       home: const WorkspaceScreen(),
     );
   }
 }
 
-class WorkspaceScreen extends StatelessWidget {
+class WorkspaceScreen extends ConsumerWidget {
   const WorkspaceScreen({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+  void _createNodeViaShortcut(WidgetRef ref, NodeType type) {
+    final rand = math.Random();
+    final existingNodes = ref.read(diagramProvider).nodes;
+    final count = existingNodes.length;
 
+    const double baseX = 1200.0;
+    const double baseY = 1300.0;
+    const double cellW = 280.0;
+    const double cellH = 220.0;
+    const int cols = 4;
+
+    final col = count % cols;
+    final row = count ~/ cols;
+
+    final jitterX = rand.nextInt(40) - 20;
+    final jitterY = rand.nextInt(40) - 20;
+
+    final double spawnX = baseX + col * cellW + jitterX;
+    final double spawnY = baseY + row * cellH + jitterY;
+    final pos = Offset(spawnX, spawnY);
+
+    final id = 'node_${DateTime.now().millisecondsSinceEpoch}_${rand.nextInt(1000000)}';
+    final name = type == NodeType.structural ? 'new_collection' : 'NewEntity';
+    final path = type == NodeType.structural ? '/new_collection' : '/new_collection/\$id';
+
+    final newNode = FDMNode(
+      id: id,
+      type: type,
+      name: name,
+      path: path,
+      isDynamic: type == NodeType.entity,
+      queryVector: QueryVector(),
+      position: pos,
+    );
+
+    ref.read(diagramProvider.notifier).addNode(newNode);
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: RepaintBoundary(
-        key: globalScreenKey,
-        child: SafeArea(
-          child: Column(
-            children: [
-              // Top Toolbar (full width)
-              const Toolbar(),
-              
-              // Middle section containing SidebarLeft, Canvas, and SidebarRight
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Sidebar Left (Node Palette & Connection Builder)
-                    const SidebarLeft(),
-                    
-                    // Canvas (main workspace)
-                    const Expanded(
-                      child: CanvasView(),
-                    ),
-                    
-                    // Sidebar Right (Properties Editor & Query Vector & Validation Report)
-                    const SidebarRight(),
-                  ],
+      body: Focus(
+        autofocus: true,
+        onKeyEvent: (FocusNode focusNode, KeyEvent event) {
+          if (event is! KeyDownEvent) return KeyEventResult.ignored;
+
+          final isCtrl = HardwareKeyboard.instance.isControlPressed ||
+              HardwareKeyboard.instance.isMetaPressed;
+          final isShift = HardwareKeyboard.instance.isShiftPressed;
+
+          final state = ref.read(diagramProvider);
+          final notifier = ref.read(diagramProvider.notifier);
+
+          // 1. Undo: Ctrl/Cmd + Z
+          if (isCtrl && !isShift && event.logicalKey == LogicalKeyboardKey.keyZ) {
+            notifier.undo();
+            return KeyEventResult.handled;
+          }
+
+          // 2. Redo: Ctrl/Cmd + Shift + Z
+          if (isCtrl && isShift && event.logicalKey == LogicalKeyboardKey.keyZ) {
+            notifier.redo();
+            return KeyEventResult.handled;
+          }
+
+          // 3. Toggle Dark/Light Mode: Ctrl/Cmd + Shift + D
+          if (isCtrl && isShift && event.logicalKey == LogicalKeyboardKey.keyD) {
+            ref.read(themeModeProvider.notifier).toggle();
+            return KeyEventResult.handled;
+          }
+
+          // 4. Delete/Backspace: Hapus yang dipilih
+          if (event.logicalKey == LogicalKeyboardKey.delete ||
+              event.logicalKey == LogicalKeyboardKey.backspace) {
+            if (state.selectedNodeId != null) {
+              notifier.deleteNode(state.selectedNodeId!);
+              return KeyEventResult.handled;
+            } else if (state.selectedBoundaryId != null) {
+              notifier.deleteBoundary(state.selectedBoundaryId!);
+              return KeyEventResult.handled;
+            } else if (state.selectedEdgeId != null) {
+              notifier.deleteEdge(state.selectedEdgeId!);
+              return KeyEventResult.handled;
+            }
+          }
+
+          // 5. S: Add Structural Node in center viewport/grid
+          if (!isCtrl && !isShift && event.logicalKey == LogicalKeyboardKey.keyS) {
+            _createNodeViaShortcut(ref, NodeType.structural);
+            return KeyEventResult.handled;
+          }
+
+          // 6. E: Add Entity Node in center viewport/grid
+          if (!isCtrl && !isShift && event.logicalKey == LogicalKeyboardKey.keyE) {
+            _createNodeViaShortcut(ref, NodeType.entity);
+            return KeyEventResult.handled;
+          }
+
+          // 7. V: Toggle Validation Report panel
+          if (!isCtrl && !isShift && event.logicalKey == LogicalKeyboardKey.keyV) {
+            notifier.toggleValidationReport();
+            return KeyEventResult.handled;
+          }
+
+          // 8. Escape: Cancel/Deselect
+          if (event.logicalKey == LogicalKeyboardKey.escape) {
+            notifier.selectNode(null);
+            notifier.cancelConnection();
+            return KeyEventResult.handled;
+          }
+
+          return KeyEventResult.ignored;
+        },
+        child: RepaintBoundary(
+          key: globalScreenKey,
+          child: SafeArea(
+            child: Column(
+              children: [
+                // Top Toolbar (full width)
+                const Toolbar(),
+                
+                // Middle section containing SidebarLeft, Canvas, and SidebarRight
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Sidebar Left (Node Palette & Connection Builder)
+                      const SidebarLeft(),
+                      
+                      // Canvas (main workspace)
+                      const Expanded(
+                        child: CanvasView(),
+                      ),
+                      
+                      // Sidebar Right (Properties Editor & Query Vector & Validation Report)
+                      const SidebarRight(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

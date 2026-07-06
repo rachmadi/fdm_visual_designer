@@ -20,6 +20,9 @@ class EntityNodeWidget extends ConsumerWidget {
     const Color primaryCol = Color(0xFF2E75B6);
     const Color textDarkCol = Color(0xFF1A3A5C);
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bodyColor = Colors.white.withOpacity(isDark ? 0.92 : 1.0);
+
     final borderCol = isSelected ? Colors.amber.shade700 : primaryCol;
 
     return MouseRegion(
@@ -27,7 +30,7 @@ class EntityNodeWidget extends ConsumerWidget {
       child: Container(
           width: 220,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: bodyColor,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: borderCol, width: 2),
             boxShadow: [

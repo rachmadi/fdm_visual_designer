@@ -237,7 +237,7 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
     final state = ref.watch(diagramProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor =
-        isDark ? const Color(0xFF1E293B) : const Color(0xFFF8FAFC);
+        isDark ? Theme.of(context).colorScheme.surface : const Color(0xFFF8FAFC);
     final gridColor =
         isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
     final modeColor = state.isFirestoreMode
