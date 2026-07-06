@@ -461,8 +461,98 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
                 ],
               ),
             ),
+            const SizedBox(height: 24),
+            const Divider(),
+            const SizedBox(height: 16),
+
+            Text(
+              'KEYBOARD SHORTCUTS',
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.bold,
+                color: textCol.withOpacity(0.6),
+                letterSpacing: 1.2,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: sectionBg,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                children: [
+                  _buildShortcutRow('Undo Action', ['Ctrl', '+', 'Z'], isDark, textCol),
+                  _buildShortcutRow('Redo Action', ['Ctrl', '+', 'Shift', '+', 'Z'], isDark, textCol),
+                  _buildShortcutRow('Toggle Dark Theme', ['Ctrl', '+', 'Shift', '+', 'D'], isDark, textCol),
+                  _buildShortcutRow('Delete Selected', ['Del'], isDark, textCol),
+                  _buildShortcutRow('Add Structural Node', ['S'], isDark, textCol),
+                  _buildShortcutRow('Add Entity Node', ['E'], isDark, textCol),
+                  _buildShortcutRow('Toggle Validation', ['V'], isDark, textCol),
+                  _buildShortcutRow('Cancel / Deselect', ['Esc'], isDark, textCol),
+                ],
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildKeyCap(String key, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(
+          color: isDark ? const Color(0xFF475569) : const Color(0xFFCBD5E1),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 1,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
+      child: Text(
+        key,
+        style: TextStyle(
+          fontSize: 9,
+          fontWeight: FontWeight.bold,
+          color: isDark ? Colors.white : const Color(0xFF1E293B),
+          fontFamily: 'monospace',
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShortcutRow(String description, List<String> keys, bool isDark, Color textCol) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Text(
+              description,
+              style: TextStyle(fontSize: 10, color: textCol.withOpacity(0.8)),
+            ),
+          ),
+          Wrap(
+            spacing: 3,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: keys.map((key) {
+              if (key == '+') {
+                return Text('+', style: TextStyle(fontSize: 9, color: textCol.withOpacity(0.5)));
+              }
+              return _buildKeyCap(key, isDark);
+            }).toList(),
+          ),
+        ],
       ),
     );
   }
