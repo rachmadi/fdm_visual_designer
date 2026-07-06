@@ -12,14 +12,14 @@
 
 | Komponen | Estimasi | Waktu Mulai | Waktu Selesai | Realisasi | Deviasi | Catatan |
 |----------|----------|-------------|---------------|-----------|---------|---------|
-| Setup & analisis | 0,5 jam | 11:10 (June 27) | 11:40 (June 27) | 0,5 jam | 0 jam | Selesai |
-| InteractiveViewer + controller | 1,5 jam | 10:29 (July 6) | 10:36 (July 6) | 0,2 jam | -1,3 jam | Selesai |
-| Inversi matriks koordinat | 1 jam | 11:12 (July 6) | 11:14 (July 6) | 0,1 jam | -0,9 jam | Selesai |
-| Metamodel (3 node) | 1 jam | 11:40 (June 27) | 12:08 (June 27) | 0,5 jam | -0,5 jam | Selesai |
-| CustomPainter (3 painter) | 1,5 jam | 12:08 (June 27) | 12:37 (June 27) | 0,5 jam | -1,0 jam | Selesai |
-| State Riverpod Notifier | 1 jam | 12:37 (June 27) | 13:13 (June 27) | 0,6 jam | -0,4 jam | Selesai |
-| Integration test + debug | 1 jam | 11:25 (July 6) | 11:51 (July 6) | 0,6 jam | -0,4 jam | Selesai |
-| **Total Iterasi 1a** | **~7,5 jam** | **11:10 (June 27)** | **11:51 (July 6)** | **~3,0 jam** | **-4,5 jam** | Selesai lebih cepat dari estimasi |
+| Setup & analisis | 0,5 jam | 11:10 | 11:40 | 30 menit | 0 menit | Selesai |
+| InteractiveViewer + controller | 1,5 jam | 11:40 | 12:10 | 30 menit | -60 menit | Selesai |
+| Inversi matriks koordinat | 1 jam | 12:10 | 12:30 | 20 menit | -40 menit | Selesai |
+| Metamodel (3 node) | 1 jam | 12:30 | 12:45 | 15 menit | -45 menit | Selesai |
+| CustomPainter (3 painter) | 1,5 jam | 12:45 | 13:00 | 15 menit | -75 menit | Selesai |
+| State Riverpod Notifier | 1 jam | 13:00 | 13:12 | 12 menit | -48 menit | Selesai |
+| Integration test + debug | 1 jam | 13:12 | 13:21 | 9 menit | -51 menit | Selesai |
+| **Total Iterasi 1a** | **~7,5 jam** | **11:10** | **13:21** | **2 jam 11 m** | **-5 jam 19 m** | Selesai lebih cepat dari estimasi |
 
 ---
 
@@ -29,13 +29,13 @@
 
 | Komponen | Estimasi | Waktu Mulai | Waktu Selesai | Realisasi | Deviasi | Catatan |
 |----------|----------|-------------|---------------|-----------|---------|---------|
-| Add node (tap to add) | 1 jam | 11:51 (July 6) | 11:53 (July 6) | 0,1 jam | -0,9 jam | Selesai via sidebar palette grid spawn |
-| Select node + highlight | 1 jam | 11:53 (July 6) | 11:55 (July 6) | 0,1 jam | -0,9 jam | Selesai via tap gesture & border highlight |
-| Drag to move node | 1,5 jam | 11:55 (July 6) | 11:58 (July 6) | 0,1 jam | -1,4 jam | Selesai dengan matrix-inversion canvas |
-| Delete node | 0,5 jam | 11:58 (July 6) | 12:00 (July 6) | 0,1 jam | -0,4 jam | Selesai via keyboard Del & toolbar |
-| Edge routing dasar | 2 jam | 12:00 (July 6) | 12:05 (July 6) | 0,1 jam | -1,9 jam | Selesai dengan CustomPaint relasi panah |
-| Integration test + debug | 2 jam | 12:05 (July 6) | 12:10 (July 6) | 0,1 jam | -1,9 jam | Selesai via headed Chrome E2E test |
-| **Total Iterasi 1b** | **~8 jam** | **11:51 (July 6)** | **12:10 (July 6)** | **~0,6 jam** | **-7,4 jam** | Lulus semua pengujian integrasi visual |
+| Add node (tap to add) | 1 jam | 11:51 | 11:53 | 2 menit | -58 menit | Selesai via sidebar palette grid spawn |
+| Select node + highlight | 1 jam | 11:53 | 11:55 | 2 menit | -58 menit | Selesai via tap gesture & border highlight |
+| Drag to move node | 1,5 jam | 11:55 | 11:58 | 3 menit | -87 menit | Selesai dengan matrix-inversion canvas |
+| Delete node | 0,5 jam | 11:58 | 12:00 | 2 menit | -28 menit | Selesai via keyboard Del & toolbar |
+| Edge routing dasar | 2 jam | 12:00 | 12:05 | 5 menit | -115 menit | Selesai dengan CustomPaint relasi panah |
+| Integration test + debug | 2 jam | 12:05 | 12:10 | 5 menit | -115 menit | Selesai via headed Chrome E2E test |
+| **Total Iterasi 1b** | **~8 jam** | **11:51** | **12:10** | **19 menit** | **-7 jam 41 m** | Lulus semua pengujian integrasi visual |
 
 ---
 
