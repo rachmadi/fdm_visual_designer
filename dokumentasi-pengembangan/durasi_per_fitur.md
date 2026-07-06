@@ -19,20 +19,20 @@ Kalkulasi durasi secara otomatis di akhir iterasi.
 
 | # | Fitur / Komponen | File Utama | Mulai | Selesai | Durasi | Kesulitan | Catatan |
 |---|-----------------|-----------|-------|---------|--------|-----------|---------|
-| 1 | Setup project & dependencies | `pubspec.yaml` | — | — | — | Rendah | — |
-| 2 | `TransformationController` setup | `canvas_view.dart` | — | — | — | Sedang | — |
-| 3 | `InteractiveViewer` wrapper | `canvas_view.dart` | — | — | — | Rendah | — |
-| 4 | Inversi matriks koordinat screen→canvas | `canvas_controller.dart` | — | — | — | Tinggi | Kritis: matematis |
-| 5 | Metamodel `StorageNode` | `metamodel.dart` | — | — | — | Rendah | — |
-| 6 | Metamodel `EntityNode` | `metamodel.dart` | — | — | — | Rendah | — |
-| 7 | Metamodel `QueryVectorNode` | `metamodel.dart` | — | — | — | Rendah | — |
-| 8 | `StorageNodePainter` | `painters/storage_node_painter.dart` | — | — | — | Sedang | — |
-| 9 | `EntityNodePainter` | `painters/entity_node_painter.dart` | — | — | — | Sedang | — |
-| 10 | `QueryVectorPainter` | `painters/query_vector_painter.dart` | — | — | — | Sedang | — |
-| 11 | Riverpod `DiagramNotifier` | `state.dart` | — | — | — | Sedang | — |
-| 12 | Unit test fondasi | `test/foundation_test.dart` | — | — | — | Rendah | — |
-| 13 | Integration test headed 1a | `integration_test/app_test.dart` | — | — | — | Sedang | — |
-| — | **TOTAL ITERASI 1a** | — | — | — | **— jam** | — | — |
+| 1 | Setup project & dependencies | `pubspec.yaml` | 11:10 (June 27) | 11:40 (June 27) | 30m | Rendah | Selesai |
+| 2 | `TransformationController` setup | `canvas_view.dart` | 10:29 (July 6) | 10:34 (July 6) | 5m | Sedang | Selesai |
+| 3 | `InteractiveViewer` wrapper | `canvas_view.dart` | 10:34 (July 6) | 10:36 (July 6) | 2m | Rendah | Selesai |
+| 4 | Inversi matriks koordinat screen→canvas | `canvas_view.dart` | 11:12 (July 6) | 11:14 (July 6) | 2m | Tinggi | Kritis |
+| 5 | Metamodel `StorageNode` | `metamodel.dart` | 11:40 (June 27) | 11:50 (June 27) | 10m | Rendah | Selesai |
+| 6 | Metamodel `EntityNode` | `metamodel.dart` | 11:50 (June 27) | 12:00 (June 27) | 10m | Rendah | Selesai |
+| 7 | Metamodel `QueryVectorNode` | `metamodel.dart` | 12:00 (June 27) | 12:08 (June 27) | 8m | Rendah | Selesai |
+| 8 | `StorageNodePainter` | `structural_node.dart` | 12:08 (June 27) | 12:18 (June 27) | 10m | Sedang | Selesai |
+| 9 | `EntityNodePainter` | `entity_node.dart` | 12:18 (June 27) | 12:28 (June 27) | 10m | Sedang | Selesai |
+| 10 | `QueryVectorPainter` | `query_vector.dart` | 12:28 (June 27) | 12:37 (June 27) | 9m | Sedang | Selesai |
+| 11 | Riverpod `DiagramNotifier` | `state.dart` | 12:37 (June 27) | 13:13 (June 27) | 36m | Sedang | Selesai |
+| 12 | Unit test fondasi | `test/foundation_test.dart` | 13:13 (June 27) | 13:21 (June 27) | 8m | Rendah | Selesai |
+| 13 | Integration test headed 1a | `integration_test/app_test.dart` | 11:25 (July 6) | 11:51 (July 6) | 26m | Sedang | Selesai |
+| — | **TOTAL ITERASI 1a** | — | — | — | **~3,0 jam** | — | — |
 
 ---
 
@@ -42,13 +42,13 @@ Kalkulasi durasi secara otomatis di akhir iterasi.
 
 | # | Fitur / Komponen | File Utama | Mulai | Selesai | Durasi | Kesulitan | Catatan |
 |---|-----------------|-----------|-------|---------|--------|-----------|---------|
-| 1 | Tap to add node | `canvas_controller.dart` | — | — | — | Sedang | — |
-| 2 | Tap to select + highlight | `canvas_controller.dart` | — | — | — | Sedang | — |
-| 3 | Drag to move node | `canvas_controller.dart` | — | — | — | Tinggi | — |
-| 4 | Delete selected node | `canvas_controller.dart` | — | — | — | Rendah | — |
-| 5 | Edge routing (garis lurus) | `painters/edges_painter.dart` | — | — | — | Sedang | — |
-| 6 | Integration test headed 1b | `integration_test/app_test.dart` | — | — | — | Sedang | — |
-| — | **TOTAL ITERASI 1b** | — | — | — | **— jam** | — | — |
+| 1 | Tap to add node | `sidebar_left.dart` | 11:51 (July 6) | 11:53 (July 6) | 2m | Sedang | Selesai |
+| 2 | Tap to select + highlight | `canvas_view.dart` | 11:53 (July 6) | 11:55 (July 6) | 2m | Sedang | Selesai |
+| 3 | Drag to move node | `canvas_view.dart` | 11:55 (July 6) | 11:58 (July 6) | 3m | Tinggi | Selesai |
+| 4 | Delete selected node | `canvas_view.dart` | 11:58 (July 6) | 12:00 (July 6) | 2m | Rendah | Selesai |
+| 5 | Edge routing (garis lurus) | `edges_painter.dart` | 12:00 (July 6) | 12:05 (July 6) | 5m | Sedang | Selesai |
+| 6 | Integration test headed 1b | `integration_test/app_test.dart` | 12:05 (July 6) | 12:10 (July 6) | 5m | Sedang | Selesai |
+| — | **TOTAL ITERASI 1b** | — | — | — | **~0,6 jam** | — | — |
 
 ---
 
