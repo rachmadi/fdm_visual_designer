@@ -16,7 +16,7 @@ Tuliskan entri baru di bawah setiap iterasi secara kumulatif. Jangan menghapus r
 Setiap drift dikategorikan berdasarkan sumbernya:
 | Sumber | Keterangan |
 |---|---|
-| Intent Architect (IA) | Perubahan dari revisi requirement, klarifikasi, atau perubahan keputusan pengguna |
+| Intent Architect (IA) | Perubahan dari revisi requirement, klarifikasi, atau perubahan keputusan Intent Architect |
 | Agen | Keputusan mandiri Antigravity selama implementasi |
 | Eksternal | Dipicu faktor luar: perubahan API, dependency deprecated, keterbatasan framework, kondisi environment |
 
@@ -38,7 +38,7 @@ Canvas berhasil dibuat menggunakan `InteractiveViewer` + controller + inversi ma
 
 | Aspek | Intent Awal | Eksekusi Aktual | Alasan Drift | Sumber | Disetujui IA? |
 |---|---|---|---|---|---|
-| Stack Teknologi | React Flow + React/TS | Flutter Web + CustomPainter | User meminta opsi menggunakan Flutter Web untuk kemudahan mobile/cross-platform | IA | Ya |
+| Stack Teknologi | React Flow + React/TS | Flutter Web + CustomPainter | Intent Architect meminta opsi menggunakan Flutter Web untuk kemudahan mobile/cross-platform | IA | Ya |
 | Library Icon | Lucide Icons untuk tombol | Material Icons bawaan | Package lucide_icons error fatal dengan SDK Flutter terbaru | Eksternal | Ya |
 
 ---
@@ -48,7 +48,7 @@ Canvas berhasil dibuat menggunakan `InteractiveViewer` + controller + inversi ma
 | No | Yang Dilakukan Agen | Kategori | Ada di Spesifikasi? | Alasan Agen | Dampak | Diterima IA? |
 |---|---|---|---|---|---|---|
 | 1 | Sempat menggunakan gesture `Listener` manual | B2 — Keputusan teknis | Tidak | Khawatir bentrok gesture drag node dengan pan canvas | Moderate — dikoreksi kembali ke InteractiveViewer di Sesi 2 | Ya |
-| 2 | Menambahkan panel keyboard shortcuts UI | B1 — Penambahan | Tidak | UX mempermudah pengguna melihat panduan pintasan | Minor | Ya |
+| 2 | Menambahkan panel keyboard shortcuts UI | B1 — Penambahan | Tidak | UX mempermudah Intent Architect melihat panduan pintasan | Minor | Ya |
 
 ## Ringkasan Drift Inisiatif Agen
 | Metrik | Nilai |
