@@ -29,6 +29,7 @@ void main() {
       // 1. Launch the app
       app.main();
       await tester.pumpAndSettle();
+      await Future.delayed(const Duration(seconds: 2)); // Wait to let user see empty state
 
       // Capture screenshot 1: Empty canvas startup state
       await takeScreenshot(tester, '1_launch_screen');
@@ -41,12 +42,14 @@ void main() {
       final addEntityBtn = find.text('Add Entity Node');
 
       // 3. Add 5 Structural Nodes and 5 Entity Nodes (total 10 nodes)
-      // They will spawn in the 4-column Grid Layout we implemented.
+      // We add them with 1-second delays so the grid filling is visible.
       for (int i = 0; i < 5; i++) {
         await tester.tap(addStructuralBtn);
         await tester.pumpAndSettle();
+        await Future.delayed(const Duration(milliseconds: 500));
         await tester.tap(addEntityBtn);
         await tester.pumpAndSettle();
+        await Future.delayed(const Duration(milliseconds: 500));
       }
 
       // 4. Verify that we have multiple nodes on the canvas
@@ -55,6 +58,7 @@ void main() {
 
       // Capture screenshot 2: After adding 10 nodes in a grid layout (proving no overlap)
       await takeScreenshot(tester, '2_added_10_nodes_grid');
+      await Future.delayed(const Duration(seconds: 2)); // Let user see the grid
 
       // 5. Select one of the structural nodes
       await tester.tap(find.text('new_collection').first);
@@ -66,9 +70,9 @@ void main() {
 
       // Capture screenshot 3: Selected node showing right sidebar properties
       await takeScreenshot(tester, '3_selected_node_properties');
+      await Future.delayed(const Duration(seconds: 2));
 
       // 6. Simulate a real multi-pointer Pinch Zoom Out gesture in the center of the canvas.
-      // Canvas is generally in the middle-right area. We target Offset(800, 500).
       final Offset zoomCenterLeft = const Offset(700.0, 500.0);
       final Offset zoomCenterRight = const Offset(900.0, 500.0);
 
@@ -87,6 +91,7 @@ void main() {
 
       // Capture screenshot 4: After zooming out (proving grid & nodes scale stably without drift)
       await takeScreenshot(tester, '4_zoomed_out_canvas');
+      await Future.delayed(const Duration(seconds: 3)); // Let user see the zoomed out state
 
       // 7. Simulate dragging a node at this scaled zoom level to prove drag delta calculation is correct.
       final Finder nodeToDrag = find.text('new_collection').first;
@@ -108,8 +113,9 @@ void main() {
       // Send all screenshots to the driver
       binding.reportData = {'screenshots': screenshotQueue};
 
-      // Pause a bit to let headed browser display the completed state
-      await Future.delayed(const Duration(seconds: 3));
+      // CRITICAL: Pause for 20 seconds at the end of the test so the browser window
+      // stays open on the user's screen long enough to be inspected.
+      await Future.delayed(const Duration(seconds: 20));
     });
   });
 }
