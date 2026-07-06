@@ -86,3 +86,10 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Penambahan `onPointerCancel` pada `Listener` kanvas untuk mereset state drag dengan andal.
 - **Penumpukan Posisi Spawn Node (Overlap)**: Mengubah penentuan posisi koordinat spawn node baru dari acak `(1350–1550)` menjadi berbasis **Grid Layout** (4 kolom, masing-masing cell berukuran 280x220px) dengan jitter ringan (±20px) di `sidebar_left.dart`. Hal ini menjamin 10+ node baru yang ditambahkan berurutan tidak saling tumpang tindih secara visual.
 
+## [1.3.2] - 2026-07-06 (Perbaikan Bug Viewport Constraint)
+
+### Fixed (Perbaikan Bug)
+- **Viewport Constraint / Bounded Child scale bug**: Memperbaiki masalah kritis di mana InteractiveViewer menciutkan canvas 4000x4000 menjadi ukuran viewport layar (misal 800x600) karena property `constrained` secara default bernilai `true`.
+  - Menambahkan `constrained: false` secara eksplisit pada `InteractiveViewer` di `canvas_view.dart`. Ini memungkinkan canvas mempertahankan ukuran aslinya 4000x4000 sehingga semua hit-test koordinat dan rendering node pada posisi `(1200, 1300)` dan seterusnya menjadi presisi dan tidak melayang secara liar saat di-zoom/panning.
+
+

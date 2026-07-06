@@ -185,6 +185,28 @@
 | Pembaruan Dokumentasi IIDD & Commit Git | 11:05 | 11:08 | ~3 menit |
 | **Total Sesi** | **10:45** | **11:08** | **~23 menit** |
 
+### Sesi: Perbaikan Bug Viewport Constraint (InteractiveViewer) & Headed E2E Verification (2026-07-06)
+
+**Ringkasan:**
+- **Analisis & Identifikasi Masalah**: Ditemukan bahwa penyeretan node saat zoom/pan tetap bermasalah (node lompat/drift ke kanan bawah dan grid terpotong). Setelah dianalisis mendalam, teridentifikasi bahwa parameter `constrained` pada `InteractiveViewer` secara default bernilai `true`. Hal ini memaksa ukuran widget anak (`SizedBox` canvas 4000x4000) menciut mengikuti ukuran viewport layar (misal 800x600). Akibatnya, koordinat besar `(1200, 1300)` berada di luar bounds widget anak, merusak hit-testing dan posisi relatif saat di-scale/panning.
+- **Solusi Teknis**:
+  - Menambahkan `constrained: false` pada `InteractiveViewer` di [canvas_view.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/canvas_view.dart) agar canvas anak mempertahankan ukuran aslinya `(4000x4000)`.
+- **Verifikasi**:
+  - Menjalankan **Interactive Headed Testing** secara penuh di browser Chrome. Peringatan hit-test offset yang sebelumnya muncul kini 100% hilang karena area canvas ter-render penuh di dalam viewport.
+  - Mengambil 4 file screenshot hasil uji coba E2E terbaru dan menyalinnya ke repositori proyek `dokumentasi-pengembangan/screenshots/iterasi_1a/` dan workspace artifacts.
+  - Membangun ulang produksi web (`flutter build web`) dan deploy ulang ke Vercel ([fdm-vd.vercel.app](https://fdm-vd.vercel.app)).
+
+| Tahap | Waktu Mulai (WIB) | Waktu Selesai (WIB) | Durasi |
+|---|---|---|---|
+| Analisis Code & Debugging Viewport Constraint | 11:08 | 11:12 | ~4 menit |
+| Edit canvas_view.dart (Add constrained: false) | 11:12 | 11:14 | ~2 menit |
+| Run full headed integration tests (flutter drive) | 11:14 | 11:18 | ~4 menit |
+| Analisis visual hasil screenshot baru | 11:18 | 11:20 | ~2 menit |
+| Web Build & Deploy ke Vercel | 11:20 | 11:23 | ~3 menit |
+| Sync Git Commit & Push | 11:23 | 11:25 | ~2 menit |
+| **Total Sesi** | **11:08** | **11:25** | **~17 menit** |
+
+
 
 
 

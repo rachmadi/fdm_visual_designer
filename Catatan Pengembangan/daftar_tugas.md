@@ -44,6 +44,8 @@
   - [x] Inisialisasi folder `dokumentasi-pengembangan/` dengan 13 file log kumulatif IIDD
   - [x] Perbaikan bug zoom & penyeretan node liar (Multi-touch drag abort & canvas-space delta)
   - [x] Implementasi Grid-based Spawn Layout untuk mencegah penumpukan 10+ node baru
+  - [x] Perbaikan bug viewport constraint (constrained: false) untuk menjaga kestabilan posisi node saat di-zoom/panning
+
 
 
 ## Rencana Selanjutnya (Peningkatan Masa Depan)

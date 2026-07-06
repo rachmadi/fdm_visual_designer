@@ -262,6 +262,7 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
           // the InteractiveViewer from capturing our drag gesture
           panEnabled: !_isDraggingNode,
           scaleEnabled: !_isDraggingNode,
+          constrained: false,
           boundaryMargin: const EdgeInsets.all(500),
           minScale: 0.1,
           maxScale: 4.0,

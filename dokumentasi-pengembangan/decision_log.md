@@ -111,7 +111,21 @@
 
 ---
 
+### D-007: Non-constrained Child on InteractiveViewer
+
+- **Tanggal**: 2026-07-06
+- **Dibuat oleh**: Agen (perbaikan bug drift viewport)
+- **Konteks**: Meskipun delta drag telah menggunakan inversi matriks canvas-space, node-node tetap melayang ke kanan bawah atau menghilang saat pengguna melakukan zoom in/out. Penyelidikan mendalam menemukan bahwa InteractiveViewer secara default membatasi (constrain) ukuran widget anak agar pas dengan viewport layar (misal 800x600), mengabaikan `SizedBox` canvas 4000x4000. Hal ini menyebabkan node yang diposisikan di koordinat besar (seperti 1200, 1300) dirender di luar batas widget anak, merusak hit-testing dan kalkulasi penskalaan relatif.
+- **Keputusan**: Tambahkan `constrained: false` secara eksplisit pada widget `InteractiveViewer` di [canvas_view.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/canvas_view.dart).
+- **Alternatif yang Ditolak**: Menggunakan ukuran canvas kecil (misal 1000x1000) yang pas dengan layar (membatasi area kerja diagram).
+- **Alasan Pemilihan**: Menghilangkan constraint adalah cara yang didokumentasikan di Flutter agar widget anak berukuran besar (canvas 4000x4000) ter-render penuh di dalam bounding box aslinya, sehingga seluruh transformasi Matrix4 berjalan presisi.
+- **Dampak**: Seluruh 4000x4000 canvas ter-render penuh dengan grid merata, dan penempatan/scale node sangat stabil.
+- **Iterasi Terdampak**: 1a
+
+---
+
 *[Tambahkan keputusan baru di bawah ini saat iterasi 1a berlangsung]*
+
 
 
 ---
