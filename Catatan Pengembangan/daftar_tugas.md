@@ -55,3 +55,5 @@
 
 - [ ] Integrasi Algoritma Auto-Layout otomatis berbasis Dagre (Dart port)
 - [ ] Penambahan visual Minimap di sudut kanan bawah canvas
+- [ ] Pengaktifan 4 titik koneksi (atas, bawah, kiri, kanan) pada node dengan pergeseran dinamis otomatis (dynamic anchor switching) ketika node dipindahkan
+

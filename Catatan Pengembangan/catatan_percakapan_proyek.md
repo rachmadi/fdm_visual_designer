@@ -279,6 +279,11 @@
 | Deploy ke Vercel & Commit Git | 12:06 | 12:10 | ~4 menit |
 | **Total Sesi** | **11:51** | **12:10** | **~19 menit** |
 
+### Catatan Penting untuk Iterasi Mendatang (Koneksi Hubungan):
+*   **Dynamic 4-Sided Connection Anchors**: Saat mengimplementasikan sistem koneksi relasi node (Iterasi 1b/2a), titik koneksi (anchor points) pada setiap node harus mencakup **4 sisi** (atas, bawah, kiri, kanan), bukan hanya atas dan bawah.
+*   **Automatic Anchor Switching**: Titik koneksi harus berpindah secara otomatis memilih sisi terdekat (closest distance) secara dinamis ketika salah satu node digeser ke arah koordinat yang berbeda relatif terhadap node pasangannya.
+
+
 
 
 
