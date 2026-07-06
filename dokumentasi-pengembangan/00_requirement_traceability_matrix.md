@@ -1,0 +1,99 @@
+# 📊 Requirement Traceability Matrix (RTM)
+## FDM Visual Designer — Spesifikasi Revisi 3 Final
+
+> Matriks ini memetakan setiap requirement ke iterasi implementasi, status pengerjaan, dan file implementasi terkait.
+> Status diperbarui di setiap akhir iterasi.
+
+---
+
+## Legend Status
+
+| Simbol | Keterangan |
+|--------|------------|
+| 🕒 | Belum dimulai |
+| 🔄 | Sedang dikerjakan |
+| ✅ | Selesai & terverifikasi |
+| ❌ | Ditolak / Tidak diimplementasi |
+| ⚠️ | Perlu perhatian / Partial |
+
+---
+
+## Matriks Ketertelusuran Requirement
+
+| No | ID Req | Deskripsi Requirement | Iterasi | Status | File Implementasi |
+|----|--------|-----------------------|---------|--------|-------------------|
+| 1 | REQ-001 | Canvas interaktif menggunakan `InteractiveViewer` untuk pan & zoom | 1a | 🕒 Belum dimulai | `lib/features/canvas/canvas_view.dart` |
+| 2 | REQ-002 | Transformasi koordinat menggunakan inversi matriks (bukan listener manual) | 1a | 🕒 Belum dimulai | `lib/features/canvas/canvas_controller.dart` |
+| 3 | REQ-003 | Metamodel `StorageNode` dengan properti: id, label, type, position | 1a | 🕒 Belum dimulai | `lib/core/metamodel.dart` |
+| 4 | REQ-004 | Metamodel `EntityNode` dengan properti: id, label, fields, position | 1a | 🕒 Belum dimulai | `lib/core/metamodel.dart` |
+| 5 | REQ-005 | Metamodel `QueryVectorNode` dengan properti: id, label, vectors, position | 1a | 🕒 Belum dimulai | `lib/core/metamodel.dart` |
+| 6 | REQ-006 | `CustomPainter` untuk rendering node Storage (persegi panjang berlabel) | 1a | 🕒 Belum dimulai | `lib/features/canvas/painters/storage_node_painter.dart` |
+| 7 | REQ-007 | `CustomPainter` untuk rendering node Entity (oval/elips berlabel) | 1a | 🕒 Belum dimulai | `lib/features/canvas/painters/entity_node_painter.dart` |
+| 8 | REQ-008 | `CustomPainter` untuk rendering node Query Vector (dokumen berlabel) | 1a | 🕒 Belum dimulai | `lib/features/canvas/painters/query_vector_painter.dart` |
+| 9 | REQ-009 | State management menggunakan Riverpod `StateNotifier` / `Notifier` | 1a | 🕒 Belum dimulai | `lib/core/state.dart` |
+| 10 | REQ-010 | Menambahkan node baru ke canvas via tap pada area kosong | 1b | 🕒 Belum dimulai | `lib/features/canvas/canvas_controller.dart` |
+| 11 | REQ-011 | Menyeleksi node dengan tap; tampilkan highlight selection | 1b | 🕒 Belum dimulai | `lib/features/canvas/canvas_controller.dart` |
+| 12 | REQ-012 | Memindahkan node dengan drag gesture | 1b | 🕒 Belum dimulai | `lib/features/canvas/canvas_controller.dart` |
+| 13 | REQ-013 | Menghapus node yang terseleksi via tombol Delete atau toolbar | 1b | 🕒 Belum dimulai | `lib/features/canvas/canvas_controller.dart` |
+| 14 | REQ-014 | Edge routing dasar antara dua node (garis lurus dengan arrow) | 1b | 🕒 Belum dimulai | `lib/features/canvas/painters/edges_painter.dart` |
+| 15 | REQ-015 | Property Panel untuk Entity Node: tambah, edit, hapus field | 2a | 🕒 Belum dimulai | `lib/features/sidebar/property_panel_entity.dart` |
+| 16 | REQ-016 | Property Panel untuk Storage Node: konfigurasi tipe, label, path | 2a | 🕒 Belum dimulai | `lib/features/sidebar/property_panel_storage.dart` |
+| 17 | REQ-017 | Validasi form properti: nama field tidak boleh kosong | 2a | 🕒 Belum dimulai | `lib/core/validators.dart` |
+| 18 | REQ-018 | Property Panel untuk Query Vector Node: edit vector queries | 2b | 🕒 Belum dimulai | `lib/features/sidebar/property_panel_query.dart` |
+| 19 | REQ-019 | Dukungan tipe properti: String, Number, Boolean, Map, List, Timestamp | 2b | 🕒 Belum dimulai | `lib/core/metamodel.dart` |
+| 20 | REQ-020 | Edge tipe Referencing: garis panah dengan label "ref" | 3a | 🕒 Belum dimulai | `lib/features/canvas/painters/edges_painter.dart` |
+| 21 | REQ-021 | Edge tipe Denormalized: garis panah putus-putus dengan label "den" | 3a | 🕒 Belum dimulai | `lib/features/canvas/painters/edges_painter.dart` |
+| 22 | REQ-022 | Edge tipe Embedding: garis tebal solid dengan label "emb" | 3a | 🕒 Belum dimulai | `lib/features/canvas/painters/edges_painter.dart` |
+| 23 | REQ-023 | Routing kurva Bézier untuk edge agar tidak saling menimpa | 3a | 🕒 Belum dimulai | `lib/features/canvas/painters/edges_painter.dart` |
+| 24 | REQ-024 | Security Boundary: gambar area boundary dengan klik-drag | 3b | 🕒 Belum dimulai | `lib/features/canvas/security_boundary.dart` |
+| 25 | REQ-025 | Security Boundary: resize handle di sudut dan tepi | 3b | 🕒 Belum dimulai | `lib/features/canvas/security_boundary.dart` |
+| 26 | REQ-026 | Security Boundary: deteksi node yang berada di dalam area | 3b | 🕒 Belum dimulai | `lib/features/canvas/security_boundary.dart` |
+| 27 | REQ-027 | WFR R1: Alternasi ketat Firestore (SN → EN → SN) | 4a | 🕒 Belum dimulai | `lib/core/validation_engine.dart` |
+| 28 | REQ-028 | WFR R2: Target referencing harus ada dan bertipe Entity Node | 4a | 🕒 Belum dimulai | `lib/core/validation_engine.dart` |
+| 29 | REQ-029 | WFR R3: Source property key dari Denormalized harus terdefinisi | 4a | 🕒 Belum dimulai | `lib/core/validation_engine.dart` |
+| 30 | REQ-030 | WFR R4: Dynamic path harus menggunakan prefix `$` atau kurung kurawal | 4a | 🕒 Belum dimulai | `lib/core/validation_engine.dart` |
+| 31 | REQ-031 | WFR R5: Query Vector mereferensikan properti yang terdefinisi | 4a | 🕒 Belum dimulai | `lib/core/validation_engine.dart` |
+| 32 | REQ-032 | WFR R6: Peringatan partial overlap pada Security Boundary | 4a | 🕒 Belum dimulai | `lib/core/validation_engine.dart` |
+| 33 | REQ-033 | WFR R7: Peringatan fisik — tipe kompleks tak berbatas (limit 1MB) | 4a | 🕒 Belum dimulai | `lib/core/validation_engine.dart` |
+| 34 | REQ-034 | WFR R8: Peringatan fisik — high frequency writes (>1/s) | 4a | 🕒 Belum dimulai | `lib/core/validation_engine.dart` |
+| 35 | REQ-035 | Overlay pesan error/warning pada node yang tidak valid | 4a | 🕒 Belum dimulai | `lib/features/canvas/painters/validation_overlay_painter.dart` |
+| 36 | REQ-036 | Ekspor diagram ke format PNG resolusi tinggi | 4b | 🕒 Belum dimulai | `lib/features/toolbar/export_handler.dart` |
+| 37 | REQ-037 | Ekspor diagram ke format SVG | 4b | 🕒 Belum dimulai | `lib/features/toolbar/export_handler.dart` |
+| 38 | REQ-038 | Ekspor/Impor diagram ke format JSON | 4b | 🕒 Belum dimulai | `lib/core/serialization.dart` |
+| 39 | REQ-039 | Zoom controls: zoom in, zoom out, reset, fit-to-screen | 4b | 🕒 Belum dimulai | `lib/features/toolbar/toolbar.dart` |
+| 40 | REQ-040 | Highlight node saat hover (warna border berubah) | 5a | 🕒 Belum dimulai | `lib/features/canvas/canvas_view.dart` |
+| 41 | REQ-041 | Animasi transisi saat node dipilih (scale/fade) | 5a | 🕒 Belum dimulai | `lib/features/canvas/canvas_view.dart` |
+| 42 | REQ-042 | Sidebar kiri: palette untuk drag-and-drop node ke canvas | 5b | 🕒 Belum dimulai | `lib/features/sidebar/sidebar_left.dart` |
+| 43 | REQ-043 | Sidebar kanan: detail panel untuk node yang terseleksi | 5b | 🕒 Belum dimulai | `lib/features/sidebar/sidebar_right.dart` |
+| 44 | REQ-044 | Undo stack: Command Pattern untuk semua aksi destructive | 6a | 🕒 Belum dimulai | `lib/core/command_manager.dart` |
+| 45 | REQ-045 | Redo stack: kembalikan aksi yang di-undo | 6a | 🕒 Belum dimulai | `lib/core/command_manager.dart` |
+| 46 | REQ-046 | Multi-select node dengan Ctrl+Click atau rubber-band selection | 6b | 🕒 Belum dimulai | `lib/features/canvas/canvas_controller.dart` |
+| 47 | REQ-047 | Group move: pindahkan semua node yang terseleksi sekaligus | 6b | 🕒 Belum dimulai | `lib/features/canvas/canvas_controller.dart` |
+| 48 | REQ-048 | Alignment tools: align left, center, right, top, middle, bottom | 6b | 🕒 Belum dimulai | `lib/features/toolbar/alignment_tools.dart` |
+| 49 | REQ-049 | Grid snap: node terkunci ke grid saat dipindahkan | 6b | 🕒 Belum dimulai | `lib/features/canvas/canvas_controller.dart` |
+| 50 | REQ-050 | Headed integration test lulus untuk semua fitur sebelum rilis | 7 | 🕒 Belum dimulai | `integration_test/app_test.dart` |
+
+---
+
+## Ringkasan Status RTM
+
+| Iterasi | Total REQ | ✅ Selesai | 🔄 Berjalan | 🕒 Belum |
+|---------|-----------|-----------|------------|---------|
+| 1a | 9 | 0 | 0 | 9 |
+| 1b | 5 | 0 | 0 | 5 |
+| 2a | 3 | 0 | 0 | 3 |
+| 2b | 2 | 0 | 0 | 2 |
+| 3a | 4 | 0 | 0 | 4 |
+| 3b | 3 | 0 | 0 | 3 |
+| 4a | 9 | 0 | 0 | 9 |
+| 4b | 4 | 0 | 0 | 4 |
+| 5a | 2 | 0 | 0 | 2 |
+| 5b | 2 | 0 | 0 | 2 |
+| 6a | 2 | 0 | 0 | 2 |
+| 6b | 4 | 0 | 0 | 4 |
+| 7 | 1 | 0 | 0 | 1 |
+| **Total** | **50** | **0** | **0** | **50** |
+
+---
+
+*Dokumen ini dibuat: 2026-07-06 | Spesifikasi: Revisi 3 Final | Diperbarui: setiap akhir iterasi*

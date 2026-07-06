@@ -134,4 +134,28 @@
 | Deploy ke Vercel (fdm-vd.vercel.app) | 10:15 | 10:28 | ~13 menit |
 | **Total Sesi Baru** | **10:15** | **10:28** | **~13 menit** |
 
+### Sesi: Penyesuaian Arsitektur Canvas ke Revisi 3 Final (2026-07-06)
+
+**Ringkasan:**
+- Membaca dokumen spesifikasi `Spesifikasi_FDM_Visual_Designer_Flutter (Revisi 3 Final).docx` secara menyeluruh.
+- Mendeploy aplikasi ke Vercel dengan nama proyek `fdm-vd` dan alias `fdm-vd.vercel.app`.
+- Melakukan refaktor `canvas_view.dart`: menghapus arsitektur `Listener` manual dan menggantinya kembali dengan `InteractiveViewer` + `TransformationController` sesuai spesifikasi Revisi 3 Bagian 2.2.
+- Kunci implementasi: inversi matriks koordinat (`Matrix4.inverted()`) untuk mengkonversi posisi pointer dari screen-space ke canvas-space, dan penonaktifan `panEnabled`/`scaleEnabled` secara dinamis saat drag node aktif untuk mencegah konflik gesture.
+- Menginisialisasi folder `dokumentasi-pengembangan/` dengan 13 file log kumulatif IIDD sesuai Bagian 8 spesifikasi.
+- Menambahkan `vector_math: ^2.2.0` sebagai dependensi eksplisit di `pubspec.yaml`.
+- Semua 8 unit test WFR lulus. E2E Integration Test lulus (`All tests passed!`).
+
+| Tahap | Waktu Mulai (WIB) | Waktu Selesai (WIB) | Durasi |
+|---|---|---|---|
+| Baca Spesifikasi Revisi 3 | 10:15 | 10:22 | ~7 menit |
+| Deploy ke Vercel (fdm-vd) | 10:22 | 10:28 | ~6 menit |
+| Refaktor canvas_view.dart (InteractiveViewer) | 10:29 | 10:34 | ~5 menit |
+| Fix lint errors & pub get | 10:34 | 10:36 | ~2 menit |
+| Unit test (flutter test) | 10:36 | 10:37 | ~1 menit |
+| E2E Integration Test (flutter drive) | 10:37 | 10:40 | ~3 menit |
+| Build Web & Deploy Ulang ke Vercel | 10:40 | 10:43 | ~3 menit |
+| Pembaruan Catatan & Commit | 10:43 | 10:45 | ~2 menit |
+| **Total Sesi** | **10:29** | **10:45** | **~16 menit** |
+
+
 

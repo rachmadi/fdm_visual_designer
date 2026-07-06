@@ -40,6 +40,8 @@
   - [x] Memperbaiki seluruh error kompilasi dan sukses build produksi (`flutter build web`)
   - [x] Resolusi Bug Penyeretan Node & Konflik Gesture Arena (Final)
   - [x] Deploy ke Vercel dengan alias fdm-vd.vercel.app
+  - [x] Refaktor `canvas_view.dart` ke arsitektur `InteractiveViewer` + inversi matriks sesuai Revisi 3 Final Bagian 2.2
+  - [x] Inisialisasi folder `dokumentasi-pengembangan/` dengan 13 file log kumulatif IIDD
 
 ## Rencana Selanjutnya (Peningkatan Masa Depan)
 

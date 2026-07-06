@@ -64,3 +64,16 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
 
 ### Added (Penambahan Fitur)
 - **Deployment ke Vercel**: Sukses deploy web build produksi ke Vercel dengan domain proyek formal [fdm-vd.vercel.app](https://fdm-vd.vercel.app).
+
+## [1.3.0] - 2026-07-06 (Penyesuaian Revisi 3 Final)
+
+### Changed (Perubahan Arsitektur)
+- **Refaktor Canvas Engine ke `InteractiveViewer` + Inversi Matriks**: Menghapus arsitektur `Listener` manual (yang sebelumnya diterapkan untuk menghindari konflik gesture) dan menggantinya dengan kombinasi `InteractiveViewer` + `TransformationController` sesuai spesifikasi Revisi 3 Final Bagian 2.2.
+  - Koordinat pointer dari screen-space kini ditransformasi ke canvas-space menggunakan `Matrix4.inverted()` untuk hit-testing node yang akurat.
+  - Konflik gesture diatasi dengan menonaktifkan `panEnabled` dan `scaleEnabled` pada `InteractiveViewer` secara dinamis saat drag node aktif, lalu mengaktifkannya kembali saat drag selesai.
+  - Grid cell size disesuaikan dari 40px menjadi 20px sesuai spesifikasi (Bagian 2.4).
+  - Mode tag (Firestore/RTDB) kini dirender langsung di dalam kanvas sebagai overlay teks berwarna sesuai mode.
+
+### Added (Penambahan)
+- **Dependensi `vector_math: ^2.2.0`**: Ditambahkan sebagai dependensi eksplisit di `pubspec.yaml` karena digunakan langsung oleh `canvas_view.dart` untuk operasi `Vector3` dalam inversi matriks koordinat.
+- **Folder `dokumentasi-pengembangan/`**: Menginisialisasi 13 file log kumulatif IIDD sesuai Bagian 8 spesifikasi Revisi 3 Final, meliputi: `00_estimasi_waktu.md`, `00_requirement_traceability_matrix.md`, `context_drift_log.md`, `validation_log.md`, `conversation_log.md`, `decision_log.md`, `commit_history.md`, `iteration_summary.md`, `waktu_estimasi_vs_realisasi.md`, `durasi_per_fitur.md`, `human_intervention.md`, `error_log.md`, dan `interactive_test_log.md`.
