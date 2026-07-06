@@ -65,7 +65,7 @@
 ### D-004: Inversi Matriks Transformasi Koordinat Canvas
 - **Tanggal**: 2026-07-06
 - **Dibuat oleh**: Bersama (Spesifikasi Revisi 3 & Agen)
-- **Konteks**: Panning/zooming manual dengan Listener mengalami drift offset saat pengguna mengeklik atau menyeret node di canvas.
+- **Konteks**: Panning/zooming manual dengan Listener mengalami drift offset saat Intent Architect mengeklik atau menyeret node di canvas.
 - **Keputusan**: Menggunakan wrapper `InteractiveViewer` bawaan dan mengalikan koordinat pointer dengan inversi matriks transformasi (`Matrix4.inverted()`) untuk mengkonversi dari screen-space ke canvas-space secara akurat.
 - **Alternatif yang Ditolak**: Perhitungan offset manual terpisah (tidak akurat).
 - **Alasan Pemilihan**: Matematika inversi matriks menjamin konversi posisi pointer yang 100% akurat tanpa drift kumulatif pada tingkat zoom apa pun.
@@ -79,7 +79,7 @@
 - **Dibuat oleh**: Agen
 - **Konteks**: Saat menggunakan pinch-to-zoom (dua jari), event pointer dari jari kedua memicu deteksi drag node secara salah, membuat node melayang liar.
 - **Keputusan**: Hanya memproses drag jika id kursor cocok dengan `_activePointerId` (pointer pertama). Drag dibatalkan otomatis (`_abortDrag()`) jika pointer kedua terdeteksi masuk.
-- **Alternatif yang Ditolak**: Menonaktifkan zoom saat kursor berada di atas node (mengurangi navigasi user).
+- **Alternatif yang Ditolak**: Menonaktifkan zoom saat kursor berada di atas node (mengurangi navigasi Intent Architect).
 - **Alasan Pemilihan**: Standar industri untuk mengutamakan zoom/pan navigasi kanvas saat multi-touch aktif.
 - **Dampak**: Zoom/pan stabil dan node tidak lagi melompat liar.
 - **Iterasi Terdampak**: 1a
@@ -113,7 +113,7 @@
 ### D-008: Global HardwareKeyboard Handler
 - **Tanggal**: 2026-07-06
 - **Dibuat oleh**: Agen
-- **Konteks**: Focus node keyboard pintasan (delete, undo/redo) hilang saat pengguna mengeklik kanvas kosong di luar node.
+- **Konteks**: Focus node keyboard pintasan (delete, undo/redo) hilang saat Intent Architect mengeklik kanvas kosong di luar node.
 - **Keputusan**: Mendaftarkan handler pintasan keyboard secara terpusat di `WorkspaceScreen` menggunakan `HardwareKeyboard.instance.addHandler`.
 - **Alternatif yang Ditolak**: Menggunakan widget `Focus` biasa dengan autofocus (tidak andal di web).
 - **Alasan Pemilihan**: `HardwareKeyboard` menangkap event input di tingkat services root, menjamin responsivitas pintasan.
@@ -128,7 +128,7 @@
 - **Konteks**: Pintasan diagram (Ctrl+D untuk delete properti, Ctrl+E untuk export) bentrok dengan bookmark dan search bar browser.
 - **Keputusan**: Memanggil `event.preventDefault()` menggunakan listener `html.window.onKeyDown`.
 - **Alternatif yang Ditolak**: Mengubah pintasan diagram ke tombol non-standar.
-- **Alasan Pemilihan**: Menjaga standar pengalaman pengguna (UX) industri diagram editor.
+- **Alasan Pemilihan**: Menjaga standar User Experience (UX) industri diagram editor.
 - **Dampak**: Fungsi tombol bawaan browser diabaikan khusus selama aplikasi FDM terbuka.
 - **Iterasi Terdampak**: 1a
 

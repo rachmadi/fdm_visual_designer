@@ -196,7 +196,7 @@
 - **Tanggal**: 2026-07-06
 - **Jenis Error**: Test Failure / Visibility
 - **Lokasi**: Sesi Pengujian E2E
-- **Pesan Error**: Jendela headed Chrome browser tidak muncul secara fisik di desktop pengguna.
+- **Pesan Error**: Jendela headed Chrome browser tidak muncul secara fisik di desktop Intent Architect.
 - **Penyebab Root**: Proses ChromeDriver berjalan di dalam sandbox terminal (Session 0) sehingga browser yang dispawn berjalan tersembunyi di background.
 - **Langkah Resolusi**: Menghentikan proses sandboxed dan menjalankan ChromeDriver serta `flutter drive` sebagai perintah `unsandboxed` via Task Scheduler.
 - **Waktu Resolusi**: ~15 menit
@@ -225,7 +225,7 @@
 - **Jenis Error**: Logic
 - **Lokasi**: `lib/main.dart`
 - **Pesan Error**: Tombol shortcut keyboard global tidak berfungsi setelah berinteraksi dengan kanvas.
-- **Penyebab Root**: Widget `Focus` kehilangan fokus input saat pengguna mengklik kanvas luar atau melakukan navigasi.
+- **Penyebab Root**: Widget `Focus` kehilangan fokus input saat Intent Architect mengklik kanvas luar atau melakukan navigasi.
 - **Langkah Resolusi**: Mendaftarkan handler pintasan secara global di `HardwareKeyboard.instance.addHandler(...)` dan menghentikan propagasi dengan return `true`.
 - **Waktu Resolusi**: ~10 menit
 - **Status**: ✅ Resolved

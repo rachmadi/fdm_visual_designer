@@ -10,7 +10,7 @@
 
 Format setiap entri percakapan:
 ```
-**[HH:MM]** 👤 Intent Architect: [pesan pengguna]
+**[HH:MM]** 👤 Intent Architect: [pesan Intent Architect]
 **[HH:MM]** 🤖 Agen: [ringkasan respons/tindakan agen]
 ```
 
@@ -65,9 +65,9 @@ Format setiap entri percakapan:
 * **[16:20]** 👤 Intent Architect: Melaporkan label SN mestinya diletakkan di kotak bagian atas.
 * **[16:22]** 🤖 Agen: Menyelaraskan tata letak agar nama structural node terposisi secara absolut di tab persegi atas dan path di bagian main body secara estetis.
 
-### Sesi 5 — Tanggal: 2026-07-06 (Proteksi Browser Pengguna)
+### Sesi 5 — Tanggal: 2026-07-06 (Proteksi Browser Intent Architect)
 
-* **[16:24]** 👤 Intent Architect: Menegaskan aturan larangan menutup paksa browser pengguna (tidak boleh `taskkill chrome.exe`).
+* **[16:24]** 👤 Intent Architect: Menegaskan aturan larangan menutup paksa browser Intent Architect (tidak boleh `taskkill chrome.exe`).
 * **[16:26]** 🤖 Agen: Menambahkan aturan proteksi browser di `.agents/AGENTS.md`, menghapus skrip cleanup usang di folder `scratch/`, dan membatasi pembersihan proses hanya pada `chromedriver.exe` dan `dart.exe`.
 
 ### Sesi 6 — Tanggal: 2026-07-06 (Aturan Akurasi Dokumentasi)
