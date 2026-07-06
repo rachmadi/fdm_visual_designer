@@ -83,7 +83,36 @@
 
 ---
 
+### D-005: Single-Pointer Tracking untuk Menghindari Konflik Multi-Touch Zoom
+
+- **Tanggal**: 2026-07-06
+- **Dibuat oleh**: Agen (perbaikan bug zoom)
+- **Konteks**: Saat menggunakan pinch-to-zoom (dua jari) pada area canvas yang memiliki node, event pointer dari jari kedua dapat secara keliru memicu deteksi drag node. Ini menyebabkan node tergeser liar ke pojok bawah kanvas karena perubahan scale yang cepat dan pergerakan multi-pointer.
+- **Keputusan**: Implementasi **Single-Pointer Tracking** dengan `_activePointerId` di `canvas_view.dart`. Drag node hanya diproses jika pointer id cocok dengan yang memulai (`_activePointerId`). Jika pointer kedua menyentuh kanvas, sesi drag langsung dibatalkan (`_abortDrag()`) sehingga pengguna dapat melakukan pinch-to-zoom dengan aman tanpa memicu drag.
+- **Alternatif yang Ditolak**:
+  - Menonaktifkan zoom saat kursor berada di atas node (mengurangi kemudahan navigasi).
+  - Menyaring event drag berdasarkan jarak perpindahan minimum (masih rentan terpicu saat pinch cepat).
+- **Alasan Pemilihan**: Membatalkan drag saat multi-touch adalah pendekatan standar dalam diagram editor untuk memprioritaskan navigasi canvas (zoom/pan) saat lebih dari satu jari aktif.
+- **Dampak**: Navigasi zoom/pan stabil dan node tidak lagi melompat/drift.
+- **Iterasi Terdampak**: 1a
+
+---
+
+### D-006: Grid-Based Spawn Layout untuk Mencegah Overlap Node
+
+- **Tanggal**: 2026-07-06
+- **Dibuat oleh**: Agen (laporan bug overlap)
+- **Konteks**: Posisi spawn node acak awal `(1350–1550)` membuat node yang ditambahkan berturut-turut saling menumpuk (overlap) secara visual, mengganggu keterbacaan diagram.
+- **Keputusan**: Gunakan **Grid-based Spawn Layout** (4 kolom, ukuran cell 280x220px) dengan jitter ringan (±20px) di `sidebar_left.dart` berdasarkan jumlah node yang sudah ada di kanvas.
+- **Alternatif yang Ditolak**: Spawn di koordinat statis `(0,0)` (tidak terlihat oleh viewport awal).
+- **Alasan Pemilihan**: Menjamin node terdistribusi dengan rapi dan otomatis saat ditambahkan, langsung berada dalam jangkauan viewport utama.
+- **Dampak**: Penambahan 10+ node berjalan lancar tanpa overlap visual.
+- **Iterasi Terdampak**: 1a
+
+---
+
 *[Tambahkan keputusan baru di bawah ini saat iterasi 1a berlangsung]*
+
 
 ---
 

@@ -26,8 +26,29 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
   }
   void _createNode(NodeType type) {
     final rand = math.Random();
-    // Spawn near viewport center (synced with canvas init viewport at 1450,1450)
-    final pos = Offset(1350.0 + rand.nextInt(200), 1350.0 + rand.nextInt(200));
+    final existingNodes = ref.read(diagramProvider).nodes;
+    final count = existingNodes.length;
+
+    // Grid-based spawn to avoid overlap.
+    // Layout: 4 columns, rows grow downward. Each cell is 280x200px.
+    // Structural nodes spawn in left half, Entity nodes in right half.
+    const double baseX = 1200.0;
+    const double baseY = 1300.0;
+    const double cellW = 280.0;
+    const double cellH = 220.0;
+    const int cols = 4;
+
+    final col = count % cols;
+    final row = count ~/ cols;
+
+    // Add slight random jitter (±20px) so nodes don't line up perfectly
+    final jitterX = rand.nextInt(40) - 20;
+    final jitterY = rand.nextInt(40) - 20;
+
+    final double spawnX = baseX + col * cellW + jitterX;
+    final double spawnY = baseY + row * cellH + jitterY;
+    final pos = Offset(spawnX, spawnY);
+
     final id = 'node_${DateTime.now().millisecondsSinceEpoch}_${rand.nextInt(1000000)}';
     final name = type == NodeType.structural ? 'new_collection' : 'NewEntity';
     final path = type == NodeType.structural ? '/new_collection' : '/new_collection/\$id';
@@ -44,6 +65,7 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
 
     ref.read(diagramProvider.notifier).addNode(newNode);
   }
+
 
   void _createBoundary() {
     final rand = math.Random();

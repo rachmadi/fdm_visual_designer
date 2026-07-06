@@ -56,6 +56,7 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
   String? _draggingNodeId;
   String? _draggingBoundaryId;
   Offset? _lastPointerPosition;
+  int? _activePointerId; // Track the pointer ID currently doing the drag
 
   // Whether we are currently dragging a node (controls InteractiveViewer panEnabled)
   bool _isDraggingNode = false;
@@ -132,7 +133,28 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
     return null;
   }
 
+  void _abortDrag() {
+    if (_draggingNodeId != null || _draggingBoundaryId != null) {
+      ref.read(diagramProvider.notifier).finishDragging();
+    }
+    _draggingNodeId = null;
+    _draggingBoundaryId = null;
+    _lastPointerPosition = null;
+    _activePointerId = null;
+    if (_isDraggingNode) {
+      setState(() => _isDraggingNode = false);
+    }
+  }
+
   void _handlePointerDown(PointerDownEvent event) {
+    // If a drag is already active, this might be a second finger touching the screen.
+    // In that case, we abort the current drag session so that multi-touch pan/zoom
+    // can proceed normally without dragging any nodes.
+    if (_activePointerId != null) {
+      _abortDrag();
+      return;
+    }
+
     final canvasPos = _screenToCanvas(event.localPosition);
     _lastPointerPosition = event.localPosition;
 
@@ -144,6 +166,7 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
       } else {
         ref.read(diagramProvider.notifier).selectNode(nodeId);
         _draggingNodeId = nodeId;
+        _activePointerId = event.pointer;
         // Disable InteractiveViewer pan while we drag a node
         setState(() => _isDraggingNode = true);
       }
@@ -153,6 +176,7 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
     final boundaryId = _hitTestBoundary(canvasPos);
     if (boundaryId != null) {
       _draggingBoundaryId = boundaryId;
+      _activePointerId = event.pointer;
       ref.read(diagramProvider.notifier).selectBoundary(boundaryId);
       setState(() => _isDraggingNode = true); // block IV panning for boundaries too
       return;
@@ -163,13 +187,18 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
   }
 
   void _handlePointerMove(PointerMoveEvent event) {
+    // Ignore events that do not match the active dragging pointer,
+    // or if no drag is currently active.
+    if (_activePointerId == null || event.pointer != _activePointerId) return;
     if (_lastPointerPosition == null) return;
 
     if (_draggingNodeId != null) {
-      // Convert delta to canvas space by computing the scale factor
-      final scale = _transformationController.value.getMaxScaleOnAxis();
-      final delta = event.localPosition - _lastPointerPosition!;
-      final scaledDelta = delta / scale;
+      // CRITICAL: Convert BOTH positions to canvas-space using full matrix inversion.
+      // Simply dividing by scale is WRONG — it ignores the translation component
+      // of the matrix. This caused nodes to drift when zoomed in/out.
+      final currentCanvas = _screenToCanvas(event.localPosition);
+      final prevCanvas = _screenToCanvas(_lastPointerPosition!);
+      final canvasDelta = currentCanvas - prevCanvas;
 
       final node = ref
           .read(diagramProvider)
@@ -177,12 +206,12 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
           .firstWhere((n) => n.id == _draggingNodeId);
       ref.read(diagramProvider.notifier).updateNodePosition(
             _draggingNodeId!,
-            node.position + scaledDelta,
+            node.position + canvasDelta,
           );
     } else if (_draggingBoundaryId != null) {
-      final scale = _transformationController.value.getMaxScaleOnAxis();
-      final delta = event.localPosition - _lastPointerPosition!;
-      final scaledDelta = delta / scale;
+      final currentCanvas = _screenToCanvas(event.localPosition);
+      final prevCanvas = _screenToCanvas(_lastPointerPosition!);
+      final canvasDelta = currentCanvas - prevCanvas;
 
       final boundary = ref
           .read(diagramProvider)
@@ -190,7 +219,7 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
           .firstWhere((b) => b.id == _draggingBoundaryId);
       ref.read(diagramProvider.notifier).updateBoundaryRect(
             _draggingBoundaryId!,
-            boundary.rect.shift(scaledDelta),
+            boundary.rect.shift(canvasDelta),
           );
     }
 
@@ -198,15 +227,8 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
   }
 
   void _handlePointerUp(PointerUpEvent event) {
-    if (_draggingNodeId != null || _draggingBoundaryId != null) {
-      ref.read(diagramProvider.notifier).finishDragging();
-    }
-    _draggingNodeId = null;
-    _draggingBoundaryId = null;
-    _lastPointerPosition = null;
-    // Re-enable InteractiveViewer pan/scale
-    if (_isDraggingNode) {
-      setState(() => _isDraggingNode = false);
+    if (event.pointer == _activePointerId) {
+      _abortDrag();
     }
   }
 
@@ -232,6 +254,7 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
         onPointerDown: _handlePointerDown,
         onPointerMove: _handlePointerMove,
         onPointerUp: _handlePointerUp,
+        onPointerCancel: (_) => _abortDrag(),
         behavior: HitTestBehavior.translucent,
         child: InteractiveViewer(
           transformationController: _transformationController,

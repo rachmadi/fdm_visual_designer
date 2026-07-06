@@ -77,3 +77,12 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
 ### Added (Penambahan)
 - **Dependensi `vector_math: ^2.2.0`**: Ditambahkan sebagai dependensi eksplisit di `pubspec.yaml` karena digunakan langsung oleh `canvas_view.dart` untuk operasi `Vector3` dalam inversi matriks koordinat.
 - **Folder `dokumentasi-pengembangan/`**: Menginisialisasi 13 file log kumulatif IIDD sesuai Bagian 8 spesifikasi Revisi 3 Final, meliputi: `00_estimasi_waktu.md`, `00_requirement_traceability_matrix.md`, `context_drift_log.md`, `validation_log.md`, `conversation_log.md`, `decision_log.md`, `commit_history.md`, `iteration_summary.md`, `waktu_estimasi_vs_realisasi.md`, `durasi_per_fitur.md`, `human_intervention.md`, `error_log.md`, dan `interactive_test_log.md`.
+
+## [1.3.1] - 2026-07-06 (Perbaikan Bug Zoom & Layout Spawn)
+
+### Fixed (Perbaikan Bug)
+- **Bug Penyeretan Saat Zoom (InteractiveViewer)**: Memperbaiki masalah di mana node bergeser secara liar ke kanan bawah kanvas ketika pengguna melakukan pinch-to-zoom atau memindahkan kamera.
+  - Implementasi **Single-Pointer Tracking** dengan `_activePointerId` di `canvas_view.dart`. Drag node hanya diproses jika berasal dari pointer pertama. Jika ada pointer tambahan (misalnya dari gesture pinch-to-zoom), sesi drag akan dibatalkan (`_abortDrag()`) sehingga interaksi zoom/pan kamera tidak terganggu.
+  - Penambahan `onPointerCancel` pada `Listener` kanvas untuk mereset state drag dengan andal.
+- **Penumpukan Posisi Spawn Node (Overlap)**: Mengubah penentuan posisi koordinat spawn node baru dari acak `(1350–1550)` menjadi berbasis **Grid Layout** (4 kolom, masing-masing cell berukuran 280x220px) dengan jitter ringan (±20px) di `sidebar_left.dart`. Hal ini menjamin 10+ node baru yang ditambahkan berurutan tidak saling tumpang tindih secara visual.
+

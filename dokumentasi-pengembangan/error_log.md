@@ -130,7 +130,49 @@
 ## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
 ═══════════════════════════════════════════════════════════════════
 
-*[Tambahkan entri error baru di bawah ini saat iterasi 1a berlangsung]*
+### E-008: Matrix4.translate Deprecation & translateByDouble Positional Argument Error
+
+- **Iterasi**: 1a
+- **Tanggal**: 2026-07-06
+- **Jenis Error**: Compile
+- **Lokasi**: `lib/canvas/canvas_view.dart:71`
+- **Pesan Error**: `Too few positional arguments: 4 required, 2 given`
+- **Penyebab Root**: Method `translateByDouble` memerlukan 3 argumen posisional (x, y, z), sedangkan kami hanya memasukkan 2 argumen untuk memindahkan viewport di bidang 2D.
+- **Langkah Resolusi**: Mengubah pemanggilan menjadi `Matrix4.translationValues(x, y, 0.0)` yang lebih aman dan terhindar dari deprecation.
+- **Waktu Resolusi**: ~5 menit
+- **Status**: ✅ Resolved
+
+---
+
+### E-009: Node Drift & Berkumpul di Kanan Bawah saat Zoom
+
+- **Iterasi**: 1a
+- **Tanggal**: 2026-07-06
+- **Jenis Error**: Logic
+- **Lokasi**: `lib/canvas/canvas_view.dart`
+- **Pesan Error**: Node tidak berada di posisi semula dan berpindah liar ke kanan bawah saat melakukan pinch-to-zoom / scroll zoom.
+- **Penyebab Root**: 
+  1. Delta penyeretan node hanya membagi koordinat screen-space dengan `scale` (mengabaikan translasi matriks).
+  2. Gesture pinch-to-zoom menggunakan dua pointer (multitouch) yang memicu deteksi drag node karena salah satu pointer menyentuh area node.
+- **Langkah Resolusi**: 
+  - Melakukan konversi posisi pointer sebelum dan sesudah menggunakan inversi matriks (`_screenToCanvas`).
+  - Mengimplementasikan `_activePointerId` untuk membatasi drag hanya pada satu pointer (single touch), dan membatalkan drag (`_abortDrag()`) jika terdeteksi pointer tambahan (pinch-to-zoom gesture).
+- **Waktu Resolusi**: ~15 menit
+- **Status**: ✅ Resolved
+
+---
+
+### E-010: Penumpukan Posisi Spawn Node Baru (Overlap)
+
+- **Iterasi**: 1a
+- **Tanggal**: 2026-07-06
+- **Jenis Error**: Logic
+- **Lokasi**: `lib/ui/sidebar_left.dart`
+- **Pesan Error**: Penambahan beberapa node secara beruntun menyebabkan node baru menumpuk di koordinat yang sama.
+- **Penyebab Root**: Posisi spawn acak awal `(1350–1550)` tidak mengecek keberadaan node lain.
+- **Langkah Resolusi**: Mengganti sistem posisi spawn acak menjadi **Grid-based Layout** (4 kolom x baris ke bawah, cell 280x220px) dengan variasi jitter ringan (±20px) berdasarkan jumlah node yang ada.
+- **Waktu Resolusi**: ~5 menit
+- **Status**: ✅ Resolved
 
 ---
 
@@ -146,12 +188,13 @@
 
 | Jenis Error | Total | Resolved | Workaround | Open |
 |-------------|-------|----------|------------|------|
-| Compile | 7 | 7 | 0 | 0 |
+| Compile | 8 | 8 | 0 | 0 |
 | Runtime | 0 | 0 | 0 | 0 |
 | Test Failure | 0 | 0 | 0 | 0 |
-| Logic | 0 | 0 | 0 | 0 |
-| **Total** | **7** | **7** | **0** | **0** |
+| Logic | 2 | 2 | 0 | 0 |
+| **Total** | **10** | **10** | **0** | **0** |
 
 ---
 
 *Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap kali error ditemukan*
+

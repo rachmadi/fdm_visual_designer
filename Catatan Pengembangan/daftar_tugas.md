@@ -42,6 +42,9 @@
   - [x] Deploy ke Vercel dengan alias fdm-vd.vercel.app
   - [x] Refaktor `canvas_view.dart` ke arsitektur `InteractiveViewer` + inversi matriks sesuai Revisi 3 Final Bagian 2.2
   - [x] Inisialisasi folder `dokumentasi-pengembangan/` dengan 13 file log kumulatif IIDD
+  - [x] Perbaikan bug zoom & penyeretan node liar (Multi-touch drag abort & canvas-space delta)
+  - [x] Implementasi Grid-based Spawn Layout untuk mencegah penumpukan 10+ node baru
+
 
 ## Rencana Selanjutnya (Peningkatan Masa Depan)
 

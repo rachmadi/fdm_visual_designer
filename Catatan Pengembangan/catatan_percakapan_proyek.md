@@ -157,5 +157,34 @@
 | Pembaruan Catatan & Commit | 10:43 | 10:45 | ~2 menit |
 | **Total Sesi** | **10:29** | **10:45** | **~16 menit** |
 
+### Sesi: Perbaikan Bug Multi-Touch Zoom & Penumpukan Spawn Node (2026-07-06)
+
+**Ringkasan:**
+- **Analisis Screenshot & Uji Coba**: Menganalisis hasil screenshot E2E secara headless/non-headless dan menemukan bahwa saat menambahkan node, koordinat spawn yang terlalu dekat `(1350–1550)` menyebabkan node saling menumpuk (overlap).
+- **Bug Penyeretan Saat Zoom (InteractiveViewer)**: Menemukan bug di mana penyeretan (drag) node bergeser/drift dan berkumpul di kanan bawah kanvas ketika pengguna melakukan zoom-in/zoom-out. Hal ini disebabkan karena:
+  1. Kalkulasi delta penyeretan sebelumnya hanya membagi dengan faktor skala (`delta / scale`), sehingga mengabaikan komponen translasi matriks.
+  2. Gesture pinch-to-zoom (multitouch) secara keliru memicu event drag pada node ketika salah satu jari menyentuh bounding box node.
+- **Solusi Teknis**:
+  - Implementasi **Single-Pointer Tracking** dengan `_activePointerId` di `canvas_view.dart`. Hanya pointer pertama yang memulai drag yang diizinkan memindahkan node. Jika pointer kedua/tambahan menyentuh kanvas (pinch-to-zoom), sesi drag langsung dibatalkan via helper `_abortDrag()`.
+  - Mengintegrasikan penanganan `onPointerCancel` pada `Listener` untuk pembersihan state drag yang andal.
+  - Mengganti spawn posisi acak menjadi **Grid-based Spawn** (layout 4 kolom dengan jarak cell 280x220px) di `sidebar_left.dart` untuk mencegah penumpukan visual.
+- **Verifikasi**:
+  - Berhasil menjalankan E2E Integration Test headed Chrome (`All tests passed!`).
+  - Menyalin dan mendokumentasikan 4 file screenshot hasil uji coba ke dalam `dokumentasi-pengembangan/screenshots/iterasi_1a/`.
+  - Berhasil membuild ulang web Flutter dan mendeploy kembali ke Vercel ([fdm-vd.vercel.app](https://fdm-vd.vercel.app)).
+
+| Tahap | Waktu Mulai (WIB) | Waktu Selesai (WIB) | Durasi |
+|---|---|---|---|
+| Analisis Screenshot & Identifikasi Bug | 10:45 | 10:48 | ~3 menit |
+| Fix Drag Delta & Multi-touch Drag Abort | 10:48 | 10:52 | ~4 menit |
+| Implementasi Grid-based Spawn Layout | 10:52 | 10:54 | ~2 menit |
+| Run Flutter Analyze & Unit Tests | 10:54 | 10:56 | ~2 menit |
+| Run Headed E2E Integration Test | 10:56 | 11:00 | ~4 menit |
+| Copy Screenshots ke Repositori Dokumentasi | 11:00 | 11:02 | ~2 menit |
+| Build Web & Deploy ke Vercel | 11:02 | 11:05 | ~3 menit |
+| Pembaruan Dokumentasi IIDD & Commit Git | 11:05 | 11:08 | ~3 menit |
+| **Total Sesi** | **10:45** | **11:08** | **~23 menit** |
+
+
 
 
