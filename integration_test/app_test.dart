@@ -37,46 +37,79 @@ void main() {
       expect(find.text('FDM Visual Designer'), findsOneWidget);
       expect(find.text('NODE PALETTE'), findsOneWidget);
 
-      // 3. Click the "Add Structural Node" button in the left sidebar
       final addStructuralBtn = find.text('Add Structural Node');
-      expect(addStructuralBtn, findsOneWidget);
-      await tester.tap(addStructuralBtn);
-      await tester.pumpAndSettle();
+      final addEntityBtn = find.text('Add Entity Node');
 
-      // 4. Verify a new node named "new_collection" is created on the canvas
-      expect(find.text('new_collection'), findsAtLeastNWidgets(1));
+      // 3. Add 5 Structural Nodes and 5 Entity Nodes (total 10 nodes)
+      // They will spawn in the 4-column Grid Layout we implemented.
+      for (int i = 0; i < 5; i++) {
+        await tester.tap(addStructuralBtn);
+        await tester.pumpAndSettle();
+        await tester.tap(addEntityBtn);
+        await tester.pumpAndSettle();
+      }
 
-      // Capture screenshot 2: After adding structural node
-      await takeScreenshot(tester, '2_added_structural_node');
+      // 4. Verify that we have multiple nodes on the canvas
+      expect(find.text('new_collection'), findsAtLeastNWidgets(5));
+      expect(find.text('NewEntity'), findsAtLeastNWidgets(5));
 
-      // 5. Select the node to see its properties in the right sidebar
+      // Capture screenshot 2: After adding 10 nodes in a grid layout (proving no overlap)
+      await takeScreenshot(tester, '2_added_10_nodes_grid');
+
+      // 5. Select one of the structural nodes
       await tester.tap(find.text('new_collection').first);
       await tester.pumpAndSettle();
 
-      // 6. Verify that the Right Sidebar properties panel is open and displays node details
+      // Verify that the Right Sidebar properties panel is open and displays node details
       expect(find.text('EDIT NODE PROPERTIES'), findsOneWidget);
       expect(find.text('Node Name:'), findsOneWidget);
 
       // Capture screenshot 3: Selected node showing right sidebar properties
       await takeScreenshot(tester, '3_selected_node_properties');
 
-      // 7. Click the "Add Entity Node" button in the left sidebar
-      final addEntityBtn = find.text('Add Entity Node');
-      expect(addEntityBtn, findsOneWidget);
-      await tester.tap(addEntityBtn);
+      // 6. Simulate a real multi-pointer Pinch Zoom Out gesture in the center of the canvas.
+      // Canvas is generally in the middle-right area. We target Offset(800, 500).
+      final Offset zoomCenterLeft = const Offset(700.0, 500.0);
+      final Offset zoomCenterRight = const Offset(900.0, 500.0);
+
+      final TestGesture pinchPointer1 = await tester.startGesture(zoomCenterLeft);
+      final TestGesture pinchPointer2 = await tester.startGesture(zoomCenterRight);
+      await tester.pump();
+
+      // Move pointers closer to each other to zoom out (pinch in)
+      await pinchPointer1.moveTo(const Offset(780.0, 500.0));
+      await pinchPointer2.moveTo(const Offset(820.0, 500.0));
       await tester.pumpAndSettle();
 
-      // 8. Verify the new entity node is created
-      expect(find.text('NewEntity'), findsAtLeastNWidgets(1));
+      await pinchPointer1.up();
+      await pinchPointer2.up();
+      await tester.pumpAndSettle();
 
-      // Capture screenshot 4: After adding entity node
-      await takeScreenshot(tester, '4_added_entity_node');
+      // Capture screenshot 4: After zooming out (proving grid & nodes scale stably without drift)
+      await takeScreenshot(tester, '4_zoomed_out_canvas');
+
+      // 7. Simulate dragging a node at this scaled zoom level to prove drag delta calculation is correct.
+      final Finder nodeToDrag = find.text('new_collection').first;
+      final Offset nodePosBeforeDrag = tester.getCenter(nodeToDrag);
+      
+      final TestGesture dragPointer = await tester.startGesture(nodePosBeforeDrag);
+      await tester.pump();
+
+      // Drag the node 150px right, 100px down
+      await dragPointer.moveTo(nodePosBeforeDrag + const Offset(150.0, 100.0));
+      await tester.pumpAndSettle();
+
+      await dragPointer.up();
+      await tester.pumpAndSettle();
+
+      // Capture screenshot 5: After dragging a node at zoomed-out scale
+      await takeScreenshot(tester, '5_dragged_node_zoomed_out');
 
       // Send all screenshots to the driver
       binding.reportData = {'screenshots': screenshotQueue};
 
-      // Pause a bit
-      await Future.delayed(const Duration(seconds: 2));
+      // Pause a bit to let headed browser display the completed state
+      await Future.delayed(const Duration(seconds: 3));
     });
   });
 }

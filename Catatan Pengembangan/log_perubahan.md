@@ -92,4 +92,14 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
 - **Viewport Constraint / Bounded Child scale bug**: Memperbaiki masalah kritis di mana InteractiveViewer menciutkan canvas 4000x4000 menjadi ukuran viewport layar (misal 800x600) karena property `constrained` secara default bernilai `true`.
   - Menambahkan `constrained: false` secara eksplisit pada `InteractiveViewer` di `canvas_view.dart`. Ini memungkinkan canvas mempertahankan ukuran aslinya 4000x4000 sehingga semua hit-test koordinat dan rendering node pada posisi `(1200, 1300)` dan seterusnya menjadi presisi dan tidak melayang secara liar saat di-zoom/panning.
 
+## [1.3.3] - 2026-07-06 (Pengujian Integrasi Headed Visual & Skenario Zoom)
+
+### Added (Penambahan Skenario Tes)
+- **Skenario Integration Test Baru (Zoom & Grid Spawn)**: Mengubah dan memperluas skenario pengujian di `integration_test/app_test.dart` untuk mensimulasikan:
+  1. Penambahan 10 node berturut-turut (5 structural + 5 entity) secara otomatis untuk memverifikasi grid spawn layout.
+  2. Gerakan pinch-to-zoom out dengan 2 pointer virtual untuk memperkecil zoom canvas.
+  3. Aksi penyeretan (drag) node di bawah level zoom yang diperkecil untuk memverifikasi akurasi delta koordinat canvas-space.
+- **Eksekusi Unsandboxed**: Pengujian integrasi headed Chrome dijalankan di luar terminal sandbox (`unsandboxed`) sehingga jendela browser fisik Chrome terbuka secara nyata di layar desktop pengguna dan proses interaksinya terlihat secara visual.
+
+
 

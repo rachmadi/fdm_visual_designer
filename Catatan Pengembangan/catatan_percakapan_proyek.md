@@ -206,6 +206,28 @@
 | Sync Git Commit & Push | 11:23 | 11:25 | ~2 menit |
 | **Total Sesi** | **11:08** | **11:25** | **~17 menit** |
 
+### Sesi: Pengujian Integrasi Unsandboxed Headed Chrome (2026-07-06)
+
+**Ringkasan:**
+- **Analisis Permintaan**: Pengguna mengidentifikasi bahwa Chrome headed window sebelumnya tidak terbuka secara visual di desktop pengguna karena dijalankan di dalam sandbox terminal (menjalankan tes di background/headless virtual session). Prosedur Evergreen mewajibkan pengetesan interaktif headed secara visual.
+- **Eksekusi Unsandboxed**: 
+  - Meminta izin `unsandboxed` untuk perintah `flutter drive` guna melewati pembatasan isolasi sesi Windows terminal sandbox.
+  - Setelah izin diberikan, menjalankan `flutter drive` di luar terminal sandbox untuk membuka jendela browser Chrome secara fisik langsung di desktop pengguna.
+- **Verifikasi Visual**:
+  - Jendela Chrome terbuka secara interaktif, mensimulasikan penambahan 10 node, gerakan pinch-to-zoom out, dan drag node pada zoom-out level.
+  - Seluruh skenario pengujian integrasi lulus (`All tests passed!`).
+  - Menyalin screenshot bukti pengujian ke `dokumentasi-pengembangan/screenshots/iterasi_1a/` dan sinkronisasi repositori master.
+
+| Tahap | Waktu Mulai (WIB) | Waktu Selesai (WIB) | Durasi |
+|---|---|---|---|
+| Request Unsandboxed Permission | 11:25 | 11:27 | ~2 menit |
+| Run Unsandboxed headed E2E test | 11:27 | 11:31 | ~4 menit |
+| Verify & Sync Screenshots | 11:31 | 11:33 | ~2 menit |
+| Web Build & Deploy ke Vercel | 11:33 | 11:35 | ~2 menit |
+| Git Commit & Push | 11:35 | 11:37 | ~2 menit |
+| **Total Sesi** | **11:25** | **11:37** | **~12 menit** |
+
+
 
 
 
