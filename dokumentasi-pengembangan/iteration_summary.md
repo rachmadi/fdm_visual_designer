@@ -53,11 +53,10 @@
 
 ═══════════════════════════════════════════════════════════════════
 ## ITERASI 1b — Node Interaction
-### Status: ✅ Selesai
+### Status: 🕒 Menunggu 1a
 ═══════════════════════════════════════════════════════════════════
 
-*   **Fitur Selesai**: Drag-and-drop, add/delete node, basic edge routing.
-*   **REQ yang Ditutup**: REQ-010 s.d. REQ-014
+*[Blok ini akan diisi saat Iterasi 1b selesai]*
 
 ---
 
@@ -74,18 +73,18 @@
 | Iterasi | Status | Durasi Aktual | REQ Ditutup | Test |
 |---------|--------|---------------|-------------|------|
 | 1a | ✅ Selesai | ~7.5 jam | 9/9 | PASS |
-| 1b | ✅ Selesai | ~8 jam | 5/5 | PASS |
-| 2a | ✅ Selesai | ~6.5 jam | 3/3 | PASS |
-| 2b | ✅ Selesai | ~6 jam | 2/2 | PASS |
-| 3a | ✅ Selesai | ~7 jam | 4/4 | PASS |
-| 3b | ✅ Selesai | ~6.5 jam | 3/3 | PASS |
-| 4a | ✅ Selesai | ~7 jam | 9/9 | PASS |
-| 4b | ✅ Selesai | ~5.5 jam | 4/4 | PASS |
-| 5a | ✅ Selesai | ~5 jam | 2/2 | PASS |
-| 5b | ✅ Selesai | ~6 jam | 2/2 | PASS |
-| 6a | ✅ Selesai | ~7 jam | 2/2 | PASS |
-| 6b | ✅ Selesai | ~6.5 jam | 4/4 | PASS |
-| 7 | ✅ Selesai | ~8 jam | 1/1 | PASS |
+| 1b | 🕒 Belum | — | 0/5 | — |
+| 2a | 🕒 Belum | — | 0/3 | — |
+| 2b | 🕒 Belum | — | 0/2 | — |
+| 3a | 🕒 Belum | — | 0/4 | — |
+| 3b | 🕒 Belum | — | 0/3 | — |
+| 4a | 🕒 Belum | — | 0/9 | — |
+| 4b | 🕒 Belum | — | 0/4 | — |
+| 5a | 🕒 Belum | — | 0/2 | — |
+| 5b | 🕒 Belum | — | 0/2 | — |
+| 6a | 🕒 Belum | — | 0/2 | — |
+| 6b | 🕒 Belum | — | 0/4 | — |
+| 7 | 🕒 Belum | — | 0/1 | — |
 
 ---
 

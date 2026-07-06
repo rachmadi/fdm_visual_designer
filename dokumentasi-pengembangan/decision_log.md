@@ -124,10 +124,6 @@
 
 ---
 
-═══════════════════════════════════════════════════════════════════
-## ITERASI 7 — Finalisasi & Polishing (Pintasan Keyboard & Ganti Tema)
-═══════════════════════════════════════════════════════════════════
-
 ### D-008: Global `HardwareKeyboard` untuk Pintasan Keyboard
 - **Tanggal**: 2026-07-06
 - **Dibuat oleh**: Agen (perbaikan bug focus shortcuts)
@@ -136,7 +132,7 @@
 - **Alternatif yang Ditolak**: Menggunakan `Focus` widget dengan requestFocus otomatis (tidak andal pada Flutter Web).
 - **Alasan Pemilihan**: `HardwareKeyboard` menangkap event input di tingkat services, tidak terpengaruh oleh status fokus pada widget tree.
 - **Dampak**: Pintasan keyboard selalu responsif kapan pun tombol ditekan.
-- **Iterasi Terdampak**: 7
+- **Iterasi Terdampak**: 1a
 
 ---
 
@@ -148,7 +144,7 @@
 - **Alternatif yang Ditolak**: Mengganti pintasan keyboard ke tombol non-standar (misal `Alt + Shift + X`).
 - **Alasan Pemilihan**: Mengikuti standar pintasan industri (Figma/Miro) sembari mempertahankan integritas pengalaman pengguna di web.
 - **Dampak**: Pintasan browser dinonaktifkan khusus untuk kombinasi tombol tersebut selama aplikasi terbuka.
-- **Iterasi Terdampak**: 7
+- **Iterasi Terdampak**: 1a
 
 ---
 
@@ -160,7 +156,7 @@
 - **Alternatif yang Ditolak**: Tetap menggunakan package Riverpod versi lama.
 - **Alasan Pemilihan**: Mempertahankan kecocokan dengan seluruh codebase modern.
 - **Dampak**: Manajemen tema reaktif stabil dan aman dari deprecated warnings.
-- **Iterasi Terdampak**: 7
+- **Iterasi Terdampak**: 1a
 
 ---
 
