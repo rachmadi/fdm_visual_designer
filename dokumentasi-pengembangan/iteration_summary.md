@@ -40,13 +40,13 @@
 
 ### Ringkasan Akhir Iterasi 1a
 
-- **Tanggal Mulai**: 2026-07-06
+- **Tanggal Mulai**: 2026-06-27
 - **Tanggal Selesai**: 2026-07-06
-- **Durasi Aktual**: ~7.5 Jam
+- **Durasi Aktual**: ~3,5 jam (kumulatif)
 - **Status Akhir**: ✅ Selesai
 - **Fitur Selesai**: Fondasi InteractiveViewer, inversi matriks delta drag, dan 3 metamodel dasar.
 - **REQ yang Ditutup**: REQ-001 s.d. REQ-009
-- **Keputusan Teknis Baru**: D-001, D-002 (lihat `decision_log.md`)
+- **Keputusan Teknis Baru**: D-001 s.d. D-009 (lihat `decision_log.md`)
 - **Lesson Learned**: InteractiveViewer dengan `constrained: false` mempertahankan ukuran rendering child.
 
 ---
@@ -59,7 +59,7 @@
 - **Tanggal Mulai**: 2026-07-06
 - **Tanggal Selesai**: 2026-07-06
 - **Status Akhir**: ✅ Selesai
-- **Durasi Aktual**: ~8 jam
+- **Durasi Aktual**: ~1,1 jam (kumulatif)
 - **Target**: Add, Select, Move, Delete Node, and basic Edge routing.
 - **Hasil Utama**: 
   - Fungsionalitas pembuatan node (SN & EN) via sidebar palette dengan grid-based spawn layout.
@@ -84,8 +84,8 @@
 
 | Iterasi | Status | Durasi Aktual | REQ Ditutup | Test |
 |---------|--------|---------------|-------------|------|
-| 1a | ✅ Selesai | ~7.5 jam | 9/9 | PASS |
-| 1b | ✅ Selesai | ~8.0 jam | 5/5 | PASS |
+| 1a | ✅ Selesai | ~3,5 jam | 9/9 | PASS |
+| 1b | ✅ Selesai | ~1,1 jam | 5/5 | PASS |
 | 2a | 🕒 Belum | — | 0/3 | — |
 | 2b | 🕒 Belum | — | 0/2 | — |
 | 3a | 🕒 Belum | — | 0/4 | — |

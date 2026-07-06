@@ -16,54 +16,90 @@
 
 ---
 
-═══════════════════════════════════════════════════════════════════
+## ═══════════════════════════════════════════════════════════════════
 ## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
-### Tanggal Validasi: —
-═══════════════════════════════════════════════════════════════════
+## ═══════════════════════════════════════════════════════════════════
+
+### Tanggal Validasi: 2026-07-06
 
 ### Hasil Flutter Analyze
 ```
-[Akan diisi setelah implementasi]
+Analyzing fdm_visual_designer...
+No issues found! (analyzed 42 files)
 ```
 
 ### Hasil Unit Test (`flutter test`)
 ```
-[Akan diisi setelah implementasi]
+00:03 +8: All tests passed!
 ```
 
 ### Hasil Integration Test (Headed)
 ```
-[Akan diisi setelah implementasi]
+01:00 +3: All tests passed!
 ```
 
 ### Ringkasan Validasi Iterasi 1a
 
 | Jenis Validasi | Status | Catatan |
 |----------------|--------|---------|
-| `flutter analyze` | 🕒 Belum | — |
-| Unit Test | 🕒 Belum | — |
-| Integration Test (headed) | 🕒 Belum | — |
-| Manual Review UI | 🕒 Belum | — |
+| `flutter analyze` | ✅ Lulus | Bersih, 0 issues |
+| Unit Test | ✅ Lulus | 8 unit WFR rules semantik sukses |
+| Integration Test (headed) | ✅ Lulus | Jendela browser fisik terbuka, lulus |
+| Manual Review UI | ✅ Lulus | Zoom/pan dan penyeretan node lancar |
 
 ### Screenshot Hasil Test
-> *(Screenshot disimpan di `screenshots/iterasi_1a/`)*
+> *(Screenshot disimpan di `dokumentasi-pengembangan/screenshots/iterasi_1a/`)*
 
 ---
 
-═══════════════════════════════════════════════════════════════════
-## ITERASI 1b — [Template]
-═══════════════════════════════════════════════════════════════════
+## ═══════════════════════════════════════════════════════════════════
+## ITERASI 1b — Node Interaction & Style Polishing
+## ═══════════════════════════════════════════════════════════════════
 
-*[Blok ini akan diisi saat Iterasi 1b selesai]*
+### Tanggal Validasi: 2026-07-06
+
+### Hasil Flutter Analyze
+```
+Analyzing fdm_visual_designer...
+No issues found! (analyzed 45 files)
+```
+
+### Hasil Unit Test (`flutter test`)
+```
+00:03 +8: All tests passed!
+```
+
+### Hasil Integration Test (Headed)
+```
+01:00 +3: All tests passed!
+Screenshot saved: 1_launch_screen.png
+Screenshot saved: 2_added_nodes_grid.png
+Screenshot saved: 3_selected_node_properties.png
+Screenshot saved: 4_zoomed_out_canvas.png
+Screenshot saved: 5_dragged_node_zoomed_out.png
+Screenshot saved: 6_nodes_with_4_handles.png
+```
+
+### Ringkasan Validasi Iterasi 1b
+
+| Jenis Validasi | Status | Catatan |
+|----------------|--------|---------|
+| `flutter analyze` | ✅ Lulus | Bersih, 0 issues |
+| Unit Test | ✅ Lulus | Lulus semua 8 unit test WFR |
+| Integration Test (headed) | ✅ Lulus | Lulus 100% E2E, browser tertahan 35s |
+| Manual Review UI | ✅ Lulus | Simbol UML package & visibilitas grid OK |
+
+### Screenshot Hasil Test
+> *(Screenshot disimpan di `dokumentasi-pengembangan/screenshots/iterasi_1b/`)*
 
 ---
 
-═══════════════════════════════════════════════════════════════════
+## ═══════════════════════════════════════════════════════════════════
 ## ITERASI 2a–7 — [Template]
-═══════════════════════════════════════════════════════════════════
+## ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap akhir iterasi*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap akhir sesi*
