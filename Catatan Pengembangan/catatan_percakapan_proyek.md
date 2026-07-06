@@ -127,3 +127,11 @@
 | Pengujian Ulang E2E (tanpa IgnorePointer) & Git Push | 13:17 | 13:21 | ~4 menit |
 | **Total Sesi** | **11:10** | **13:21** | **~2 jam 11 menit** |
 
+### Sesi Baru: Deploy Vercel (2026-07-06)
+
+| Tahap | Waktu Mulai (WIB) | Waktu Selesai (WIB) | Durasi |
+|---|---|---|---|
+| Deploy ke Vercel (fdm-vd.vercel.app) | 10:15 | 10:28 | ~13 menit |
+| **Total Sesi Baru** | **10:15** | **10:28** | **~13 menit** |
+
+

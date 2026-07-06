@@ -59,3 +59,8 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
 - **Perbaikan Pembacaan File Web (Bytes Null)**: Menambahkan opsi `withData: true` pada `FilePicker` dan menggunakan penanganan cast aman `Map<String, dynamic>.from(e as Map)` agar pembacaan byte JSON web tidak bernilai null atau memicu type cast exception di runtime.
 - **Pencegahan Tabrakan ID Pembuatan Komponen**: Mengganti format ID generator berbasis milidetik mentah dengan menambahkan nomor acak suffix (`math.Random().nextInt(1000000)`) pada pembuatan node, boundary, dan edge untuk mencegah tabrakan ID (duplicate ID collision) saat ditambahkan berturut-turut secara cepat, yang sebelumnya membuat node baru menempel di node lama.
 - **Penyelesaian Konflik Gesture Drag & Pan Canvas (Final)**: Menghapus `InteractiveViewer` sepenuhnya dan menggantinya dengan sistem pan/zoom/drag manual berbasis `Listener` (raw pointer events) dan widget `Transform`. Pendekatan ini menghilangkan konflik gesture arena secara total, karena tidak ada lagi gesture recognizer bawaan yang bersaing dengan event seret node. Hit-testing manual dilakukan untuk menentukan apakah pointer mengenai node (drag node) atau area kosong (pan kanvas). Zoom scroll mouse juga ditangani secara manual.
+
+## [1.2.0] - 2026-07-06
+
+### Added (Penambahan Fitur)
+- **Deployment ke Vercel**: Sukses deploy web build produksi ke Vercel dengan domain proyek formal [fdm-vd.vercel.app](https://fdm-vd.vercel.app).

@@ -39,9 +39,11 @@
   - [x] Menyusun panel lapor kesalahan (Validation Report) di sidebar kanan
   - [x] Memperbaiki seluruh error kompilasi dan sukses build produksi (`flutter build web`)
   - [x] Resolusi Bug Penyeretan Node & Konflik Gesture Arena (Final)
+  - [x] Deploy ke Vercel dengan alias fdm-vd.vercel.app
 
 ## Rencana Selanjutnya (Peningkatan Masa Depan)
 
 - [ ] Integrasi Algoritma Auto-Layout otomatis berbasis Dagre (Dart port)
 - [ ] Penambahan visual Minimap di sudut kanan bawah canvas
 - [ ] Penambahan Shortcut keyboard global (Ctrl+Z, Ctrl+Y, Delete)
+
