@@ -109,6 +109,15 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Memindahkan eksekusi ChromeDriver ke luar sandbox (`unsandboxed` menggunakan `npx.cmd chromedriver@149`) sehingga ChromeDriver dapat berinteraksi dengan sesi login desktop aktif pengguna (Session 1).
   - Hasilnya, jendela browser Chrome headed saat ini **terbuka secara fisik dan visual** di layar desktop pengguna selama integrasi test dijalankan.
 
+## [1.3.5] - 2026-07-06 (Integrasi Pintasan Keyboard & Spesifikasi Revisi 3)
 
+### Added (Penambahan Fitur)
+- **Pintasan Keyboard Global (Section 4.3)**: 
+  - Mengimplementasikan `Focus` + `onKeyEvent` pada `WorkspaceScreen` untuk pintasan global: `Ctrl/Cmd + Z` & `Ctrl/Cmd + Shift + Z` (Undo/Redo), `Delete`/`Backspace` (Delete selection), `S` (Add Structural Node), `E` (Add Entity Node), `V` (Toggle Validation Report), dan `Escape` (Cancel/Deselect).
+- **Pintasan Ganti Tema (Section 9.9)**:
+  - Mengimplementasikan `Ctrl/Cmd + Shift + D` untuk mengganti tema (Dark Mode / Light Mode) secara dinamis via `ThemeModeNotifier`.
 
-
+### Fixed (Perbaikan Sesuai Spesifikasi)
+- **Dark Mode Canvas & Opacity Node (Section 5)**:
+  - Mengubah canvas background di dark mode agar secara dinamis mengikuti `Theme.of(context).colorScheme.surface`.
+  - Menerapkan opacity `0.92` pada background warna putih untuk Entity Node di dark mode untuk meningkatkan visual dark aesthetics.

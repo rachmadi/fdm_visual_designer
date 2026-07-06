@@ -250,6 +250,36 @@
 | Git Commit & Push | 11:49 | 11:51 | ~2 menit |
 | **Total Sesi** | **11:37** | **11:51** | **~14 menit** |
 
+### Sesi: Integrasi Shortcut Keyboard & Spesifikasi Revisi 3 (2026-07-06)
+
+**Ringkasan:**
+- **Analisis Permintaan**: Pengguna menginstruksikan untuk memastikan semua spesifikasi pada Revisi 3 Final dipenuhi. Ditemukan bahwa pintasan keyboard global (Bagian 4.3) dan spesifikasi Dark Mode (Bagian 5 dan 9.9) belum sepenuhnya diintegrasikan di root UI.
+- **Implementasi Fitur**:
+  - **Pintasan Keyboard Global (Section 4.3 & 9.9)**: Menambahkan widget `Focus` di sekeliling `WorkspaceScreen` pada [lib/main.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/main.dart) untuk menangkap:
+    - `Ctrl/Cmd + Z` & `Ctrl/Cmd + Shift + Z` (Undo/Redo)
+    - `Ctrl/Cmd + Shift + D` (Toggle Dark/Light Theme)
+    - `Delete` / `Backspace` (Menghapus node/edge/boundary terpilih)
+    - `S` (Add Structural Node), `E` (Add Entity Node)
+    - `V` (Toggle Validation Report panel)
+    - `Escape` (Deselect all & cancel connection mode)
+  - **Tema Dinamis & Opacity Dark Mode (Section 5)**: 
+    - Mengganti hardcoded theme mode dengan `ThemeModeNotifier` (Riverpod NotifierProvider) untuk memfasilitasi penggantian tema secara reaktif via pintasan keyboard.
+    - Menyesuaikan warna background canvas di dark mode agar mengambil `Theme.of(context).colorScheme.surface`.
+    - Menerapkan opacity `0.92` pada fill warna putih untuk body Entity Node di dark mode pada [lib/canvas/nodes/entity_node.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/entity_node.dart).
+- **Verifikasi**:
+  - Menjalankan `flutter analyze` dan lulus tanpa kesalahan kompilasi.
+  - Membangun build produksi web (`flutter build web`) dan deploy ke Vercel.
+
+| Tahap | Waktu Mulai (WIB) | Waktu Selesai (WIB) | Durasi |
+|---|---|---|---|
+| Analisis Spesifikasi Revisi 3 & Pencarian Code | 11:51 | 11:54 | ~3 menit |
+| Implementasi Keyboard Shortcuts & Theme Mode | 11:54 | 12:00 | ~6 menit |
+| Implementasi Opacity Entity Node & Bg Dark Mode | 12:00 | 12:03 | ~3 menit |
+| Run Flutter Analyze & Web Build | 12:03 | 12:06 | ~3 menit |
+| Deploy ke Vercel & Commit Git | 12:06 | 12:10 | ~4 menit |
+| **Total Sesi** | **11:51** | **12:10** | **~19 menit** |
+
+
 
 
 
