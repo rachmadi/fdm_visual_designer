@@ -459,4 +459,27 @@ Application finished.
 | Pembaruan catatan percakapan proyek dan log perubahan | 16:30 | 16:32 | ~2 menit |
 | **Total Sesi** | **16:24** | **16:32** | **~8 menit** |
 
+---
+
+## Sesi Pengembangan — 2026-07-06 (Sesi 6, Aturan Akurasi Dokumentasi & Koreksi Log Waktu)
+
+### Aktivitas Utama:
+- **Aturan Akurasi Dokumentasi**:
+  - Menyepakati aturan wajib baru bahwa seluruh dokumen log pengembangan, RTM, log waktu, dan log perubahan adalah **sangat penting dan wajib diisi secara akurat dan konsisten secara matematis**.
+  - Menambahkan klausul aturan ini secara permanen ke [`.agents/AGENTS.md`](file:///E:/rachmadi/Antigravity/.agents/AGENTS.md).
+- **Koreksi Data Log Waktu**:
+  - Mengoreksi seluruh nilai kosong `—` dan data dummy pada [`waktu_estimasi_vs_realisasi.md`](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/waktu_estimasi_vs_realisasi.md) dan [`durasi_per_fitur.md`](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/durasi_per_fitur.md) untuk Iterasi 1a dan Iterasi 1b.
+  - Memastikan seluruh selisih waktu mulai-selesai sinkron secara matematis dengan realisasi durasi pengerjaan aktual.
+
+**Tabel Durasi Pengerjaan & Pengujian:**
+
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| Perumusan aturan akurasi dokumentasi dan penulisan di `.agents/AGENTS.md` | 16:34 | 16:36 | ~2 menit |
+| Koreksi tabel waktu mulai, selesai, realisasi di `waktu_estimasi_vs_realisasi.md` | 16:36 | 16:39 | ~3 menit |
+| Koreksi durasi per fitur secara detail di `durasi_per_fitur.md` | 16:39 | 16:41 | ~2 menit |
+| Commit git lokal dan sinkronisasi push ke GitHub master | 16:41 | 16:43 | ~2 menit |
+| **Total Sesi** | **16:34** | **16:43** | **~9 menit** |
+
+
 
