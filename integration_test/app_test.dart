@@ -189,8 +189,8 @@ void main() {
 
       // 4. Delete property with SnackBar Undo
       await tester.tap(find.byKey(const Key('delete_prop_user_name')));
-      await tester.pumpAndSettle();
-      await Future.delayed(const Duration(seconds: 1));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
 
       expect(find.text('Field "user_name" dihapus'), findsOneWidget);
       expect(find.text('UNDO'), findsOneWidget);
@@ -198,7 +198,6 @@ void main() {
       // Tap UNDO
       await tester.tap(find.text('UNDO'));
       await tester.pumpAndSettle();
-      await Future.delayed(const Duration(seconds: 1));
 
       // Verify restored
       expect(find.text('user_name: string'), findsOneWidget);
