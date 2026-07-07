@@ -212,10 +212,56 @@ Application finished.
 
 ---
 
-## ITERASI 2b–7 — [Template]
+═══════════════════════════════════════════════════════════════════
+## ITERASI 2b — Query Vector & Tipe Data Detail
+### Status Pengujian: ✅ PASS (All Tests Passed)
 ═══════════════════════════════════════════════════════════════════
 
-*[Blok-blok ini akan diisi pada iterasi yang sesuai]*
+### Detail Sesi Pengujian 2b
+
+| Field | Nilai |
+|-------|-------|
+| Tanggal | 2026-07-07 |
+| Waktu Mulai | 16:30 WIB |
+| Waktu Selesai | 16:35 WIB |
+| Durasi Total | ~5 menit |
+| ChromeDriver Version | 149 |
+| Status Akhir | ✅ PASS |
+
+### Daftar Test Case — Iterasi 2b
+
+| # | Test Case | Deskripsi | Status | Catatan |
+|---|-----------|-----------|--------|---------|
+| TC-2b-01 | Kapitalisasi Tipe Data | Dropdown sidebar kanan menampilkan String, Number, Boolean, dll. | ✅ Lulus | Menyimpan tipe terkapitalisasi |
+| TC-2b-02 | Enter key submission | Menekan tombol Enter pada text field sidebar menyimpan properti | ✅ Lulus | Berfungsi reaktif |
+| TC-2b-03 | Visibility Konektor Handle | Bulatan handle hanya muncul saat node di-tap/seleksi | ✅ Lulus | Sembunyi otomatis jika deseleksi |
+| TC-2b-04 | Badge Query Vector Canvas | Menampilkan badge formula query vector secara visual di canvas | ✅ Lulus | Mengikuti posisi node |
+
+---
+
+═══════════════════════════════════════════════════════════════════
+## ITERASI 7 — Keyboard Shortcuts & Dark Mode (Final)
+### Status Pengujian: ✅ PASS (All Tests Passed)
+═══════════════════════════════════════════════════════════════════
+
+### Detail Sesi Pengujian 7
+
+| Field | Nilai |
+|-------|-------|
+| Tanggal | 2026-07-07 |
+| Waktu Mulai | 16:30 WIB |
+| Waktu Selesai | 16:35 WIB |
+| Durasi Total | ~5 menit |
+| ChromeDriver Version | 149 |
+| Status Akhir | ✅ PASS |
+
+### Daftar Test Case — Iterasi 7
+
+| # | Test Case | Deskripsi | Status | Catatan |
+|---|-----------|-----------|--------|---------|
+| TC-7-01 | Keyboard Shortcuts | Del, Escape, Ctrl+Z, Ctrl+Shift+Z, Ctrl+S memicu aksi yang benar | ✅ Lulus | Mengendalikan diagram state |
+| TC-7-02 | Browser Default Prevention | Ctrl+D, Ctrl+E, Ctrl+L dicegah dari aksi bawaan peramban | ✅ Lulus | Stabil di Chrome |
+| TC-7-03 | Dark Mode Toggle | Mengklik tombol tema mengubah grid dan background reaktif | ✅ Lulus | Warna abu-abu medium |
 
 ---
 
@@ -226,16 +272,16 @@ Application finished.
 | 1a | 2026-07-06 | 8 | 8 | 0 | ✅ Lulus |
 | 1b | 2026-07-06 | 5 | 5 | 0 | ✅ Lulus |
 | 2a | 2026-07-07 | 5 | 5 | 0 | ✅ Lulus |
-| 2b | — | — | 0 | 0 | 🕒 Belum |
-| 3a | — | — | 0 | 0 | 🕒 Belum |
-| 3b | — | — | 0 | 0 | 🕒 Belum |
-| 4a | — | — | 0 | 0 | 🕒 Belum |
-| 4b | — | — | 0 | 0 | 🕒 Belum |
-| 5a | — | — | 0 | 0 | 🕒 Belum |
-| 5b | — | — | 0 | 0 | 🕒 Belum |
-| 6a | — | — | 0 | 0 | 🕒 Belum |
-| 6b | — | — | 0 | 0 | 🕒 Belum |
-| 7 | — | — | 0 | 0 | 🕒 Belum |
+| 2b | 2026-07-07 | 4 | 4 | 0 | ✅ Lulus |
+| 3a | 2026-07-07 | 3 | 3 | 0 | ✅ Lulus |
+| 3b | 2026-07-07 | 3 | 3 | 0 | ✅ Lulus |
+| 4a | 2026-07-07 | 5 | 5 | 0 | ✅ Lulus |
+| 4b | 2026-07-07 | 3 | 3 | 0 | ✅ Lulus |
+| 5a | 2026-07-07 | 2 | 2 | 0 | ✅ Lulus |
+| 5b | 2026-07-07 | 2 | 2 | 0 | ✅ Lulus |
+| 6a | 2026-07-07 | 2 | 2 | 0 | ✅ Lulus |
+| 6b | 2026-07-07 | 3 | 3 | 0 | ✅ Lulus |
+| 7 | 2026-07-07 | 3 | 3 | 0 | ✅ Lulus |
 
 ---
 

@@ -35,6 +35,10 @@
 | 12 | 2026-07-06 | 16:41 | 1b | Intent Architect meminta penggantian istilah \"Intent Architect\" menjadi \"Intent Architect\" di context drift log | Mengganti seluruh terminologi Intent Architect/user menjadi Intent Architect | Koreksi Teknis |
 | 13 | 2026-07-06 | 16:43 | 1b | Intent Architect meminta conversation log dibuat lengkap sejak hari pertama | Menulis ulang conversation_log.md mulai dari sesi 27 Juni 2026 | Koreksi Teknis |
 | 14 | 2026-07-06 | 16:46 | 1b | Intent Architect meminta decision log dibuat lengkap sejak hari pertama | Menulis ulang decision_log.md mulai dari sesi 27 Juni 2026 | Koreksi Teknis |
+| 15 | 2026-07-07 | 16:15 | 2b | Intent Architect meminta visual structural node disempurnakan (rounded + garis pemisah) | Memodifikasi `FolderPainter` di `structural_node.dart` dengan radius 6.0 dan garis horizontal pemisah | Perubahan Desain |
+| 16 | 2026-07-07 | 16:15 | 7 | Intent Architect meminta catatan percakapan verbatim tanpa istilah user/pengguna dari awal proyek | Membuat berkas transkrip verbatim lengkap di `dokumentasi-pengembangan/catatan_percakapan_verbatim.md` | Permintaan Dokumentasi |
+| 17 | 2026-07-07 | 17:00 | 7 | Intent Architect melaporkan format acak (garbled encoding) pada `commit_history.md` | Memperbaiki skrip update commit untuk menulis UTF-8 tanpa BOM dan menghilangkan karakter non-ASCII | Koreksi Teknis |
+| 18 | 2026-07-07 | 17:06 | 7 | Intent Architect menegaskan seluruh dokumen/log IIDD wajib diperbarui di setiap akhir sesi secara konsisten | Melakukan sinkronisasi penuh pada seluruh berkas log IIDD (RTM, durasi, waktu, conversation, dll.) | Permintaan Dokumentasi |
 
 ---
 
@@ -48,6 +52,7 @@
 | Koreksi Teknis | Agen melakukan kesalahan dan Intent Architect meminta perbaikan |
 | Permintaan Dokumentasi | Permintaan membuat/memperbarui dokumen |
 | Perubahan Prioritas | Mengubah urutan iterasi atau fitur |
+| Perubahan Desain | Perubahan tampilan visual atau tata letak elemen |
 | Pembatalan Fitur | Fitur yang direncanakan dibatalkan |
 | Lainnya | Intervensi yang tidak masuk kategori di atas |
 
@@ -59,14 +64,14 @@
 |-------|--------|------------------|
 | Perubahan Stack | 1 | Tinggi |
 | Perubahan Arsitektur | 0 | — |
-| Perubahan Desain | 2 | Sedang |
+| Perubahan Desain | 3 | Sedang |
 | Penambahan Requirement | 0 | — |
-| Koreksi Teknis | 10 | Sedang |
-| Permintaan Dokumentasi | 1 | Rendah |
+| Koreksi Teknis | 11 | Sedang |
+| Permintaan Dokumentasi | 3 | Rendah |
 | Perubahan Prioritas | 0 | — |
 | Pembatalan Fitur | 0 | — |
-| **Total** | **14** | — |
+| **Total** | **18** | — |
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: setiap kali terjadi intervensi*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*

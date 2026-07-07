@@ -246,16 +246,42 @@
 
 ---
 
+### E-016: Compile Error pada structural_node.dart (FolderPainter)
+- **Iterasi**: 2b
+- **Tanggal**: 2026-07-07
+- **Jenis Error**: Compile
+- **Lokasi**: `lib/canvas/nodes/structural_node.dart:13`
+- **Pesan Error**: `Error: Only static fields can be declared as const. Error: The name of a constructor must match the name of the enclosing class.`
+- **Penyebab Root**: Deklarasi tanda tangan metode `void paint(Canvas canvas, Size size) {` terhapus tidak sengaja saat melakukan replace kode visual structural node, sehingga badan metode dianggap sebagai inisialisasi variabel di dalam kelas `FolderPainter`.
+- **Langkah Resolusi**: Mengembalikan deklarasi tanda tangan metode `void paint` beserta tanda kurung kurawal penutupnya secara utuh.
+- **Waktu Resolusi**: ~3 menit
+- **Status**: ✅ Resolved
+
+---
+
+### E-017: Integration Test Duplicate Finder (NewEntity)
+- **Iterasi**: 2b
+- **Tanggal**: 2026-07-07
+- **Jenis Error**: Test Failure
+- **Lokasi**: `integration_test/app_test.dart`
+- **Pesan Error**: `Expected: exactly one matching candidate. Actual: Found 2 widgets with text "NewEntity"`
+- **Penyebab Root**: Pencarian finder teks nama node bersifat ambigu karena teks `"NewEntity"` muncul secara bersamaan sebagai label node di kanvas dan juga sebagai teks nilai di dalam input form property editor sidebar kanan.
+- **Langkah Resolusi**: Mengubah asersi `findsOneWidget` menjadi `findsAtLeastNWidgets(1)` pada asersi nama-nama node dinamis di kanvas.
+- **Waktu Resolusi**: ~5 menit
+- **Status**: ✅ Resolved
+
+---
+
 ## Ringkasan Error per Jenis
 
 | Jenis Error | Total | Resolved | Workaround | Open |
 |-------------|-------|----------|------------|------|
-| Compile | 9 | 9 | 0 | 0 |
+| Compile | 10 | 10 | 0 | 0 |
 | Runtime | 0 | 0 | 0 | 0 |
-| Test Failure | 2 | 2 | 0 | 0 |
+| Test Failure | 3 | 3 | 0 | 0 |
 | Logic | 4 | 4 | 0 | 0 |
-| **Total** | **15** | **15** | **0** | **0** |
+| **Total** | **17** | **17** | **0** | **0** |
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap kali error ditemukan*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*

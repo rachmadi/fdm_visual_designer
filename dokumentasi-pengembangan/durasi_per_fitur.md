@@ -69,8 +69,25 @@ Kalkulasi durasi secara otomatis di akhir iterasi.
 
 ---
 
+═══════════════════════════════════════════════════════════════════
+## ITERASI 2b — Query Vector & Tipe Data Detail
+═══════════════════════════════════════════════════════════════════
+
+| # | Fitur / Komponen | File Utama | Mulai | Selesai | Durasi | Kesulitan | Catatan |
+|---|-----------------|-----------|-------|---------|--------|-----------|---------|
+| 1 | Dropdown tipe data terkapitalisasi & onSubmitted (Enter) | `sidebar_right.dart` | 16:15 (July 7) | 16:21 (July 7) | 6m | Sedang | UI / Keystrokes |
+| 2 | Sembunyikan handle konektor saat node tidak terpilih | `structural_node.dart`, `entity_node.dart` | 16:21 (July 7) | 16:24 (July 7) | 3m | Sedang | Kondisi rendering |
+| 3 | Panel konfigurasi Query Vector (Filter & Sort) | `sidebar_right.dart` | 16:24 (July 7) | 16:27 (July 7) | 3m | Tinggi | Integrasi Riverpod |
+| 4 | Render panel/badge visual Query Vector di canvas | `entity_node.dart`, `canvas_view.dart` | 16:27 (July 7) | 16:30 (July 7) | 3m | Sedang | CustomPaint & layout |
+| 5 | Pengujian E2E & visual headed ChromeDriver | `app_test.dart` | 16:30 (July 7) | 16:35 (July 7) | 5m | Tinggi | Headed Scheduled Task |
+| 6 | Revisi FolderPainter Structural Node (rounded + pemisah) | `structural_node.dart` | 16:35 (July 7) | 16:41 (July 7) | 6m | Sedang | CustomPainter path |
+| 7 | Verbatim Log formal & sinkronisasi commit log | `commit_history.md`, `catatan_percakapan_verbatim.md` | 16:41 (July 7) | 17:05 (July 7) | 24m | Sedang | Dokumentasi otomatis |
+| — | **TOTAL ITERASI 2b** | — | — | — | **50m** | — | — |
+
+---
+
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 2b–7 — [Template]
+## ITERASI 3–7 — [Template]
 ## ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*

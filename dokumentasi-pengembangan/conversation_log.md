@@ -18,7 +18,7 @@ Format setiap entri percakapan:
 
 ## ═══════════════════════════════════════════════════════════════════
 ## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
-## ═══════════════════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════════════════
 
 ### Sesi 1 — Tanggal: 2026-06-27 (Inisialisasi & Setup)
 
@@ -29,7 +29,7 @@ Format setiap entri percakapan:
 * **[12:08]** 👤 Intent Architect: Menguji impor data mentah Firebase JSON ekspor (users/products) tetapi data tidak termuat di kanvas.
 * **[12:12]** 🤖 Agen: Menambahkan parameter `withData: true` pada FilePicker dan menulis parser fallback cerdas di `serializer.dart` untuk auto-load skema dari data database biasa.
 * **[12:22]** 👤 Intent Architect: Melaporkan masalah drag node berdampingan (node baru ikut terseret bersama node lama).
-* **[12:25]** 🤖 Agen: Menemukan tabrakan ID karena generator berbasis milidetik mentah di web, lalu memperbaikinya dengan representasi ID acak nano/micro detik.
+* **[12:25]** 🤖 Agen: Menemukan tabrakan ID karena generator berbasis milidetik mentah di web, lalu memperbaikinya dengan ID mikrodetik acak.
 
 ### Sesi 2 — Tanggal: 2026-07-06 (Penyelarasan Arsitektur Canvas & Dokumen IIDD)
 
@@ -42,13 +42,13 @@ Format setiap entri percakapan:
 * **[11:08]** 👤 Intent Architect: Melaporkan grid terpotong saat zoom out karena area kanvas menciut.
 * **[11:12]** 🤖 Agen: Mengidentifikasi parameter `constrained: true` sebagai penyebab penciutan area anak, lalu mengubahnya menjadi `constrained: false` agar kanvas mempertahankan ukuran aslinya (4000x4000).
 * **[11:25]** 👤 Intent Architect: Meminta pengujian headed visual yang berjalan nyata di monitor desktop.
-* **[11:37]** 🤖 Agen: Membuka sesi unsandboxed E2E headed test dengan ChromeDriver Session 0 dan Flutter Driver Session 1. Jendela browser Google Chrome fisik muncul secara nyata di monitor, berjalan lancar, dan lulus 100%.
+* **[11:37]** 🤖 Agen: Membuka sesi unsandboxed E2E headed test dengan ChromeDriver Session 0 dan Flutter Driver Session 1. Jendela browser Google Chrome fisik muncul secara nyata di monitor, berjalan lancar, dan lulus 100.
 
 ---
 
 ## ═══════════════════════════════════════════════════════════════════
 ## ITERASI 1b — Node Interaction & Style Polishing
-## ═══════════════════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════════════════
 
 ### Sesi 3 — Tanggal: 2026-07-06 (Spline Bézier & Custom Connection Handles)
 
@@ -78,11 +78,36 @@ Format setiap entri percakapan:
 ---
 
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 2a–7 — [Template]
-## ═══════════════════════════════════════════════════════════════════
+## ITERASI 2a & 2b — Property Panel, Query Vector, dan Verbatim Log
+═══════════════════════════════════════════════════════════════════
 
-*[Blok-blok ini akan diisi pada iterasi yang sesuai]*
+### Sesi 7 — Tanggal: 2026-07-07 (Property Editor & Validasi)
+
+* **[08:33]** 👤 Intent Architect: Menambahkan property editor di sidebar kanan, reordering ListView, form validation, dan SnackBar delete dengan Undo.
+* **[08:42]** 🤖 Agen: Mengimplementasikan ReorderableListView, input validation, SnackBar Undo 3 detik, unit tests, dan headed E2E integration test.
+
+### Sesi 8 — Tanggal: 2026-07-07 (Dynamic Connection Handles & Kapitalisasi Data Type)
+
+* **[09:12]** 👤 Intent Architect: Menambahkan dropdown tipe data kapital, trigger Enter untuk input, batasan handle bulat hanya saat node terpilih, visualisasi Query Vector di canvas.
+* **[09:30]** 🤖 Agen: Mengimplementasikan kapitalisasi tipe data, input Enter, `isSelected` connection handle, Query Vector panel di sidebar, rendering badge formula di canvas, dan headed integration test.
+
+### Sesi 9 — Tanggal: 2026-07-07 (Pintasan Keyboard Global & Tema Dinamis)
+
+* **[09:35]** 👤 Intent Architect: Menambahkan pintasan keyboard global (Ctrl+Z, Ctrl+Shift+Z, Del, S, E, V, Escape), pencegahan default action browser, Dark/Light mode dinamis, dan panel pintasan keyboard di sidebar kiri.
+* **[09:46]** 🤖 Agen: Mengimplementasikan keyboard shortcuts global, pencegahan default action browser (Ctrl+D/E/L), Light/Dark mode reaktif, panel pintasan, dan E2E test.
+
+### Sesi 10 — Tanggal: 2026-07-07 (Dynamic Anchor Switching & Bézier Cubic Curves)
+
+* **[09:50]** 👤 Intent Architect: Meminta implementasi 4 titik koneksi dan dynamic switching beserta Bézier curves untuk edge.
+* **[10:05]** 🤖 Agen: Mengimplementasikan anchor switching dinamis, kurva Bézier, dan pengujian integrasi visual headed Chrome E2E.
+
+### Sesi 11 — Tanggal: 2026-07-07 (Penyempurnaan Visual, Verbatim Log, dan Git Push)
+
+* **[16:15]** 👤 Intent Architect: Mengoreksi structural node (rounded + garis pemisah tab-body), meminta verbatim log tanpa istilah user/pengguna dari awal proyek, dan menuntut commit GitHub serta deploy Vercel yang konsisten.
+* **[16:45]** 🤖 Agen: Menyesuaikan FolderPainter dengan radius `6.0` dan garis pembatas horizontal. Menulis skrip PowerShell state-machine untuk mengekstrak verbatim log murni ke `dokumentasi-pengembangan/catatan_percakapan_verbatim.md`.
+* **[17:00]** 👤 Intent Architect: Melaporkan kerusakan karakter encoding di `commit_history.md`.
+* **[17:05]** 🤖 Agen: Memperbaiki skrip update commit untuk menulis UTF-8 tanpa BOM dan menghilangkan karakter non-ASCII. Melakukan sinkronisasi penuh pada seluruh berkas log IIDD (RTM, durasi, waktu, conversation) dan mendorong perubahan ke repositori GitHub.
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap akhir sesi*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*

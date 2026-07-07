@@ -186,12 +186,52 @@
 
 ---
 
-## ═══════════════════════════════════════════════════════════════════
-## ITERASI 2a–7 — [Template]
-## ═══════════════════════════════════════════════════════════════════
-
-*[Blok-blok ini akan diisi pada iterasi yang sesuai]*
+### D-014: Pembuatan ReorderableListView untuk Properti Sidebar
+- **Tanggal**: 2026-07-07
+- **Dibuat oleh**: Agen
+- **Konteks**: Memudahkan pengurutan properti secara visual dan intuitif.
+- **Keputusan**: Merombak tampilan daftar properti di sidebar kanan menjadi `ReorderableListView` untuk drag-and-drop properti secara langsung.
+- **Alternatif yang Ditolak**: Menggunakan tombol panah ke atas/bawah (kurang intuitif dan memakan ruang UI).
+- **Alasan Pemilihan**: Memberikan UX modern di mana pengurutan dapat dilakukan langsung dengan drag gesture.
+- **Dampak**: Navigasi dan pengurutan properti lebih responsif.
+- **Iterasi Terdampak**: 2a
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap akhir sesi*
+### D-015: Penggunaan Windows Scheduled Task untuk Headed E2E Testing
+- **Tanggal**: 2026-07-07
+- **Dibuat oleh**: Agen
+- **Konteks**: Terminal sandboxed agen tidak memiliki akses ke sesi GUI interaktif pengguna (Session 1), sehingga browser Chrome untuk pengujian headed tidak terlihat secara fisik oleh IA.
+- **Keputusan**: Mendaftarkan dan menjalankan pengujian integrasi headed via Windows Scheduled Task menggunakan akun pengguna interaktif (`LogonType Interactive`).
+- **Alternatif yang Ditolak**: Menggunakan `flutter drive` langsung di sandboxed terminal (menghasilkan headed browser di background session 0/headless yang tidak terlihat oleh IA).
+- **Alasan Pemilihan**: Scheduled Task interaktif adalah satu-satunya mekanisme Windows yang dapat melompati isolasi sesi background untuk memunculkan GUI window di desktop aktif pengguna.
+- **Dampak**: Browser Chrome dapat terbuka secara fisik di layar desktop IA untuk verifikasi visual langsung.
+- **Iterasi Terdampak**: 7
+
+---
+
+### D-016: Revisi Desain FolderPainter Structural Node (Rounded + Pemisah)
+- **Tanggal**: 2026-07-07
+- **Dibuat oleh**: Bersama (Intent Architect & Agen)
+- **Konteks**: Simbol structural node berupa tab persegi panjang membutuhkan visualisasi pemisah yang jelas antara tab header atas dengan bodi utama, serta sudut-sudut yang melengkung (rounded) agar terlihat premium.
+- **Keputusan**: Mengubah implementasi path di `FolderPainter` menjadi rounded dengan radius `6.0` dan menggambar garis pembatas horizontal lurus di `y = 22` yang membelah tab dan bodi.
+- **Alternatif yang Ditolak**: Mempertahankan sudut tajam 90 derajat tanpa garis pemisah (mengurangi kejelasan batas tab nama).
+- **Alasan Pemilihan**: Sesuai dengan spesifikasi visual UML package formal dan revisi permintaan IA.
+- **Dampak**: Tampilan structural node menjadi lebih estetik dan memenuhi notasi visual.
+- **Iterasi Terdampak**: 2b
+
+---
+
+### D-017: Pembuatan Script State-Machine PowerShell untuk Ekstraksi Verbatim Log
+- **Tanggal**: 2026-07-07
+- **Dibuat oleh**: Agen
+- **Konteks**: Log transkrip mentah JSONL berukuran sangat besar (megabytes) dan mengandung banyak tag XML internal serta log pemikiran agen yang kotor.
+- **Keputusan**: Menulis script PowerShell state-machine yang memproses berkas log baris-demi-baris, menyaring langkah obrolan final (`USER_INPUT` dan `PLANNER_RESPONSE`), membersihkan tag XML sistem, dan memindahkannya ke berkas formal.
+- **Alternatif yang Ditolak**: Menyalin log secara manual (rawan kesalahan/hilang data) atau memfilter mentah berbasis keyword (menghilangkan detail penjelasan penting Agen).
+- **Alasan Pemilihan**: Otomatisasi penulisan log verbatim yang akurat dan bersih dari awal proyek tanpa ada bias ringkasan.
+- **Dampak**: Catatan verbatim yang dihasilkan menjadi sangat bersih, rapi, dan mudah dibaca oleh IA.
+- **Iterasi Terdampak**: 7
+
+---
+
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*
