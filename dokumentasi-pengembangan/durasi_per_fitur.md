@@ -53,8 +53,24 @@ Kalkulasi durasi secara otomatis di akhir iterasi.
 ---
 
 ═══════════════════════════════════════════════════════════════════
-## ITERASI 2a–7 — [Template]
+## ITERASI 2a — Property Editor & Form Validation
 ═══════════════════════════════════════════════════════════════════
+
+| # | Fitur / Komponen | File Utama | Mulai | Selesai | Durasi | Kesulitan | Catatan |
+|---|-----------------|-----------|-------|---------|--------|-----------|---------|
+| 1 | reorderProperties & insertPropertyAt | `state.dart` | 16:55 (July 6) | 17:00 (July 6) | 5m | Sedang | State mutations |
+| 2 | ReorderableListView properti | `sidebar_right.dart` | 17:00 (July 6) | 17:02 (July 6) | 2m | Sedang | UI layout |
+| 3 | E2E integration test Stage 4 | `app_test.dart` | 17:02 (July 6) | 17:04 (July 6) | 2m | Sedang | E2E setup |
+| 4 | Fix empty textfield & unique Keys | `sidebar_right.dart` | 08:33 (July 7) | 08:35 (July 7) | 2m | Tinggi | Bug fix |
+| 5 | Visual headed E2E test run | `app_test.dart` | 08:35 (July 7) | 08:38 (July 7) | 3m | Sedang | All passed |
+| 6 | Dokumen & Walkthrough | — | 08:38 (July 7) | 08:42 (July 7) | 4m | Rendah | Selesai |
+| — | **TOTAL ITERASI 2a** | — | — | — | **18m** | — | — |
+
+---
+
+## ═══════════════════════════════════════════════════════════════════
+## ITERASI 2b–7 — [Template]
+## ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*
 
@@ -70,4 +86,4 @@ Kalkulasi durasi secara otomatis di akhir iterasi.
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap akhir iterasi*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*

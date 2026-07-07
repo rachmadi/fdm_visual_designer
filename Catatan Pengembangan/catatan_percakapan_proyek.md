@@ -481,5 +481,44 @@ Application finished.
 | Commit git lokal dan sinkronisasi push ke GitHub master | 16:41 | 16:43 | ~2 menit |
 | **Total Sesi** | **16:34** | **16:43** | **~9 menit** |
 
+---
+
+## Sesi Pengembangan — 2026-07-06 (Sesi 7) & 2026-07-07 (Sesi 8)
+
+### Fitur yang Diimplementasikan: Iterasi 2a (Property Editor & Form Validation)
+
+**Ringkasan:**
+- **Mutasi State Baru**: Menambahkan metode `reorderProperties` dan `insertPropertyAt` pada `DiagramNotifier` di [state.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/core/state.dart) untuk menata ulang posisi item properti di dalam array node dan pemulihan (Undo).
+- **Rombak UI Properti (sidebar_right.dart)**:
+  - Mengubah daftar properti statis menjadi `ReorderableListView` dinamis dengan drag handle default MD3.
+  - Implementasi edit inline: mengetuk nama field mengaktifkan input text inline (`_editingPropKeyController`), menekan *Enter* atau tombol *Simpan* melakukan rename.
+  - Penambahan dropdown untuk tipe data properti dan switch dinamis (`isUnbounded` / `isReferencing`).
+  - Merubah form tambah properti menjadi inline form yang disembunyikan/ditampilkan menggunakan tombol `+ Tambah property`.
+- **Form Validation terperinci**:
+  - Validasi error real-time: Nama kosong (`Nama field tidak boleh kosong`), alfanumerik/underscore (`Nama field hanya boleh mengandung huruf, angka, dan underscore`), awalan angka (`Nama field tidak boleh diawali angka`), duplikasi (`Nama field sudah ada di node ini`), dan panjang (`Nama field terlalu panjang (maks. 64 karakter)`).
+- **Hapus dengan SnackBar Undo**:
+  - Menghapus properti akan memicu `SnackBar` dengan durasi 3 detik dan tombol `UNDO`. Jika di-tap, properti dan semua edges relasi horizontal yang terhapus dikembalikan ke index aslinya.
+- **Masalah Teknis Pengujian & Solusi**:
+  - **Masalah**: Pada E2E test, saat mensimulasikan input teks kosong `''`, test framework mengalami kegagalan karena TextField target awalnya sudah kosong, sehingga tidak memicu callback `onChanged`.
+    - *Solusi*: Mengisi TextField dengan teks sementara `'temp'` terlebih dahulu, lalu menghapusnya menjadi `''` agar callback `onChanged` terpicu.
+  - **Masalah**: Kesalahan `Bad state: Too many elements` pada finder `find.widgetWithText(TextField, 'Nama field')` karena terdapat beberapa TextField dengan label/hint serupa yang aktif secara bersamaan di UI sidebar kanan.
+    - *Solusi*: Menambahkan `Key` unik (`Key('add_prop_name_input')` dan `Key('inline_edit_prop_name_input')`) pada kedua widget TextField di [sidebar_right.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/panels/sidebar_right.dart), dan merujuk pencarian widget via key di `app_test.dart`.
+- **Hasil Pengujian**:
+  - Semua unit test lulus. E2E headed integration test berhasil dijalankan menggunakan ChromeDriver secara visual langsung di layar desktop pengguna (`All tests passed!`). Screenshot diperbarui dan disalin ke repositori.
+
+**Tabel Durasi Pengerjaan & Pengujian:**
+
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| **Sesi 7 (2026-07-06):** | | | |
+| Perancangan plan & implementasi state mutation | 16:55 | 17:00 | ~5 menit |
+| Refaktor UI list properti & dropdown tipe data | 17:00 | 17:02 | ~2 menit |
+| Pembuatan test case E2E awal & uji coba crash | 17:02 | 17:04 | ~2 menit |
+| **Sesi 8 (2026-07-07):** | | | |
+| Perbaikan deteksi input kosong & penambahan Key unik pada TextField | 08:33 | 08:35 | ~2 menit |
+| Eksekusi ChromeDriver & visual headed E2E test run (All Passed) | 08:35 | 08:38 | ~3 menit |
+| Sinkronisasi screenshot, pembuatan walkthrough, dan log perubahan | 08:38 | 08:42 | ~4 menit |
+| **Total Sesi** | **16:55** | **08:42** | **~18 menit** |
+
 
 

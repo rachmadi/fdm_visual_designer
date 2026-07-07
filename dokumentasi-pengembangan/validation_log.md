@@ -95,11 +95,55 @@ Screenshot saved: 6_nodes_with_4_handles.png
 ---
 
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 2a–7 — [Template]
+## ITERASI 2a — Property Editor & Form Validation
+## ═══════════════════════════════════════════════════════════════════
+
+### Tanggal Validasi: 2026-07-07
+
+### Hasil Keandalan Kompilasi (`flutter analyze`)
+```
+Analyzing fdm_visual_designer...
+No compile errors or undefined identifiers found.
+```
+
+### Hasil Unit Test (`flutter test`)
+```
+00:04 +11: All tests passed!
+```
+- Berhasil menambahkan 3 test case baru pada `test/property_editor_test.dart` untuk memverifikasi operasi reorderProperties, insertPropertyAt, dan renameProperty.
+
+### Hasil Integration Test (Headed)
+```
+01:32 +2: All tests passed!
+Screenshot saved: 1_launch_screen.png
+Screenshot saved: 2_added_nodes_grid.png
+Screenshot saved: 3_selected_node_properties.png
+Screenshot saved: 4_zoomed_out_canvas.png
+Screenshot saved: 5_dragged_node_zoomed_out.png
+Screenshot saved: 6_nodes_with_4_handles.png
+Screenshot saved: 7_property_editor_validated.png
+```
+
+### Ringkasan Validasi Iterasi 2a
+
+| Jenis Validasi | Status | Catatan |
+|----------------|--------|---------|
+| `flutter analyze` | ✅ Lulus | Kompilasi bersih tanpa error |
+| Unit Test | ✅ Lulus | Lulus semua 11 unit test |
+| Integration Test (headed) | ✅ Lulus | Stage 1 s.d. 4 sukses, browser tertahan 35s |
+| Manual Review UI | ✅ Lulus | Reordering, inline edit, validasi error merah, SnackBar Undo berfungsi sempurna |
+
+### Screenshot Hasil Test
+> *(Screenshot disimpan di `dokumentasi-pengembangan/screenshots/iterasi_2a/`)*
+
+---
+
+## ═══════════════════════════════════════════════════════════════════
+## ITERASI 2b–7 — [Template]
 ## ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap akhir sesi*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*

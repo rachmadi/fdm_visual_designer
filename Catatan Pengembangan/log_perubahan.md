@@ -174,3 +174,33 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Menetapkan aturan **akurasi dokumentasi proyek** yang mewajibkan seluruh log pengerjaan diisi secara presisi dan konsisten secara matematis tanpa data dummy atau placeholder kosong.
   - Mengoreksi seluruh berkas log waktu (`waktu_estimasi_vs_realisasi.md` dan `durasi_per_fitur.md`) untuk Iterasi 1a dan 1b agar sinkron secara matematis.
   - Menjalankan tes interaktif headed (`--no-headless`) melalui Scheduled Task interaktif (`LogonType Interactive`) lintas sesi ke ChromeDriver Session 0. Jendela browser Google Chrome fisik muncul di layar monitor desktop user secara nyata dan visual, menjalankan seluruh skenario hingga selesai, dan bertahan selama 35 detik sebelum menutup secara otomatis. Semua stage lulus 100% (PASS).
+
+## [1.4.0] - 2026-07-07 (Iterasi 2a - Property Editor & Form Validation)
+
+### Added (Penambahan Fitur)
+- **Reorderable Property List (`ReorderableListView.builder`)**:
+  - Menyusun daftar properti di sidebar kanan agar dapat diurutkan ulang menggunakan fitur drag-and-drop secara interaktif.
+  - Menambahkan metode `reorderProperties` pada state diagram notifier untuk memperbarui urutan properti secara reaktif.
+- **Inline Editing & Dynamic Controls**:
+  - Tapping/double tapping nama properti akan membuka `TextField` inline dengan autofokus untuk mengubah nama properti secara langsung.
+  - Penambahan inline `DropdownButton` kecil untuk mengubah tipe data properti secara langsung.
+  - Toggles Switch dinamis untuk properti `isUnbounded` (jika array/map) dan `isReferencing` (jika reference).
+- **Form Validation Real-time**:
+  - Menambahkan validasi ketat pada key properti: checks kosong (`Nama field tidak boleh kosong`), format huruf/angka/underscore (`Nama field hanya boleh mengandung huruf, angka, dan underscore`), awalan angka (`Nama field tidak boleh diawali angka`), panjang (`Nama field terlalu panjang (maks. 64 karakter)`), dan duplikasi dalam satu node (`Nama field sudah ada di node ini`).
+  - Menampilkan pesan error validasi berwarna merah tepat di bawah TextField yang bersangkutan.
+- **Deletion dengan SnackBar Undo 3 Detik**:
+  - Menghapus properti di daftar akan memicu `SnackBar` bertuliskan `"Field [key] dihapus"` dengan tombol `"UNDO"`.
+  - Jika tombol UNDO ditekan dalam 3 detik, properti dan semua edges relasi horizontal yang terhubung akan dikembalikan ke index aslinya.
+- **E2E Integration Test Stage 4**:
+  - Memperluas skenario pengujian di `integration_test/app_test.dart` untuk menguji: penambahan properti baru, trigger validasi error (kosong, awalan angka, duplikasi), edit inline nama properti, delete properti, dan pemulihan via SnackBar Undo.
+- **Unit Test Baru (`test/property_editor_test.dart`)**:
+  - Menulis 3 unit test untuk memastikan operasi mutasi reorder, rename, dan insert properti berjalan dengan benar.
+
+### Fixed (Perbaikan Bug & Tes)
+- **Resolusi Masalah Duplikasi Widget Finder**:
+  - Menambahkan `Key` unik (`add_prop_name_input` dan `inline_edit_prop_name_input`) pada TextField properti di [sidebar_right.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/panels/sidebar_right.dart) dan merujuk pencarian widget via key di `app_test.dart` untuk menyelesaikan error `Too many elements`.
+  - Menambahkan `Key` unik (`add_prop_save_button` dan `inline_edit_prop_save_button`) pada tombol Simpan properti untuk menghindari ambiguitas pengetukan widget Simpan.
+- **Resolusi Validasi Kosong E2E Test**:
+  - Memasukkan teks sementara `'temp'` sebelum memasukkan `''` pada TextField nama properti di integration test untuk memastikan event `onChanged` terpicu pada framework.
+- **Pembersihan Log Analisis**:
+  - Semua unit test lulus. `flutter analyze` bersih dari kesalahan kompilasi. E2E headed integration test lulus (`All tests passed!`). Tangkapan layar bukti pengujian interaktif visual disalin ke repositori.

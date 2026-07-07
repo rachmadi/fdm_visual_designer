@@ -122,6 +122,90 @@ void main() {
       await takeScreenshot(tester, '6_nodes_with_4_handles');
       print('✅ Stage 3 Selesai');
 
+      // ==========================================
+      // STAGE 4: PROPERTY EDITOR & VALIDATION
+      // ==========================================
+      print('=== Memulai Stage 4: Property Editor & Validasi ===');
+      // Tap on an Entity Node to show properties
+      await tester.tap(find.text('NewEntity').first);
+      await tester.pumpAndSettle();
+      await Future.delayed(const Duration(seconds: 1));
+
+      // Verify property editor is open
+      expect(find.text('PROPERTIES (0)'), findsOneWidget);
+
+      // 1. Add new property
+      await tester.tap(find.text('Tambah property'));
+      await tester.pumpAndSettle();
+      
+      await tester.enterText(find.byKey(const Key('add_prop_name_input')), 'name');
+      await tester.pumpAndSettle();
+      
+      // Save it
+      await tester.tap(find.byKey(const Key('add_prop_save_button')));
+      await tester.pumpAndSettle();
+      await Future.delayed(const Duration(seconds: 1));
+
+      // Verify property added
+      expect(find.text('name: string'), findsOneWidget);
+
+      // 2. Form validation rules
+      await tester.tap(find.text('Tambah property'));
+      await tester.pumpAndSettle();
+
+      // Check empty warning
+      await tester.enterText(find.byKey(const Key('add_prop_name_input')), 'temp');
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byKey(const Key('add_prop_name_input')), '');
+      await tester.pumpAndSettle();
+      expect(find.text('Nama field tidak boleh kosong'), findsOneWidget);
+
+      // Check starts with number warning
+      await tester.enterText(find.byKey(const Key('add_prop_name_input')), '1field');
+      await tester.pumpAndSettle();
+      expect(find.text('Nama field tidak boleh diawali angka'), findsOneWidget);
+
+      // Check duplicate warning
+      await tester.enterText(find.byKey(const Key('add_prop_name_input')), 'name');
+      await tester.pumpAndSettle();
+      expect(find.text('Nama field sudah ada di node ini'), findsOneWidget);
+
+      // Cancel add
+      await tester.tap(find.text('Batal'));
+      await tester.pumpAndSettle();
+
+      // 3. Rename inline
+      await tester.tap(find.text('name: string'));
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.byKey(const Key('inline_edit_prop_name_input')), 'user_name');
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key('inline_edit_prop_save_button')));
+      await tester.pumpAndSettle();
+      await Future.delayed(const Duration(seconds: 1));
+
+      expect(find.text('user_name: string'), findsOneWidget);
+
+      // 4. Delete property with SnackBar Undo
+      await tester.tap(find.byKey(const Key('delete_prop_user_name')));
+      await tester.pumpAndSettle();
+      await Future.delayed(const Duration(seconds: 1));
+
+      expect(find.text('Field "user_name" dihapus'), findsOneWidget);
+      expect(find.text('UNDO'), findsOneWidget);
+
+      // Tap UNDO
+      await tester.tap(find.text('UNDO'));
+      await tester.pumpAndSettle();
+      await Future.delayed(const Duration(seconds: 1));
+
+      // Verify restored
+      expect(find.text('user_name: string'), findsOneWidget);
+
+      await takeScreenshot(tester, '7_property_editor_validated');
+      print('✅ Stage 4 Selesai');
+
       // CRITICAL: Tahan jendela browser selama 35 detik agar dapat diperiksa pengguna
       print('=== Menahan jendela browser selama 35 detik... ===');
       await Future.delayed(const Duration(seconds: 35));

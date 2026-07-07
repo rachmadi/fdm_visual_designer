@@ -60,6 +60,16 @@
   - [x] Penempatan label nama Structural Node di kotak tab bagian atas
   - [x] Peningkatan visibilitas & kontras garis grid pada dark mode saat zoom out (strokeWidth = 1.0)
 
+## [1.1.0] - Property Editor & Form Validation (Iterasi 2a - Selesai)
+
+- [x] Rombak UI list properti di sidebar kanan menggunakan `ReorderableListView`
+- [x] Implementasi inline editing (TextField & Dropdown) untuk nama dan tipe properti aktif di sidebar
+- [x] Implementasi penambahan properti baru menggunakan inline form dengan tombol `+ Tambah property`
+- [x] Tambahkan validasi error nama properti (kosong, alfanumerik/underscore, diawali angka, duplikasi, batas 64 karakter)
+- [x] Implementasi SnackBar delete dengan tombol Undo berdurasi 3 detik
+- [x] Penulisan unit test untuk mutasi state properti (reordering, insertion, renaming)
+- [x] Penulisan E2E integration test Stage 4 untuk memverifikasi fungsionalitas pengeditan properti, validasi, dan SnackBar Undo
+
 ## Rencana Selanjutnya (Peningkatan Masa Depan)
 
 - [ ] Integrasi Algoritma Auto-Layout otomatis berbasis Dagre (Dart port)

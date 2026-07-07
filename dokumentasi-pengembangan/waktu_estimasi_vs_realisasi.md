@@ -40,8 +40,24 @@
 ---
 
 ═══════════════════════════════════════════════════════════════════
-## ITERASI 2a–7 — [Template]
+## ITERASI 2a — Property Editor & Form Validation
 ═══════════════════════════════════════════════════════════════════
+
+| Komponen | Estimasi | Waktu Mulai | Waktu Selesai | Realisasi | Deviasi | Catatan |
+|----------|----------|-------------|---------------|-----------|---------|---------|
+| Rencana & state mutation | 1,5 jam | 16:55 | 17:00 | 5 menit | -85 menit | Selesai |
+| Rombak UI list & dropdown | 2 jam | 17:00 | 17:02 | 2 menit | -118 menit | Selesai |
+| E2E test coding & debug | 1,5 jam | 17:02 | 17:04 | 2 menit | -88 menit | Pause kuota |
+| Refaktor input & Key | 0,5 jam | 08:33 | 08:35 | 2 menit | -28 menit | Selesai |
+| headed E2E test run | 0,5 jam | 08:35 | 08:38 | 3 menit | -27 menit | All passed |
+| Dokumen & Walkthrough | 0,5 jam | 08:38 | 08:42 | 4 menit | -26 menit | Selesai |
+| **Total Iterasi 2a** | **~6,5 jam** | **16:55** | **08:42** | **18 menit** | **-6 jam 12 m** | Selesai sangat cepat karena reuse state |
+
+---
+
+## ═══════════════════════════════════════════════════════════════════
+## ITERASI 2b–7 — [Template]
+## ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*
 
@@ -51,9 +67,9 @@
 
 | Iterasi | Estimasi | Realisasi | Deviasi | Akurasi |
 |---------|----------|-----------|---------|---------|
-| 1a | ~7,5 jam | ~7,5 jam | 0 jam | 100% |
-| 1b | ~8 jam | ~8,0 jam | 0 jam | 100% |
-| 2a | ~6,5 jam | — | — | — |
+| 1a | ~7,5 jam | 2 jam 11 m | -5 jam 19 m | 29.1% |
+| 1b | ~8 jam | 19 menit | -7 jam 41 m | 4.0% |
+| 2a | ~6,5 jam | 18 menit | -6 jam 12 m | 4.6% |
 | 2b | ~6 jam | — | — | — |
 | 3a | ~7 jam | — | — | — |
 | 3b | ~6,5 jam | — | — | — |
@@ -64,8 +80,8 @@
 | 6a | ~7 jam | — | — | — |
 | 6b | ~6,5 jam | — | — | — |
 | 7 | ~8 jam | — | — | — |
-| **Total** | **~87 jam** | **~7,5 jam** | **0 jam** | **100%** |
+| **Total** | **~87 jam** | **2 jam 48 m** | **-19 jam 12 m** | **12.7%** |
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap akhir iterasi*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*

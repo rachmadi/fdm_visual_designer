@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/metamodel.dart';
 import '../../core/state.dart';
@@ -18,6 +19,14 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
   final TextEditingController _propKeyController = TextEditingController();
   DataType _propType = DataType.string;
   bool _propUnbounded = false;
+  bool _propReferencing = false;
+  bool _showAddForm = false;
+
+  // Property Edit Form
+  final TextEditingController _editingPropKeyController = TextEditingController();
+  String? _editingPropKey;
+  String? _addPropertyError;
+  String? _editPropertyError;
 
   // Query Vector Add Form
   final TextEditingController _filterFieldController = TextEditingController();
@@ -32,6 +41,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
     _nameController.dispose();
     _pathController.dispose();
     _propKeyController.dispose();
+    _editingPropKeyController.dispose();
     _filterFieldController.dispose();
     _sortFieldController.dispose();
     super.dispose();
@@ -43,17 +53,104 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
       _pathController.text = node.path;
       _lastSelectedNodeId = node.id;
       _lastSelectedBoundaryId = null;
+      // Reset editing states on node change
+      _editingPropKey = null;
+      _editPropertyError = null;
+      _addPropertyError = null;
+      _showAddForm = false;
     }
   }
 
-  void _addProperty(String nodeId) {
+  String? _validatePropertyName(String val, FDMNode node, {String? excludeKey}) {
+    final key = val.trim();
+    if (key.isEmpty) {
+      return 'Nama field tidak boleh kosong';
+    }
+    final alphaNumericUnderscore = RegExp(r'^[a-zA-Z0-9_]+$');
+    if (!alphaNumericUnderscore.hasMatch(key)) {
+      return 'Nama field hanya boleh mengandung huruf, angka, dan underscore';
+    }
+    final startsWithNumber = RegExp(r'^[0-9]');
+    if (startsWithNumber.hasMatch(key)) {
+      return 'Nama field tidak boleh diawali angka';
+    }
+    if (key.length > 64) {
+      return 'Nama field terlalu panjang (maks. 64 karakter)';
+    }
+    final isDuplicate = node.properties.any((p) {
+      if (excludeKey != null && p.key == excludeKey) return false;
+      return p.key == key;
+    });
+    if (isDuplicate) {
+      return 'Nama field sudah ada di node ini';
+    }
+    return null;
+  }
+
+  IconData _getDataTypeIcon(DataType type) {
+    switch (type) {
+      case DataType.string:
+        return Icons.title;
+      case DataType.number:
+        return Icons.pin;
+      case DataType.boolean:
+        return Icons.toggle_on;
+      case DataType.timestamp:
+        return Icons.schedule;
+      case DataType.geopoint:
+        return Icons.location_on;
+      case DataType.reference:
+        return Icons.link;
+      case DataType.array:
+        return Icons.format_list_bulleted;
+      case DataType.map:
+        return Icons.layers;
+      case DataType.nullValue:
+        return Icons.remove_circle_outline;
+    }
+  }
+
+  void _deletePropertyWithUndo(BuildContext context, String nodeId, PropertyNode prop, int originalIndex) {
+    final diagramState = ref.read(diagramProvider);
+    final connectedEdges = diagramState.edges.where((e) {
+      return e.sourceNodeId == nodeId && e.sourcePropertyKey == prop.key;
+    }).toList();
+
+    ref.read(diagramProvider.notifier).deleteProperty(nodeId, prop.key);
+
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Field "${prop.key}" dihapus'),
+        duration: const Duration(seconds: 3),
+        action: SnackBarAction(
+          label: 'UNDO',
+          onPressed: () {
+            ref.read(diagramProvider.notifier).insertPropertyAt(nodeId, originalIndex, prop);
+            for (final edge in connectedEdges) {
+              ref.read(diagramProvider.notifier).addEdge(edge);
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  void _addProperty(String nodeId, FDMNode node) {
     final key = _propKeyController.text.trim();
-    if (key.isEmpty) return;
+    final err = _validatePropertyName(key, node);
+    if (err != null) {
+      setState(() {
+        _addPropertyError = err;
+      });
+      return;
+    }
 
     final prop = PropertyNode(
       key: key,
       dataType: _propType,
       isUnbounded: _propUnbounded,
+      isReferencing: _propReferencing,
     );
 
     ref.read(diagramProvider.notifier).addProperty(nodeId, prop);
@@ -63,6 +160,9 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
     setState(() {
       _propType = DataType.string;
       _propUnbounded = false;
+      _propReferencing = false;
+      _addPropertyError = null;
+      _showAddForm = false;
     });
   }
 
@@ -383,139 +483,335 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
           // Properties Editor
           Text('PROPERTIES (${node.properties.length})', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
-          
-          // Form to add property
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: sectionBg,
-              borderRadius: BorderRadius.circular(6),
-              border: Border.all(color: Colors.grey.withOpacity(0.2)),
+
+          // Reorderable list of properties
+          if (node.properties.isNotEmpty)
+            ReorderableListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: node.properties.length,
+              onReorder: (oldIndex, newIndex) {
+                ref.read(diagramProvider.notifier).reorderProperties(node.id, oldIndex, newIndex);
+              },
+              itemBuilder: (context, index) {
+                final p = node.properties[index];
+                final isComplex = p.dataType == DataType.array || p.dataType == DataType.map;
+                final isEditing = _editingPropKey == p.key;
+
+                return Card(
+                  key: Key(p.key),
+                  elevation: 0,
+                  color: isEditing
+                      ? (isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9))
+                      : (isComplex ? const Color(0xFFFFFBEB) : sectionBg),
+                  margin: const EdgeInsets.symmetric(vertical: 4),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    side: BorderSide(
+                      color: isEditing
+                          ? const Color(0xFF2E75B6)
+                          : (isComplex ? const Color(0xFFE07B00).withOpacity(0.5) : Colors.grey.withOpacity(0.2)),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: isEditing
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextField(
+                                      key: const Key('inline_edit_prop_name_input'),
+                                      controller: _editingPropKeyController,
+                                      autofocus: true,
+                                      style: const TextStyle(fontSize: 12),
+                                      decoration: InputDecoration(
+                                        labelText: 'Nama field',
+                                        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                                        border: const OutlineInputBorder(),
+                                        errorText: _editPropertyError,
+                                      ),
+                                      onChanged: (val) {
+                                        setState(() {
+                                          _editPropertyError = _validatePropertyName(val, node, excludeKey: p.key);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  DropdownButton<DataType>(
+                                    value: p.dataType,
+                                    items: DataType.values.where((t) => t != DataType.nullValue).map((t) {
+                                      return DropdownMenuItem(
+                                        value: t,
+                                        child: Text(t.nameString, style: const TextStyle(fontSize: 12)),
+                                      );
+                                    }).toList(),
+                                    onChanged: (val) {
+                                      if (val != null) {
+                                        ref.read(diagramProvider.notifier).updateProperty(
+                                          node.id,
+                                          p.key,
+                                          p.copyWith(
+                                            dataType: val,
+                                            isUnbounded: (val == DataType.array || val == DataType.map) ? p.isUnbounded : false,
+                                            isReferencing: (val == DataType.reference) ? p.isReferencing : false,
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                              if (p.dataType == DataType.array || p.dataType == DataType.map)
+                                SwitchListTile(
+                                  dense: true,
+                                  title: const Text('Tidak terbatas', style: TextStyle(fontSize: 11)),
+                                  subtitle: const Text('Tambahkan anotasi ⚠️ 1MB', style: TextStyle(fontSize: 10)),
+                                  value: p.isUnbounded,
+                                  onChanged: (val) {
+                                    ref.read(diagramProvider.notifier).updateProperty(
+                                      node.id,
+                                      p.key,
+                                      p.copyWith(isUnbounded: val),
+                                    );
+                                  },
+                                ),
+                              if (p.dataType == DataType.reference)
+                                SwitchListTile(
+                                  dense: true,
+                                  title: const Text('Referencing', style: TextStyle(fontSize: 11)),
+                                  subtitle: const Text('Hubungkan ke node lain', style: TextStyle(fontSize: 10)),
+                                  value: p.isReferencing,
+                                  onChanged: (val) {
+                                    ref.read(diagramProvider.notifier).updateProperty(
+                                      node.id,
+                                      p.key,
+                                      p.copyWith(isReferencing: val),
+                                    );
+                                  },
+                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _editingPropKey = null;
+                                        _editPropertyError = null;
+                                      });
+                                    },
+                                    child: const Text('Batal', style: TextStyle(fontSize: 11)),
+                                  ),
+                                  FilledButton(
+                                    key: const Key('inline_edit_prop_save_button'),
+                                    onPressed: () {
+                                      final val = _editingPropKeyController.text;
+                                      final err = _validatePropertyName(val, node, excludeKey: p.key);
+                                      if (err == null) {
+                                        ref.read(diagramProvider.notifier).updateProperty(
+                                          node.id,
+                                          p.key,
+                                          p.copyWith(key: val.trim()),
+                                        );
+                                        setState(() {
+                                          _editingPropKey = null;
+                                          _editPropertyError = null;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _editPropertyError = err;
+                                        });
+                                      }
+                                    },
+                                    child: const Text('Simpan', style: TextStyle(fontSize: 11)),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              Icon(_getDataTypeIcon(p.dataType), size: 14, color: isComplex ? const Color(0xFFE07B00) : Colors.grey),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      _editingPropKey = p.key;
+                                      _editingPropKeyController.text = p.key;
+                                      _editPropertyError = null;
+                                    });
+                                  },
+                                  child: Text(
+                                    '${p.key}: ${p.dataType.nameString}${p.isUnbounded ? " (⚠️ 1MB)" : ""}',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      color: isComplex ? const Color(0xFF92400E) : textCol,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (isComplex)
+                                    IconButton(
+                                      icon: Icon(
+                                        p.isUnbounded ? Icons.warning : Icons.info,
+                                        size: 14,
+                                        color: p.isUnbounded ? const Color(0xFFE07B00) : Colors.grey,
+                                      ),
+                                      tooltip: 'Toggle Unbounded Limit',
+                                      onPressed: () {
+                                        ref.read(diagramProvider.notifier).updateProperty(
+                                          node.id,
+                                          p.key,
+                                          p.copyWith(isUnbounded: !p.isUnbounded),
+                                        );
+                                      },
+                                    ),
+                                  IconButton(
+                                    key: Key('delete_prop_${p.key}'),
+                                    icon: const Icon(Icons.delete, size: 14, color: Color(0xFFEF4444)),
+                                    onPressed: () => _deletePropertyWithUndo(context, node.id, p, index),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                  ),
+                );
+              },
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextField(
-                  controller: _propKeyController,
-                  style: const TextStyle(fontSize: 12),
-                  decoration: const InputDecoration(
-                    hintText: 'property_key',
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                    border: OutlineInputBorder(),
+          const SizedBox(height: 12),
+
+          // Add Property trigger button & inline form
+          if (!_showAddForm)
+            FilledButton.tonalIcon(
+              onPressed: () {
+                setState(() {
+                  _showAddForm = true;
+                  _propKeyController.clear();
+                  _propType = DataType.string;
+                  _propUnbounded = false;
+                  _propReferencing = false;
+                  _addPropertyError = null;
+                });
+              },
+              icon: const Icon(Icons.add, size: 14),
+              label: const Text('Tambah property', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+              style: FilledButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+              ),
+            )
+          else
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: sectionBg,
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: Colors.grey.withOpacity(0.2)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextField(
+                    key: const Key('add_prop_name_input'),
+                    controller: _propKeyController,
+                    style: const TextStyle(fontSize: 12),
+                    decoration: InputDecoration(
+                      labelText: 'Nama field',
+                      hintText: 'mis. createdAt',
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                      border: const OutlineInputBorder(),
+                      errorText: _addPropertyError,
+                      prefixIcon: const Icon(Icons.label_outline, size: 14),
+                    ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9_]')),
+                    ],
+                    onChanged: (val) {
+                      setState(() {
+                        _addPropertyError = _validatePropertyName(val, node);
+                      });
+                    },
                   ),
-                ),
-                const SizedBox(height: 6),
-                DropdownButtonFormField<DataType>(
-                  value: _propType,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    border: OutlineInputBorder(),
+                  const SizedBox(height: 8),
+                  DropdownButtonFormField<DataType>(
+                    value: _propType,
+                    decoration: const InputDecoration(
+                      labelText: 'Tipe data',
+                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      border: OutlineInputBorder(),
+                    ),
+                    items: DataType.values.where((t) => t != DataType.nullValue).map((t) {
+                      return DropdownMenuItem(
+                        value: t,
+                        child: Text(t.nameString, style: const TextStyle(fontSize: 12)),
+                      );
+                    }).toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        _propType = val ?? DataType.string;
+                      });
+                    },
                   ),
-                  items: DataType.values.where((t) => t != DataType.nullValue).map((t) {
-                    return DropdownMenuItem(
-                      value: t,
-                      child: Text(t.nameString, style: const TextStyle(fontSize: 12)),
-                    );
-                  }).toList(),
-                  onChanged: (val) {
-                    setState(() {
-                      _propType = val ?? DataType.string;
-                    });
-                  },
-                ),
-                if (_propType == DataType.array || _propType == DataType.map) ...[
-                  const SizedBox(height: 4),
+                  if (_propType == DataType.array || _propType == DataType.map) ...[
+                    const SizedBox(height: 4),
+                    SwitchListTile(
+                      dense: true,
+                      title: const Text('Tidak terbatas', style: TextStyle(fontSize: 11)),
+                      subtitle: const Text('Tambahkan anotasi ⚠️ 1MB', style: TextStyle(fontSize: 10)),
+                      value: _propUnbounded,
+                      onChanged: (val) {
+                        setState(() {
+                          _propUnbounded = val;
+                        });
+                      },
+                    ),
+                  ],
+                  if (_propType == DataType.reference) ...[
+                    const SizedBox(height: 4),
+                    SwitchListTile(
+                      dense: true,
+                      title: const Text('Referencing', style: TextStyle(fontSize: 11)),
+                      subtitle: const Text('Hubungkan ke node lain', style: TextStyle(fontSize: 10)),
+                      value: _propReferencing,
+                      onChanged: (val) {
+                        setState(() {
+                          _propReferencing = val;
+                        });
+                      },
+                    ),
+                  ],
+                  const SizedBox(height: 8),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Checkbox(
-                        value: _propUnbounded,
-                        onChanged: (val) {
+                      TextButton(
+                        onPressed: () {
                           setState(() {
-                            _propUnbounded = val ?? false;
+                            _showAddForm = false;
+                            _addPropertyError = null;
                           });
                         },
+                        child: const Text('Batal', style: TextStyle(fontSize: 11)),
                       ),
-                      const Row(
-                        children: [
-                          Text('Unbounded limit ', style: TextStyle(fontSize: 11)),
-                          Icon(Icons.warning, size: 10, color: Color(0xFFE07B00)),
-                          Text(' (⚠️ 1MB)', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFFE07B00))),
-                        ],
+                      const SizedBox(width: 8),
+                      FilledButton(
+                        key: const Key('add_prop_save_button'),
+                        onPressed: () => _addProperty(node.id, node),
+                        child: const Text('Simpan', style: TextStyle(fontSize: 11)),
                       ),
                     ],
                   ),
                 ],
-                const SizedBox(height: 6),
-                ElevatedButton(
-                  onPressed: () => _addProperty(node.id),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2E75B6),
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  child: const Text('Add Property', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
-                ),
-              ],
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-
-          // List current properties
-          ...node.properties.map((p) {
-            final isComplex = p.dataType == DataType.array || p.dataType == DataType.map;
-            return Card(
-              elevation: 0,
-              color: isComplex ? const Color(0xFFFFFBEB) : sectionBg,
-              margin: const EdgeInsets.symmetric(vertical: 4),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
-                side: BorderSide(
-                  color: isComplex ? const Color(0xFFE07B00).withOpacity(0.5) : Colors.grey.withOpacity(0.2),
-                ),
-              ),
-              child: ListTile(
-                dense: true,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-                title: Text(
-                  '${p.key}: ${p.dataType.nameString}${p.isUnbounded ? " (⚠️ 1MB)" : ""}',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    color: isComplex ? const Color(0xFF92400E) : textCol,
-                  ),
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Quick edit toggle
-                    IconButton(
-                      icon: Icon(
-                        p.isUnbounded ? Icons.warning : Icons.info,
-                        size: 14,
-                        color: p.isUnbounded ? const Color(0xFFE07B00) : Colors.grey,
-                      ),
-                      tooltip: 'Toggle Unbounded Limit',
-                      onPressed: isComplex
-                          ? () {
-                              ref.read(diagramProvider.notifier).updateProperty(
-                                node.id,
-                                p.key,
-                                p.copyWith(isUnbounded: !p.isUnbounded),
-                              );
-                            }
-                          : null,
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.delete, size: 14, color: Color(0xFFEF4444)),
-                      onPressed: () {
-                        ref.read(diagramProvider.notifier).deleteProperty(node.id, p.key);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
           const SizedBox(height: 16),
           const Divider(),
           const SizedBox(height: 8),

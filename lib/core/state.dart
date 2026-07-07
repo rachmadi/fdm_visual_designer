@@ -274,6 +274,43 @@ class DiagramNotifier extends Notifier<DiagramState> {
     _runValidation();
   }
 
+  void reorderProperties(String nodeId, int oldIndex, int newIndex) {
+    _saveToUndoStack();
+    final newNodes = state.nodes.map((n) {
+      if (n.id == nodeId) {
+        final props = List<PropertyNode>.from(n.properties);
+        var targetIndex = newIndex;
+        if (oldIndex < targetIndex) {
+          targetIndex -= 1;
+        }
+        final item = props.removeAt(oldIndex);
+        props.insert(targetIndex, item);
+        return n.copyWith(properties: props);
+      }
+      return n;
+    }).toList();
+    state = state.copyWith(nodes: newNodes);
+    _runValidation();
+  }
+
+  void insertPropertyAt(String nodeId, int index, PropertyNode prop) {
+    _saveToUndoStack();
+    final newNodes = state.nodes.map((n) {
+      if (n.id == nodeId) {
+        final props = List<PropertyNode>.from(n.properties);
+        if (index >= 0 && index <= props.length) {
+          props.insert(index, prop);
+        } else {
+          props.add(prop);
+        }
+        return n.copyWith(properties: props);
+      }
+      return n;
+    }).toList();
+    state = state.copyWith(nodes: newNodes);
+    _runValidation();
+  }
+
   void addEdge(FDMEdge edge) {
     _saveToUndoStack();
     final newEdges = List<FDMEdge>.from(state.edges)..add(edge);
