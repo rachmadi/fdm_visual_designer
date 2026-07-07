@@ -576,5 +576,39 @@ Application finished.
 | Build produksi web (`flutter build web`) & serve port `5555` | 15:32 | 15:34 | ~2 menit |
 | **Total Sesi 10** | **15:10** | **15:34** | **~24 menit** |
 
+## Sesi Pengembangan — 2026-07-07 (Sesi 11, Perbaikan Bug Kompilasi, Hubungan Canvas, dan Pengujian E2E Sempurna)
+
+### Aktivitas Utama:
+- **Perbaikan Kompilasi Proyek**:
+  - Mengeluarkan deklarasi nested `_buildEdgeEditor` dari dalam `_buildEditorContent` pada [sidebar_right.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/panels/sidebar_right.dart) menjadi metode mandiri kelas.
+  - Menambahkan parameter wajib `path: ''`, `queryVector: QueryVector()`, dan `position: Offset.zero` pada konstruktor fallback `FDMNode` di `sidebar_right.dart`.
+  - Mengubah penulisan `const textPainter = TextPainter(...)` menjadi `final textPainter = TextPainter(...)` di [edges_painter.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/edges_painter.dart).
+- **Perbaikan Deteksi Indeks Single-Field**:
+  - Memperbaiki estimasi indeks di `sidebar_right.dart` agar jika field filter dan sort sama, terestimasi sebagai `Single-Field` (badge hijau) alih-alih `COMPOSITE`.
+- **Pembersihan Seleksi Canvas & Hubungan Relasi**:
+  - Mengoreksi penanganan klik kosong di canvas pada `state.dart` agar menghapus seluruh seleksi node/boundary/edge secara aman.
+  - Membatasi opsi tipe relasi di `sidebar_left.dart` berdasarkan tipe node sumber (Hierarchy untuk SN, Referencing/Denormalization untuk EN).
+  - Memperbarui `completeConnection` di `state.dart` untuk mencegah penambahan relasi duplikat dengan memperbarui properti relasi yang sudah ada.
+- **Penyempurnaan Pengujian E2E**:
+  - Menggunakan `findsAtLeastNWidgets(1)` pada asersi teks nama node di `app_test.dart` untuk menghindari error duplikasi finder akibat widget nama inline.
+  - Memperbaiki alur validasi teks kosong dengan memasukkan teks `'temp'` terlebih dahulu sebelum mengosongkannya agar callback `onChanged` terpicu.
+  - Menambahkan `ensureVisible` sebelum interaksi dropdown filter, sort, dan tombol tambah filter/sort untuk menghindari pergeseran layout.
+  - Menghitung koordinat midpoint secara dinamis dengan penyesuaian offset vertikal 30 piksel untuk menunjuk ke garis konektor relasi di canvas.
+  - **Hasil**: 13 unit test passed, dan E2E headed integration test (`flutter drive`) sukses 100% dengan 6 screenshot tersimpan.
+  - **Build Web & Server**: Menjalankan kembali build produksi web dan menyajikannya via dev server lokal pada port `5555`.
+
+**Tabel Durasi Pengerjaan & Pengujian:**
+
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| Analisis error kompilasi & pemindahan _buildEdgeEditor | 16:15 | 16:16 | ~1 menit |
+| Perbaikan instansiasi FDMNode & TextPainter | 16:16 | 16:18 | ~2 menit |
+| Uji unit test & perbaikan E2E duplicate finder & empty validation | 16:18 | 16:21 | ~3 menit |
+| Penambahan ensureVisible & perhitungan midpoint dinamis di E2E | 16:21 | 16:24 | ~3 menit |
+| Eksekusi visual headed E2E test run (100% Passed) | 16:24 | 16:27 | ~3 menit |
+| Kompilasi build produksi web & pembaruan dokumentasi | 16:27 | 16:30 | ~35 menit |
+| **Total Sesi 11** | **16:15** | **16:30** | **~15 menit** |
+
+
 
 

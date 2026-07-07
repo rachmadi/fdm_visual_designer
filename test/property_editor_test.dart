@@ -133,5 +133,35 @@ void main() {
       expect(updatedNode.queryVector.sortFields[0].field, equals('status'));
       expect(updatedNode.queryVector.estimatedIndexes, equals(EstimatedIndex.composite));
     });
+
+    test('Query Vector: single field index estimation when filter and sort are on the same field', () {
+      final container = ProviderContainer();
+      final notifier = container.read(diagramProvider.notifier);
+
+      final node = FDMNode(
+        id: 'node_1',
+        name: 'Task',
+        type: NodeType.entity,
+        path: 'tasks/\$id',
+        properties: [
+          PropertyNode(key: 'task_id', dataType: DataType.string),
+        ],
+        queryVector: QueryVector(),
+        position: Offset.zero,
+      );
+
+      notifier.state = DiagramState(nodes: [node]);
+
+      // Filter and sort on the same field 'task_id'
+      final qv = QueryVector(
+        filterFields: ['task_id'],
+        sortFields: [SortField(field: 'task_id', direction: 'asc')],
+        estimatedIndexes: EstimatedIndex.single,
+      );
+      notifier.updateQueryVector('node_1', qv);
+
+      final updatedNode = container.read(diagramProvider).nodes.first;
+      expect(updatedNode.queryVector.estimatedIndexes, equals(EstimatedIndex.single));
+    });
   });
 }

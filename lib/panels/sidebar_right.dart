@@ -76,25 +76,25 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
   String? _validatePropertyName(String val, FDMNode node, {String? excludeKey}) {
     final key = val.trim();
     if (key.isEmpty) {
-      return 'Nama field tidak boleh kosong';
+      return 'Field name cannot be empty';
     }
     final alphaNumericUnderscore = RegExp(r'^[a-zA-Z0-9_]+$');
     if (!alphaNumericUnderscore.hasMatch(key)) {
-      return 'Nama field hanya boleh mengandung huruf, angka, dan underscore';
+      return 'Field name can only contain letters, numbers, and underscores';
     }
     final startsWithNumber = RegExp(r'^[0-9]');
     if (startsWithNumber.hasMatch(key)) {
-      return 'Nama field tidak boleh diawali angka';
+      return 'Field name cannot start with a number';
     }
     if (key.length > 64) {
-      return 'Nama field terlalu panjang (maks. 64 karakter)';
+      return 'Field name is too long (max 64 characters)';
     }
     final isDuplicate = node.properties.any((p) {
       if (excludeKey != null && p.key == excludeKey) return false;
       return p.key == key;
     });
     if (isDuplicate) {
-      return 'Nama field sudah ada di node ini';
+      return 'Field name already exists in this node';
     }
     return null;
   }
@@ -137,7 +137,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Field "${prop.key}" dihapus'),
+        content: Text('Field "${prop.key}" deleted'),
         duration: const Duration(seconds: 3),
         action: SnackBarAction(
           label: 'UNDO',
@@ -255,16 +255,21 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
   }
 
   EstimatedIndex _estimateIndex(List<String> filters, List<SortField> sorts) {
-    // Estimator Logic:
-    // - If filterFields > 1, or (filterFields == 1 and sorts is not empty) -> Composite
-    // - Else if filterFields == 1 or sorts is not empty -> Single-Field
-    // - Else -> None
-    if (filters.length > 1 || (filters.isNotEmpty && sorts.isNotEmpty)) {
-      return EstimatedIndex.composite;
-    } else if (filters.isNotEmpty || sorts.isNotEmpty) {
-      return EstimatedIndex.single;
+    final uniqueFields = <String>{};
+    for (final f in filters) {
+      uniqueFields.add(f);
     }
-    return EstimatedIndex.none;
+    for (final s in sorts) {
+      uniqueFields.add(s.field);
+    }
+
+    if (uniqueFields.isEmpty) {
+      return EstimatedIndex.none;
+    }
+    if (uniqueFields.length > 1) {
+      return EstimatedIndex.composite;
+    }
+    return EstimatedIndex.single;
   }
 
   @override
@@ -289,6 +294,11 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
       selectedBoundary = state.boundaries.firstWhere((b) => b.id == state.selectedBoundaryId, orElse: () => state.boundaries.first);
     }
 
+    FDMEdge? selectedEdge;
+    if (state.selectedEdgeId != null) {
+      selectedEdge = state.edges.firstWhere((e) => e.id == state.selectedEdgeId, orElse: () => state.edges.first);
+    }
+
     return Container(
       width: 320,
       decoration: BoxDecoration(
@@ -304,7 +314,9 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
             child: Text(
               selectedNode != null 
                   ? 'EDIT NODE PROPERTIES' 
-                  : (selectedBoundary != null ? 'EDIT BOUNDARY PROPERTIES' : 'PROPERTIES'),
+                  : (selectedBoundary != null 
+                      ? 'EDIT BOUNDARY PROPERTIES' 
+                      : (selectedEdge != null ? 'EDIT CONNECTION PROPERTIES' : 'PROPERTIES')),
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.bold,
@@ -319,7 +331,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
-              child: _buildEditorContent(selectedNode, selectedBoundary, textCol, sectionBg, isDark),
+              child: _buildEditorContent(selectedNode, selectedBoundary, selectedEdge, textCol, sectionBg, isDark),
             ),
           ),
 
@@ -337,8 +349,106 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
     );
   }
 
-  Widget _buildEditorContent(FDMNode? node, SecurityBoundary? boundary, Color textCol, Color sectionBg, bool isDark) {
-    if (node == null && boundary == null) {
+  Widget _buildEdgeEditor(FDMEdge edge, Color textCol, Color sectionBg, bool isDark) {
+    final notifier = ref.read(diagramProvider.notifier);
+    final sourceNode = ref.read(diagramProvider).nodes.firstWhere(
+          (n) => n.id == edge.sourceNodeId,
+          orElse: () => FDMNode(id: '', name: 'Unknown', type: NodeType.entity, path: '', queryVector: QueryVector(), position: Offset.zero),
+        );
+    final targetNode = ref.read(diagramProvider).nodes.firstWhere(
+          (n) => n.id == edge.targetNodeId,
+          orElse: () => FDMNode(id: '', name: 'Unknown', type: NodeType.entity, path: '', queryVector: QueryVector(), position: Offset.zero),
+        );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Connection Info Section
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: sectionBg,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Connection Info', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: textCol)),
+              const SizedBox(height: 8),
+              Text('Source: ${sourceNode.name}', style: TextStyle(fontSize: 11, color: textCol.withOpacity(0.8))),
+              if (edge.sourcePropertyKey != null)
+                Text('Source Field: ${edge.sourcePropertyKey}', style: TextStyle(fontSize: 11, color: textCol.withOpacity(0.8))),
+              const SizedBox(height: 4),
+              Text('Target: ${targetNode.name}', style: TextStyle(fontSize: 11, color: textCol.withOpacity(0.8))),
+              const SizedBox(height: 4),
+              Text('Type: ${edge.type.name.toUpperCase()}', style: TextStyle(fontSize: 11, color: textCol.withOpacity(0.8))),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+
+        // Settings based on type
+        if (edge.type == EdgeType.referencing) ...[
+          Text('CARDINALITY', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: textCol.withOpacity(0.6))),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Checkbox(
+                value: edge.isOneToMany,
+                onChanged: (val) {
+                  notifier.updateEdgeProperties(edge.id, isOneToMany: val ?? false);
+                },
+              ),
+              Expanded(
+                child: Text(
+                  'One-to-Many (*) Cardinality',
+                  style: TextStyle(fontSize: 12, color: textCol),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+        ],
+
+        if (edge.type == EdgeType.denormalization) ...[
+          Text('REPLICATION SYNC PATH (LABEL)', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: textCol.withOpacity(0.6))),
+          const SizedBox(height: 8),
+          TextField(
+            controller: TextEditingController(text: edge.label)..selection = TextSelection.collapsed(offset: (edge.label ?? '').length),
+            style: const TextStyle(fontSize: 12),
+            decoration: const InputDecoration(
+              hintText: 'e.g. sender_name',
+              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              border: OutlineInputBorder(),
+            ),
+            onChanged: (val) {
+              notifier.updateEdgeProperties(edge.id, label: val.trim());
+            },
+          ),
+          const SizedBox(height: 16),
+        ],
+
+        // Delete Button
+        const SizedBox(height: 8),
+        ElevatedButton.icon(
+          onPressed: () {
+            notifier.deleteEdge(edge.id);
+          },
+          icon: const Icon(Icons.delete, size: 16, color: Colors.white),
+          label: const Text('Delete Connection', style: TextStyle(color: Colors.white, fontSize: 12)),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red.shade600,
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEditorContent(FDMNode? node, SecurityBoundary? boundary, FDMEdge? edge, Color textCol, Color sectionBg, bool isDark) {
+    if (node == null && boundary == null && edge == null) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 40.0),
@@ -347,7 +457,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
               Icon(Icons.mouse, size: 24, color: textCol.withOpacity(0.3)),
               const SizedBox(height: 8),
               Text(
-                'Select a node or boundary\non the canvas to edit.',
+                'Select a node, boundary, or connection\non the canvas to edit.',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: textCol.withOpacity(0.4), fontSize: 12),
               ),
@@ -355,6 +465,10 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
           ),
         ),
       );
+    }
+
+    if (edge != null) {
+      return _buildEdgeEditor(edge, textCol, sectionBg, isDark);
     }
 
     if (boundary != null) {
@@ -562,7 +676,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                                       autofocus: true,
                                       style: const TextStyle(fontSize: 12),
                                       decoration: InputDecoration(
-                                        labelText: 'Nama field',
+                                        labelText: 'Field name',
                                         contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                                         border: const OutlineInputBorder(),
                                         errorText: _editPropertyError,
@@ -620,8 +734,8 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                               if (p.dataType == DataType.array || p.dataType == DataType.map)
                                 SwitchListTile(
                                   dense: true,
-                                  title: const Text('Tidak terbatas', style: TextStyle(fontSize: 11)),
-                                  subtitle: const Text('Tambahkan anotasi ⚠️ 1MB', style: TextStyle(fontSize: 10)),
+                                  title: const Text('Unbounded', style: TextStyle(fontSize: 11)),
+                                  subtitle: const Text('Add ⚠️ 1MB annotation', style: TextStyle(fontSize: 10)),
                                   value: p.isUnbounded,
                                   onChanged: (val) {
                                     ref.read(diagramProvider.notifier).updateProperty(
@@ -635,7 +749,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                                 SwitchListTile(
                                   dense: true,
                                   title: const Text('Referencing', style: TextStyle(fontSize: 11)),
-                                  subtitle: const Text('Hubungkan ke node lain', style: TextStyle(fontSize: 10)),
+                                  subtitle: const Text('Connect to another node', style: TextStyle(fontSize: 10)),
                                   value: p.isReferencing,
                                   onChanged: (val) {
                                     ref.read(diagramProvider.notifier).updateProperty(
@@ -655,8 +769,9 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                                         _editPropertyError = null;
                                       });
                                     },
-                                    child: const Text('Batal', style: TextStyle(fontSize: 11)),
+                                    child: const Text('Cancel', style: TextStyle(fontSize: 11)),
                                   ),
+                                  const SizedBox(width: 8),
                                   FilledButton(
                                     key: const Key('inline_edit_prop_save_button'),
                                     onPressed: () {
@@ -678,7 +793,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                                         });
                                       }
                                     },
-                                    child: const Text('Simpan', style: TextStyle(fontSize: 11)),
+                                    child: const Text('Save', style: TextStyle(fontSize: 11)),
                                   ),
                                 ],
                               ),
@@ -755,114 +870,123 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                 });
               },
               icon: const Icon(Icons.add, size: 14),
-              label: const Text('Tambah property', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+              label: const Text('Add property', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 10),
               ),
             )
           else
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: sectionBg,
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: Colors.grey.withOpacity(0.2)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  TextField(
-                    key: const Key('add_prop_name_input'),
-                    controller: _propKeyController,
-                    style: const TextStyle(fontSize: 12),
-                    decoration: InputDecoration(
-                      labelText: 'Nama field',
-                      hintText: 'mis. createdAt',
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                      border: const OutlineInputBorder(),
-                      errorText: _addPropertyError,
-                      prefixIcon: const Icon(Icons.label_outline, size: 14),
-                    ),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9_]')),
-                    ],
-                    onChanged: (val) {
-                      setState(() {
-                        _addPropertyError = _validatePropertyName(val, node);
-                      });
-                    },
-                    onSubmitted: (_) => _addProperty(node.id, node),
-                  ),
-                  const SizedBox(height: 8),
-                  DropdownButtonFormField<DataType>(
-                    value: _propType,
-                    decoration: const InputDecoration(
-                      labelText: 'Tipe data',
-                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      border: OutlineInputBorder(),
-                    ),
-                    items: DataType.values.where((t) => t != DataType.nullValue).map((t) {
-                      return DropdownMenuItem(
-                        value: t,
-                        child: Text(_getDataTypeDisplayName(t), style: const TextStyle(fontSize: 12)),
-                      );
-                    }).toList(),
-                    onChanged: (val) {
-                      setState(() {
-                        _propType = val ?? DataType.string;
-                      });
-                    },
-                  ),
-                  if (_propType == DataType.array || _propType == DataType.map) ...[
-                    const SizedBox(height: 4),
-                    SwitchListTile(
-                      dense: true,
-                      title: const Text('Tidak terbatas', style: TextStyle(fontSize: 11)),
-                      subtitle: const Text('Tambahkan anotasi ⚠️ 1MB', style: TextStyle(fontSize: 10)),
-                      value: _propUnbounded,
+            Focus(
+              onKeyEvent: (focusNode, event) {
+                if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.enter) {
+                  _addProperty(node.id, node);
+                  return KeyEventResult.handled;
+                }
+                return KeyEventResult.ignored;
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: sectionBg,
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(color: Colors.grey.withOpacity(0.2)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TextField(
+                      key: const Key('add_prop_name_input'),
+                      controller: _propKeyController,
+                      style: const TextStyle(fontSize: 12),
+                      decoration: InputDecoration(
+                        labelText: 'Field name',
+                        hintText: 'e.g. createdAt',
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                        border: const OutlineInputBorder(),
+                        errorText: _addPropertyError,
+                        prefixIcon: const Icon(Icons.label_outline, size: 14),
+                      ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9_]')),
+                      ],
                       onChanged: (val) {
                         setState(() {
-                          _propUnbounded = val;
+                          _addPropertyError = _validatePropertyName(val, node);
+                        });
+                      },
+                      onSubmitted: (_) => _addProperty(node.id, node),
+                    ),
+                    const SizedBox(height: 8),
+                    DropdownButtonFormField<DataType>(
+                      value: _propType,
+                      decoration: const InputDecoration(
+                        labelText: 'Data type',
+                        contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        border: OutlineInputBorder(),
+                      ),
+                      items: DataType.values.where((t) => t != DataType.nullValue).map((t) {
+                        return DropdownMenuItem(
+                          value: t,
+                          child: Text(_getDataTypeDisplayName(t), style: const TextStyle(fontSize: 12)),
+                        );
+                      }).toList(),
+                      onChanged: (val) {
+                        setState(() {
+                          _propType = val ?? DataType.string;
                         });
                       },
                     ),
-                  ],
-                  if (_propType == DataType.reference) ...[
-                    const SizedBox(height: 4),
-                    SwitchListTile(
-                      dense: true,
-                      title: const Text('Referencing', style: TextStyle(fontSize: 11)),
-                      subtitle: const Text('Hubungkan ke node lain', style: TextStyle(fontSize: 10)),
-                      value: _propReferencing,
-                      onChanged: (val) {
-                        setState(() {
-                          _propReferencing = val;
-                        });
-                      },
-                    ),
-                  ],
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {
+                    if (_propType == DataType.array || _propType == DataType.map) ...[
+                      const SizedBox(height: 4),
+                      SwitchListTile(
+                        dense: true,
+                        title: const Text('Unbounded', style: TextStyle(fontSize: 11)),
+                        subtitle: const Text('Add ⚠️ 1MB annotation', style: TextStyle(fontSize: 10)),
+                        value: _propUnbounded,
+                        onChanged: (val) {
                           setState(() {
-                            _showAddForm = false;
-                            _addPropertyError = null;
+                            _propUnbounded = val;
                           });
                         },
-                        child: const Text('Batal', style: TextStyle(fontSize: 11)),
-                      ),
-                      const SizedBox(width: 8),
-                      FilledButton(
-                        key: const Key('add_prop_save_button'),
-                        onPressed: () => _addProperty(node.id, node),
-                        child: const Text('Simpan', style: TextStyle(fontSize: 11)),
                       ),
                     ],
-                  ),
-                ],
+                    if (_propType == DataType.reference) ...[
+                      const SizedBox(height: 4),
+                      SwitchListTile(
+                        dense: true,
+                        title: const Text('Referencing', style: TextStyle(fontSize: 11)),
+                        subtitle: const Text('Connect to another node', style: TextStyle(fontSize: 10)),
+                        value: _propReferencing,
+                        onChanged: (val) {
+                          setState(() {
+                            _propReferencing = val;
+                          });
+                        },
+                      ),
+                    ],
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              _showAddForm = false;
+                              _addPropertyError = null;
+                            });
+                          },
+                          child: const Text('Cancel', style: TextStyle(fontSize: 11)),
+                        ),
+                        const SizedBox(width: 8),
+                        FilledButton(
+                          key: const Key('add_prop_save_button'),
+                          onPressed: () => _addProperty(node.id, node),
+                          child: const Text('Save', style: TextStyle(fontSize: 11)),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           const SizedBox(height: 16),
@@ -912,6 +1036,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                               ),
                             )
                           : DropdownButtonFormField<String>(
+                              key: const Key('qv_filter_dropdown'),
                               value: _selectedFilterField,
                               decoration: const InputDecoration(
                                 labelText: 'Filter field (F)',
@@ -945,6 +1070,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                     ),
                     const SizedBox(width: 4),
                     IconButton(
+                      key: const Key('qv_filter_add_button'),
                       icon: const Icon(Icons.add_circle, size: 20, color: Color(0xFF2E75B6)),
                       onPressed: () => _addFilterField(node),
                     ),
@@ -976,6 +1102,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                               ),
                             )
                           : DropdownButtonFormField<String>(
+                              key: const Key('qv_sort_dropdown'),
                               value: _selectedSortField,
                               decoration: const InputDecoration(
                                 labelText: 'Sort field (S)',
@@ -1021,6 +1148,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                       },
                     ),
                     IconButton(
+                      key: const Key('qv_sort_add_button'),
                       icon: const Icon(Icons.add_circle, size: 20, color: Color(0xFF2E75B6)),
                       onPressed: () => _addSortField(node),
                     ),

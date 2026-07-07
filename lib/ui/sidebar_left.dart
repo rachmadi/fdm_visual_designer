@@ -134,8 +134,8 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
 
     final sourceNode = state.nodes.any((n) => n.id == _selectedSourceNodeId)
         ? state.nodes.firstWhere((n) => n.id == _selectedSourceNodeId)
-        : (state.nodes.isNotEmpty ? state.nodes.first : null);
-    final sourceProps = (_selectedSourceNodeId != null && sourceNode != null) ? sourceNode.properties : <PropertyNode>[];
+        : null;
+    final sourceProps = sourceNode != null ? sourceNode.properties : <PropertyNode>[];
 
     return Container(
       width: 280,
@@ -317,6 +317,17 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
                       setState(() {
                         _selectedSourceNodeId = val;
                         _selectedSourcePropKey = null;
+                        if (val != null) {
+                          final node = state.nodes.firstWhere((n) => n.id == val);
+                          if (node.type == NodeType.structural) {
+                            _selectedEdgeType = EdgeType.hierarchy;
+                          } else {
+                            if (_selectedEdgeType == EdgeType.hierarchy) {
+                              _selectedEdgeType = EdgeType.referencing;
+                            }
+                          }
+                          ref.read(diagramProvider.notifier).setConnectionMode(_selectedEdgeType);
+                        }
                       });
                     },
                   ),
@@ -353,25 +364,44 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
                   const Text('Relation Type:', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
                   const SizedBox(height: 4),
                   DropdownButtonFormField<EdgeType>(
+                    key: ValueKey('relation_type_dropdown_${_selectedSourceNodeId ?? 'null'}'),
                     value: _selectedEdgeType,
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       border: OutlineInputBorder(),
                     ),
-                    items: const [
-                      DropdownMenuItem(
-                        value: EdgeType.hierarchy,
-                        child: Text('Hierarchy (SN ⇄ EN)', style: TextStyle(fontSize: 12)),
-                      ),
-                      DropdownMenuItem(
-                        value: EdgeType.referencing,
-                        child: Text('Referencing (Pointer)', style: TextStyle(fontSize: 12)),
-                      ),
-                      DropdownMenuItem(
-                        value: EdgeType.denormalization,
-                        child: Text('Denormalization (Sync)', style: TextStyle(fontSize: 12)),
-                      ),
-                    ],
+                    items: sourceNode == null
+                        ? const [
+                            DropdownMenuItem(
+                              value: EdgeType.hierarchy,
+                              child: Text('Hierarchy (SN ⇄ EN)', style: TextStyle(fontSize: 12)),
+                            ),
+                            DropdownMenuItem(
+                              value: EdgeType.referencing,
+                              child: Text('Referencing (Pointer)', style: TextStyle(fontSize: 12)),
+                            ),
+                            DropdownMenuItem(
+                              value: EdgeType.denormalization,
+                              child: Text('Denormalization (Sync)', style: TextStyle(fontSize: 12)),
+                            ),
+                          ]
+                        : (sourceNode.type == NodeType.structural
+                            ? const [
+                                DropdownMenuItem(
+                                  value: EdgeType.hierarchy,
+                                  child: Text('Hierarchy (SN ⇄ EN)', style: TextStyle(fontSize: 12)),
+                                ),
+                              ]
+                            : const [
+                                DropdownMenuItem(
+                                  value: EdgeType.referencing,
+                                  child: Text('Referencing (Pointer)', style: TextStyle(fontSize: 12)),
+                                ),
+                                DropdownMenuItem(
+                                  value: EdgeType.denormalization,
+                                  child: Text('Denormalization (Sync)', style: TextStyle(fontSize: 12)),
+                                ),
+                              ]),
                     onChanged: (val) {
                       setState(() {
                         _selectedEdgeType = val ?? EdgeType.hierarchy;

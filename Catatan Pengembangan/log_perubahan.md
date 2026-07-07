@@ -232,3 +232,25 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Memperbarui file pengujian `integration_test/app_test.dart` untuk menyesuaikan asersi asertif nama tipe data dari huruf kecil (`string`) menjadi huruf kapital (`String`) karena perluasan tipe data detail.
 - **Pembersihan Log Analisis**:
   - Semua unit test lulus. E2E headed integration test dijalankan secara visual dan lulus (`All tests passed!`). Dev server lokal dijalankan pada port `5555` menyajikan `build/web` untuk peninjauan manual oleh user.
+
+## [1.7.1] - 2026-07-07 (Perbaikan Bug Kompilasi, Hubungan Canvas, dan Pengujian E2E Sempurna)
+
+### Fixed (Perbaikan Bug & Kompilasi)
+- **Resolusi Bug Kompilasi Sidebar & Painter**:
+  - Mengeluarkan deklarasi nested `_buildEdgeEditor` dari dalam `_buildEditorContent` pada [sidebar_right.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/panels/sidebar_right.dart) sehingga terhindar dari compiler scoping error pada build web.
+  - Menambahkan parameter wajib `path: ''`, `queryVector: QueryVector()`, dan `position: Offset.zero` pada konstruktor fallback `FDMNode` di `sidebar_right.dart`.
+  - Mengubah penulisan `const textPainter = TextPainter(...)` menjadi `final textPainter = TextPainter(...)` di [edges_painter.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/edges_painter.dart) karena `TextPainter` tidak mendukung instansiasi `const`.
+- **Perbaikan Deteksi Indeks Single-Field**:
+  - Menyempurnakan logika `_estimateIndex` di `sidebar_right.dart` agar mendeteksi kueri yang hanya menggunakan 1 field unik (untuk filter dan sort sekaligus) sebagai indeks `Single-Field` alih-alih `COMPOSITE`.
+- **Relasi & Canvas Interaction**:
+  - Mengatur batasan opsi tipe relasi di `sidebar_left.dart` berdasarkan tipe node sumber.
+  - Mencegah relasi duplikat pada `state.dart` dengan cara memperbarui properti relasi yang sudah ada jika terdapat relasi baru yang menghubungkan node sumber dan target yang sama.
+  - Menghapus seluruh seleksi (node/boundary/edge) secara aman saat pengguna mengklik area kosong pada canvas.
+- **Penyempurnaan Integrasi Tes (`app_test.dart`)**:
+  - Menggunakan `findsAtLeastNWidgets(1)` pada asersi teks nama node canvas untuk mengatasi konflik duplikasi pencarian akibat nama node yang juga muncul di input/editor text field.
+  - Memasukkan teks sementara `'temp'` sebelum mengosongkan TextField nama properti agar framework memicu callback `onChanged`.
+  - Menambahkan `ensureVisible` sebelum melakukan tap pada dropdown filter/sort dan tombol tambah filter/sort untuk menghindari pergeseran layout.
+  - Menghitung koordinat midpoint secara dinamis berdasarkan posisi render node di layar dan menggeser 30 piksel ke bawah untuk menembak garis konektor relasi di canvas secara presisi.
+- **Hasil Akhir**:
+  - Semua unit test lulus. E2E headed integration test (`flutter drive`) sukses 100% dengan 6 screenshot tersimpan. Build web sukses dan disajikan pada port `5555`.
+

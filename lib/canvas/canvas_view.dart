@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
@@ -137,6 +138,166 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
     return null;
   }
 
+  FDMNode? _findNode(String id) {
+    final nodes = ref.read(diagramProvider).nodes;
+    for (final n in nodes) {
+      if (n.id == id) return n;
+    }
+    return null;
+  }
+
+  double _getNodeWidth(FDMNode node) {
+    return node.type == NodeType.structural ? 200.0 : 220.0;
+  }
+
+  double _getNodeHeight(FDMNode node) {
+    if (node.type == NodeType.structural) {
+      return 80.0;
+    } else {
+      if (node.properties.isEmpty) {
+        return 36.0 + 18.0 + 1.0 + 12.0 + 35.0;
+      }
+      return 36.0 + 18.0 + 1.0 + 12.0 + node.properties.length * 28.0;
+    }
+  }
+
+  Offset _nodeCenter(FDMNode node) {
+    return Offset(
+      node.position.dx + _getNodeWidth(node) / 2,
+      node.position.dy + _getNodeHeight(node) / 2,
+    );
+  }
+
+  Offset _getDynamicAnchor(FDMNode fromNode, FDMNode toNode, {required bool forSource}) {
+    final fromCenter = _nodeCenter(fromNode);
+    final toCenter = _nodeCenter(toNode);
+
+    final dx = toCenter.dx - fromCenter.dx;
+    final dy = toCenter.dy - fromCenter.dy;
+
+    final node = forSource ? fromNode : toNode;
+    final w = _getNodeWidth(node);
+    final h = _getNodeHeight(node);
+    final cx = node.position.dx + w / 2;
+    final cy = node.position.dy + h / 2;
+
+    final absDx = dx.abs();
+    final absDy = dy.abs();
+
+    AnchorSide side;
+    if (absDx > absDy) {
+      if (forSource) {
+        side = dx > 0 ? AnchorSide.right : AnchorSide.left;
+      } else {
+        side = dx > 0 ? AnchorSide.left : AnchorSide.right;
+      }
+    } else {
+      if (forSource) {
+        side = dy > 0 ? AnchorSide.bottom : AnchorSide.top;
+      } else {
+        side = dy > 0 ? AnchorSide.top : AnchorSide.bottom;
+      }
+    }
+
+    switch (side) {
+      case AnchorSide.top:
+        return Offset(cx, node.position.dy);
+      case AnchorSide.bottom:
+        return Offset(cx, node.position.dy + h);
+      case AnchorSide.left:
+        return Offset(node.position.dx, cy);
+      case AnchorSide.right:
+        return Offset(node.position.dx + w, cy);
+    }
+  }
+
+  Offset _getPropertyAnchor(FDMNode node, String? propKey) {
+    final w = _getNodeWidth(node);
+    if (propKey == null || propKey.isEmpty) {
+      return Offset(node.position.dx + w, node.position.dy + _getNodeHeight(node) / 2);
+    }
+    final index = node.properties.indexWhere((p) => p.key == propKey);
+    if (index == -1) {
+      return Offset(node.position.dx + w, node.position.dy + _getNodeHeight(node) / 2);
+    }
+    final y = node.position.dy + 36.0 + 18.0 + 1.0 + 6.0 + index * 28.0 + 14.0;
+    return Offset(node.position.dx + w, y);
+  }
+
+  Offset _evaluateCubic(Offset p1, Offset cp1, Offset cp2, Offset p2, double t) {
+    final omt = 1.0 - t;
+    final omt2 = omt * omt;
+    final omt3 = omt2 * omt;
+    final t2 = t * t;
+    final t3 = t2 * t;
+
+    return Offset(
+      omt3 * p1.dx + 3.0 * omt2 * t * cp1.dx + 3.0 * omt * t2 * cp2.dx + t3 * p2.dx,
+      omt3 * p1.dy + 3.0 * omt2 * t * cp1.dy + 3.0 * omt * t2 * cp2.dy + t3 * p2.dy,
+    );
+  }
+
+  String? _hitTestEdge(Offset canvasPos) {
+    final state = ref.read(diagramProvider);
+    for (final edge in state.edges) {
+      final source = _findNode(edge.sourceNodeId);
+      final target = _findNode(edge.targetNodeId);
+      if (source == null || target == null) continue;
+
+      Offset p1, p2;
+      AnchorSide exitSide;
+
+      if (edge.type == EdgeType.hierarchy) {
+        p1 = _getDynamicAnchor(source, target, forSource: true);
+        p2 = _getDynamicAnchor(source, target, forSource: false);
+        final srcCenter = _nodeCenter(source);
+        final tgtCenter = _nodeCenter(target);
+        final dx = tgtCenter.dx - srcCenter.dx;
+        final dy = tgtCenter.dy - srcCenter.dy;
+        if (dx.abs() > dy.abs()) {
+          exitSide = dx > 0 ? AnchorSide.right : AnchorSide.left;
+        } else {
+          exitSide = dy > 0 ? AnchorSide.bottom : AnchorSide.top;
+        }
+      } else {
+        p1 = _getPropertyAnchor(source, edge.sourcePropertyKey);
+        p2 = _getDynamicAnchor(source, target, forSource: false);
+        exitSide = AnchorSide.right;
+      }
+
+      final dx = (p2.dx - p1.dx).abs();
+      final dy = (p2.dy - p1.dy).abs();
+      Offset cp1, cp2;
+
+      if (exitSide == AnchorSide.top || exitSide == AnchorSide.bottom) {
+        final tension = math.max(60.0, dy * 0.5);
+        final dir = exitSide == AnchorSide.bottom ? 1.0 : -1.0;
+        cp1 = Offset(p1.dx, p1.dy + tension * dir);
+        cp2 = Offset(p2.dx, p2.dy - tension * dir);
+      } else {
+        final tension = math.max(60.0, dx * 0.5);
+        final dir = exitSide == AnchorSide.right ? 1.0 : -1.0;
+        cp1 = Offset(p1.dx + tension * dir, p1.dy);
+        cp2 = Offset(p2.dx - tension * dir, p2.dy);
+      }
+
+      double minDistance = double.infinity;
+      for (int step = 0; step <= 8; step++) {
+        final t = step / 8.0;
+        final pt = _evaluateCubic(p1, cp1, cp2, p2, t);
+        final dist = (canvasPos - pt).distance;
+        if (dist < minDistance) {
+          minDistance = dist;
+        }
+      }
+
+      if (minDistance < 15.0) {
+        return edge.id;
+      }
+    }
+    return null;
+  }
+
   void _abortDrag() {
     if (_draggingNodeId != null || _draggingBoundaryId != null) {
       ref.read(diagramProvider.notifier).finishDragging();
@@ -183,6 +344,12 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
       _activePointerId = event.pointer;
       ref.read(diagramProvider.notifier).selectBoundary(boundaryId);
       setState(() => _isDraggingNode = true); // block IV panning for boundaries too
+      return;
+    }
+
+    final edgeId = _hitTestEdge(canvasPos);
+    if (edgeId != null) {
+      ref.read(diagramProvider.notifier).selectEdge(edgeId);
       return;
     }
 

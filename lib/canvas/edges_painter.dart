@@ -224,13 +224,13 @@ class EdgesPainter extends CustomPainter {
         _drawDashedPath(canvas, bezierPath, currentPaint);
         _drawArrowhead(canvas, p2, p1, currentPaint);
 
-        // Jika referencing 1:N (asterisk di source)
+        // Jika referencing 1:N (asterisk di sisi kepala panah p2)
         final prop = source.properties.firstWhere(
           (p) => p.key == edge.sourcePropertyKey,
           orElse: () => PropertyNode(key: '', dataType: DataType.nullValue),
         );
         if (edge.isOneToMany || prop.dataType == DataType.array) {
-          _drawAsterisk(canvas, p1);
+          _drawAsterisk(canvas, p2, p1);
         }
 
       } else if (edge.type == EdgeType.denormalization) {
@@ -314,20 +314,48 @@ class EdgesPainter extends CustomPainter {
     canvas.drawCircle(center, 4, dotPaint);
   }
 
-  void _drawAsterisk(Canvas canvas, Offset handlePos) {
+  void _drawAsterisk(Canvas canvas, Offset p2, Offset p1) {
     final textPainter = TextPainter(
       text: const TextSpan(
         text: '*',
         style: TextStyle(
           color: Color(0xFFE07B00),
-          fontSize: 16,
+          fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
       ),
       textDirection: TextDirection.ltr,
     );
     textPainter.layout();
-    textPainter.paint(canvas, handlePos + const Offset(4, -14));
+
+    final dx = p2.dx - p1.dx;
+    final dy = p2.dy - p1.dy;
+
+    double offsetX = 4.0;
+    double offsetY = -16.0;
+
+    if (dx.abs() > dy.abs()) {
+      if (dx > 0) {
+        offsetX = -14.0;
+        offsetY = -18.0;
+      } else {
+        offsetX = 6.0;
+        offsetY = -18.0;
+      }
+    } else {
+      if (dy > 0) {
+        offsetX = 6.0;
+        offsetY = -18.0;
+      } else {
+        offsetX = 6.0;
+        offsetY = 4.0;
+      }
+    }
+
+    canvas.save();
+    canvas.translate(p2.dx + offsetX, p2.dy + offsetY);
+    textPainter.paint(canvas, Offset.zero);
+    canvas.restore();
   }
 
   void _drawEdgeLabel(Canvas canvas, Offset p1, Offset p2, String label) {

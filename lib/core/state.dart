@@ -313,7 +313,37 @@ class DiagramNotifier extends Notifier<DiagramState> {
 
   void addEdge(FDMEdge edge) {
     _saveToUndoStack();
-    final newEdges = List<FDMEdge>.from(state.edges)..add(edge);
+    final index = state.edges.indexWhere((e) =>
+        e.sourceNodeId == edge.sourceNodeId &&
+        e.targetNodeId == edge.targetNodeId &&
+        e.type == edge.type &&
+        e.sourcePropertyKey == edge.sourcePropertyKey);
+
+    List<FDMEdge> newEdges;
+    if (index != -1) {
+      newEdges = List<FDMEdge>.from(state.edges);
+      newEdges[index] = newEdges[index].copyWith(
+        isOneToMany: edge.isOneToMany,
+        label: edge.label,
+      );
+    } else {
+      newEdges = List<FDMEdge>.from(state.edges)..add(edge);
+    }
+    state = state.copyWith(edges: newEdges);
+    _runValidation();
+  }
+
+  void updateEdgeProperties(String edgeId, {bool? isOneToMany, String? label}) {
+    _saveToUndoStack();
+    final newEdges = state.edges.map((e) {
+      if (e.id == edgeId) {
+        return e.copyWith(
+          isOneToMany: isOneToMany ?? e.isOneToMany,
+          label: label ?? e.label,
+        );
+      }
+      return e;
+    }).toList();
     state = state.copyWith(edges: newEdges);
     _runValidation();
   }
@@ -382,7 +412,23 @@ class DiagramNotifier extends Notifier<DiagramState> {
       isOneToMany: isOneToMany,
     );
 
-    final newEdges = List<FDMEdge>.from(state.edges)..add(newEdge);
+    final index = state.edges.indexWhere((e) =>
+        e.sourceNodeId == state.pendingSourceNodeId &&
+        e.targetNodeId == targetId &&
+        e.type == state.connectionMode &&
+        e.sourcePropertyKey == sourceProp);
+
+    List<FDMEdge> newEdges;
+    if (index != -1) {
+      newEdges = List<FDMEdge>.from(state.edges);
+      newEdges[index] = newEdges[index].copyWith(
+        isOneToMany: isOneToMany,
+        label: label,
+      );
+    } else {
+      newEdges = List<FDMEdge>.from(state.edges)..add(newEdge);
+    }
+
     state = state.copyWith(
       edges: newEdges,
       pendingSourceNodeId: null,
@@ -448,25 +494,25 @@ class DiagramNotifier extends Notifier<DiagramState> {
 
   void selectNode(String? id) {
     state = state.copyWith(
-      selectedNodeId: id ?? DiagramState._undefined,
-      selectedBoundaryId: DiagramState._undefined,
-      selectedEdgeId: DiagramState._undefined,
+      selectedNodeId: id,
+      selectedBoundaryId: null,
+      selectedEdgeId: null,
     );
   }
 
   void selectBoundary(String? id) {
     state = state.copyWith(
-      selectedBoundaryId: id ?? DiagramState._undefined,
-      selectedNodeId: DiagramState._undefined,
-      selectedEdgeId: DiagramState._undefined,
+      selectedBoundaryId: id,
+      selectedNodeId: null,
+      selectedEdgeId: null,
     );
   }
 
   void selectEdge(String? id) {
     state = state.copyWith(
-      selectedEdgeId: id ?? DiagramState._undefined,
-      selectedNodeId: DiagramState._undefined,
-      selectedBoundaryId: DiagramState._undefined,
+      selectedEdgeId: id,
+      selectedNodeId: null,
+      selectedBoundaryId: null,
     );
   }
 

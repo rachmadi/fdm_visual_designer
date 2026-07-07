@@ -11,26 +11,39 @@ class FolderPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final path = Path();
-    path.moveTo(0, 22);
-    path.lineTo(0, 0);
-    path.lineTo(110, 0);
-    path.lineTo(110, 22);
-    path.lineTo(size.width, 22);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    path.close();
+    const double radius = 6.0;
+    final fillPath = Path()
+      ..moveTo(0, 22 + radius)
+      ..lineTo(0, radius)
+      ..quadraticBezierTo(0, 0, radius, 0)
+      ..lineTo(110 - radius, 0)
+      ..quadraticBezierTo(110, 0, 110, radius)
+      ..lineTo(110, 22)
+      ..lineTo(size.width - radius, 22)
+      ..quadraticBezierTo(size.width, 22, size.width, 22 + radius)
+      ..lineTo(size.width, size.height - radius)
+      ..quadraticBezierTo(size.width, size.height, size.width - radius, size.height)
+      ..lineTo(radius, size.height)
+      ..quadraticBezierTo(0, size.height, 0, size.height - radius)
+      ..close();
 
     final fillPaint = Paint()
       ..color = fillColor
       ..style = PaintingStyle.fill;
-    canvas.drawPath(path, fillPaint);
+    canvas.drawPath(fillPath, fillPaint);
 
     final strokePaint = Paint()
       ..color = strokeColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
-    canvas.drawPath(path, strokePaint);
+      ..strokeWidth = 2
+      ..strokeJoin = StrokeJoin.round;
+    canvas.drawPath(fillPath, strokePaint);
+
+    // Garis pemisah horizontal antara bagian atas (tab) dan bawah (badan folder)
+    final sepPath = Path()
+      ..moveTo(0, 22)
+      ..lineTo(size.width, 22);
+    canvas.drawPath(sepPath, strokePaint);
   }
 
   @override
