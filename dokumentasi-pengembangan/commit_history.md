@@ -1,4 +1,4 @@
-﻿# ðŸ“ Commit History â€” FDM Visual Designer
+# Commit History - FDM Visual Designer
 ## Format: Kumulatif per Iterasi | Spesifikasi: Revisi 3 Final
 
 > File ini mencatat seluruh riwayat commit Git yang dilakukan selama pengembangan.
@@ -8,30 +8,31 @@
 
 ## Konvensi Commit Message
 
-\\\
+```
 <type>(<scope>): <deskripsi singkat>
 
 [Deskripsi opsional]
 
 [Footer/Breaking change opsional]
-\\\
+```
 
 **Tipe yang digunakan:**
-- \eat\ â€” Fitur baru
-- \ix\ â€” Perbaikan bug
-- \efactor\ â€” Refactoring tanpa perubahan fungsional
-- \	est\ â€” Penambahan atau perbaikan test
-- \docs\ â€” Perubahan dokumentasi saja
-- \chore\ â€” Perubahan build, config, atau tooling
+- `feat` - Fitur baru
+- `fix` - Perbaikan bug
+- `refactor` - Refactoring tanpa perubahan fungsional
+- `test` - Penambahan atau perbaikan test
+- `docs` - Perubahan dokumentasi saja
+- `chore` - Perubahan build, config, atau tooling
 
 ---
 
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+-------------------------------------------------------------------
 ## Riwayat Git Commit Proyek (Iterasi 1a s.d. Iterasi 7)
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+-------------------------------------------------------------------
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `61ca282` | 2026-07-07 | Antigravity | docs: update commit history to log verbatim migration and README index update |
 | `1f5f16a` | 2026-07-07 | Antigravity | docs: move verbatim log to formal documentation folder, update README index, and add end-of-iteration tasks checklist |
 | `aad0ab1` | 2026-07-07 | Antigravity | docs: append final synchronization commit to commit_history.md |
 | `da4cd06` | 2026-07-07 | Antigravity | docs: synchronize commit_history.md with all recent commits |
@@ -66,7 +67,6 @@
 | `0b1118f` | 2026-07-06 | Antigravity | docs: finalize IIDD logs for human interventions, decisions, errors, and test logs |
 | `1e7dd72` | 2026-07-06 | Antigravity | docs: update requirement traceability matrix and summary files with actual completed progress |
 | `cf84058` | 2026-07-06 | Antigravity | fix: resolve browser shortcuts conflict and register global keyboard handler |
-| `f43ba7a` | 2026-07-06 | Antigravity | docs: update development notes for shortcuts and dark mode session |
 
 ---
 
