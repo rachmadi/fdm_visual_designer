@@ -596,6 +596,13 @@ Application finished.
   - Menghitung koordinat midpoint secara dinamis dengan penyesuaian offset vertikal 30 piksel untuk menunjuk ke garis konektor relasi di canvas.
   - **Hasil**: 13 unit test passed, dan E2E headed integration test (`flutter drive`) sukses 100% dengan 6 screenshot tersimpan.
   - **Build Web & Server**: Menjalankan kembali build produksi web dan menyajikannya via dev server lokal pada port `5555`.
+- **Revisi Simbol Structural Node**:
+  - Memperbarui `FolderPainter` di [structural_node.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/structural_node.dart) agar memiliki sudut-sudut yang membulat (rounded) dengan radius `6.0` dan garis pembatas horizontal yang memisahkan bagian tab atas dengan badan folder bawah.
+- **Verbatim Conversation Log**:
+  - Membuat berkas catatan percakapan verbatim word-for-word lengkap di [catatan_percakapan_verbatim.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Catatan%20Pengembangan/catatan_percakapan_verbatim.md).
+- **Git Commit & Vercel Production Deployment**:
+  - Melakukan commit berkas perubahan ke GitHub repositori.
+  - Mendeploy build produksi web secara sukses ke Vercel di domain resmi [fdm-vd.vercel.app](https://fdm-vd.vercel.app).
 
 **Tabel Durasi Pengerjaan & Pengujian:**
 
@@ -606,8 +613,11 @@ Application finished.
 | Uji unit test & perbaikan E2E duplicate finder & empty validation | 16:18 | 16:21 | ~3 menit |
 | Penambahan ensureVisible & perhitungan midpoint dinamis di E2E | 16:21 | 16:24 | ~3 menit |
 | Eksekusi visual headed E2E test run (100% Passed) | 16:24 | 16:27 | ~3 menit |
-| Kompilasi build produksi web & pembaruan dokumentasi | 16:27 | 16:30 | ~35 menit |
-| **Total Sesi 11** | **16:15** | **16:30** | **~15 menit** |
+| Kompilasi build produksi web & pembaruan dokumentasi awal | 16:27 | 16:30 | ~3 menit |
+| Penanganan interaktif visual headed E2E test via scheduled task | 16:30 | 16:35 | ~5 menit |
+| Revisi visual structural node (rounded + garis pemisah) & uji ulang | 16:35 | 16:41 | ~6 menit |
+| Pembuatan catatan verbatim, Git commit & push, serta deploy ke Vercel | 16:41 | 16:45 | ~4 menit |
+| **Total Sesi 11** | **16:15** | **16:45** | **~30 menit** |
 
 
 

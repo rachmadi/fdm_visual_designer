@@ -251,6 +251,11 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Memasukkan teks sementara `'temp'` sebelum mengosongkan TextField nama properti agar framework memicu callback `onChanged`.
   - Menambahkan `ensureVisible` sebelum melakukan tap pada dropdown filter/sort dan tombol tambah filter/sort untuk menghindari pergeseran layout.
   - Menghitung koordinat midpoint secara dinamis berdasarkan posisi render node di layar dan menggeser 30 piksel ke bawah untuk menembak garis konektor relasi di canvas secara presisi.
+- **Revisi Simbol Structural Node**:
+  - Mengubah `FolderPainter` di [structural_node.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/structural_node.dart) agar memiliki sudut-sudut membulat (*rounded*) dengan radius `6.0` dan menggambar garis horizontal lurus yang membagi area tab atas dengan badan folder utama di bawahnya.
+- **Catatan Percakapan Verbatim**:
+  - Menyediakan dokumen [catatan_percakapan_verbatim.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Catatan%20Pengembangan/catatan_percakapan_verbatim.md) berisi transkrip verbatim percakapan word-for-word antara user dan model di Sesi 11.
+- **Deployment ke Vercel**:
+  - Berhasil dideploy secara final ke Vercel ([fdm-vd.vercel.app](https://fdm-vd.vercel.app)) untuk memudahkan pengujian terpisah oleh IA.
 - **Hasil Akhir**:
   - Semua unit test lulus. E2E headed integration test (`flutter drive`) sukses 100% dengan 6 screenshot tersimpan. Build web sukses dan disajikan pada port `5555`.
-
