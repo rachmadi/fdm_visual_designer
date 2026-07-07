@@ -101,6 +101,14 @@ class _WorkspaceScreenState extends ConsumerState<WorkspaceScreen> {
   bool _handleKeyEvent(KeyEvent event) {
     if (event is! KeyDownEvent) return false;
 
+    // Jangan memicu shortcut jika user sedang fokus menulis di TextField/input text
+    final primaryFocus = FocusManager.instance.primaryFocus;
+    if (primaryFocus != null &&
+        primaryFocus.context != null &&
+        primaryFocus.context!.findAncestorWidgetOfExactType<EditableText>() != null) {
+      return false;
+    }
+
     final isCtrl = HardwareKeyboard.instance.isControlPressed ||
         HardwareKeyboard.instance.isMetaPressed;
     final isShift = HardwareKeyboard.instance.isShiftPressed;

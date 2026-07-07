@@ -132,7 +132,6 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
     final sectionBg = isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9);
     final textCol = isDark ? Colors.white : const Color(0xFF1E293B);
 
-    final entityNodes = state.nodes.where((n) => n.type == NodeType.entity).toList();
     final sourceNode = state.nodes.any((n) => n.id == _selectedSourceNodeId)
         ? state.nodes.firstWhere((n) => n.id == _selectedSourceNodeId)
         : (state.nodes.isNotEmpty ? state.nodes.first : null);

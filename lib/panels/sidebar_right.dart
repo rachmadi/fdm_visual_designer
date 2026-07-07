@@ -34,7 +34,6 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
   String _sortDirection = 'asc';
 
   String? _lastSelectedNodeId;
-  String? _lastSelectedBoundaryId;
 
   @override
   void dispose() {
@@ -52,7 +51,6 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
       _nameController.text = node.name;
       _pathController.text = node.path;
       _lastSelectedNodeId = node.id;
-      _lastSelectedBoundaryId = null;
       // Reset editing states on node change
       _editingPropKey = null;
       _editPropertyError = null;
