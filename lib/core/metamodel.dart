@@ -18,6 +18,29 @@ enum DataType {
 }
 
 extension DataTypeExtension on DataType {
+  String get displayName {
+    switch (this) {
+      case DataType.string:
+        return 'String';
+      case DataType.number:
+        return 'Number';
+      case DataType.boolean:
+        return 'Boolean';
+      case DataType.timestamp:
+        return 'Timestamp';
+      case DataType.geopoint:
+        return 'Geopoint';
+      case DataType.reference:
+        return 'Reference';
+      case DataType.array:
+        return 'List';
+      case DataType.map:
+        return 'Map';
+      case DataType.nullValue:
+        return 'Null';
+    }
+  }
+
   String get nameString {
     switch (this) {
       case DataType.string:

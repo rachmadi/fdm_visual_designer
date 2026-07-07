@@ -70,6 +70,17 @@
 - [x] Penulisan unit test untuk mutasi state properti (reordering, insertion, renaming)
 - [x] Penulisan E2E integration test Stage 4 untuk memverifikasi fungsionalitas pengeditan properti, validasi, dan SnackBar Undo
 
+## [1.7.0] - Query Vector & Tipe Data Detail (Iterasi 2b - Selesai)
+
+- [x] Perluas dropdown tipe data (String, Number, Boolean, Map, List, Timestamp, Geopoint, Reference) dengan format terkapitalisasi agar berfungsi penuh
+- [x] Tambahkan fitur `onSubmitted` (Enter) untuk menyimpan properti saat penambahan properti baru dan edit inline
+- [x] Batasi visibilitas dan keaktifan titik konektor tepi node hanya ketika node sedang terpilih (`isSelected == true`)
+- [x] Implementasi UI panel konfigurasi Query Vector di sidebar kanan (Filter & Sort field menggunakan Dropdown dari properti node)
+- [x] Render panel/badge visual Query Vector di canvas di bawah Entity Node jika terisi
+- [x] Sesuaikan `_nodeRect` di `CanvasView` untuk hit-testing Entity Node yang memiliki Query Vector
+- [x] Tambahkan unit test untuk updateQueryVector dan estimasi indeks
+- [x] Jalankan headed E2E integration test untuk menguji fitur baru secara interaktif dan visual
+
 ## Rencana Selanjutnya (Peningkatan Masa Depan)
 
 - [ ] Integrasi Algoritma Auto-Layout otomatis berbasis Dagre (Dart port)

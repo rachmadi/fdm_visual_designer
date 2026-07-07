@@ -539,5 +539,42 @@ Application finished.
 | Sinkronisasi screenshot, update catatan proyek, log perubahan & daftar tugas | 08:56 | 09:05 | ~9 menit |
 | **Total Sesi 9** | **08:45** | **09:05** | **~20 menit** |
 
+---
+
+## Sesi Pengembangan — 2026-07-07 (Sesi 10, Iterasi 2b - Query Vector & Tipe Data Detail)
+
+### Aktivitas Utama:
+- **Tipe Data Detail & Kapitalisasi**:
+  - Menambahkan getter `displayName` pada `DataTypeExtension` di [metamodel.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/core/metamodel.dart) untuk memetakan nama tipe data (mis. `DataType.array` menjadi `"List"`) dan memformat nama visual agar terkapitalisasi secara profesional.
+  - Memperbarui label dropdown tipe data properti dan deskripsi item properti list tile di [sidebar_right.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/panels/sidebar_right.dart) dan [sidebar_left.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/ui/sidebar_left.dart) untuk menggunakan `displayName`.
+- **Fitur Enter Submit (onSubmitted)**:
+  - Mengimplementasikan callback `onSubmitted` pada input TextField tambah properti baru dan edit properti inline di `sidebar_right.dart` agar menekan tombol *Enter* langsung menyimpan properti tersebut.
+- **Konektor Bersyarat (Conditional Connection Handles)**:
+  - Membatasi visibilitas dan keaktifan 4 titik konektor tepi node (atas, bawah, kiri, kanan) serta konektor properti di [entity_node.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/entity_node.dart) dan [structural_node.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/structural_node.dart) agar **hanya muncul dan aktif ketika node tersebut terpilih** (`isSelected == true`).
+- **Input Query Vector Terintegrasi via Dropdown**:
+  - Mengganti TextField input filter field (F) dan sort field (S) pada panel Query Vector dengan `DropdownButtonFormField<String>` yang menyajikan daftar properti aktif dari node. Menambahkan opsi `"-- Custom Field --"` untuk custom input text manual jika diperlukan.
+- **Visualisasi Query Vector di Canvas**:
+  - Merender sub-panel visual "QUERY VECTOR" di bagian bawah kartu Entity Node di canvas jika konfigurasi Query Vector (Filter atau Sort) tidak kosong. Menampilkan formula `Q = <F, S, I>` beserta badge tipe indeks (`SINGLE` atau `COMPOSITE`).
+  - Menyesuaikan tinggi hit-test rect pada `_nodeRect` di `canvas_view.dart` agar drag/klik tetap presisi pada Entity Node yang memiliki Query Vector.
+- **Hasil Pengujian**:
+  - Menambahkan unit test baru `'Query Vector: updateQueryVector and Index Estimation'` di `test/property_editor_test.dart` dan lulus pengujian.
+  - Menyesuaikan asersi tipe data pada `integration_test/app_test.dart` dari huruf kecil menjadi huruf kapital (`String`).
+  - Menjalankan visual headed integration test di Chrome (lulus 100%, `All tests passed!`).
+  - Menjalankan build web (`flutter build web`) dan dev server lokal pada port `5555` menyajikan `build/web` agar siap ditinjau secara manual oleh user.
+
+**Tabel Durasi Pengerjaan & Pengujian:**
+
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| Analisis kebutuhan RTM 2b & pembuatan Rencana Implementasi | 15:10 | 15:20 | ~10 menit |
+| Implementasi kapitalisasi tipe data & enter submit (onSubmitted) | 15:20 | 15:22 | ~2 menit |
+| Implementasi konektor bersyarat (hanya tampil jika terpilih) | 15:22 | 15:24 | ~2 menit |
+| Implementasi input Query Vector terintegrasi dropdown & rendering canvas | 15:24 | 15:26 | ~2 menit |
+| Penulisan unit test baru & penyesuaian asersi app_test.dart | 15:26 | 15:28 | ~2 menit |
+| Eksekusi unit test (`flutter test`) - 100% Passed | 15:28 | 15:30 | ~2 menit |
+| Eksekusi visual headed integration test (`flutter drive`) - 100% Passed | 15:30 | 15:32 | ~2 menit |
+| Build produksi web (`flutter build web`) & serve port `5555` | 15:32 | 15:34 | ~2 menit |
+| **Total Sesi 10** | **15:10** | **15:34** | **~24 menit** |
+
 
 

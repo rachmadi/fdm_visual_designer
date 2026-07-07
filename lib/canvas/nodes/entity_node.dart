@@ -206,128 +206,220 @@ class EntityNodeWidget extends ConsumerWidget {
                                 children: [
                                   propWidget,
                                   // Property connection handle on the right edge
-                                  Positioned(
-                                    right: -12,
-                                    top: 10,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        final currentMode = ref.read(diagramProvider).connectionMode;
-                                        if (currentMode == EdgeType.hierarchy) {
-                                          ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.referencing);
-                                        }
-                                        ref.read(diagramProvider.notifier).startConnection(node.id, prop.key);
-                                      },
-                                      child: MouseRegion(
-                                        cursor: SystemMouseCursors.click,
-                                        child: Container(
-                                          width: 8,
-                                          height: 8,
-                                          decoration: BoxDecoration(
-                                            color: isComplex ? const Color(0xFFE07B00) : primaryCol,
-                                            shape: BoxShape.circle,
+                                  if (isSelected)
+                                    Positioned(
+                                      right: -12,
+                                      top: 10,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          final currentMode = ref.read(diagramProvider).connectionMode;
+                                          if (currentMode == EdgeType.hierarchy) {
+                                            ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.referencing);
+                                          }
+                                          ref.read(diagramProvider.notifier).startConnection(node.id, prop.key);
+                                        },
+                                        child: MouseRegion(
+                                          cursor: SystemMouseCursors.click,
+                                          child: Container(
+                                            width: 8,
+                                            height: 8,
+                                            decoration: BoxDecoration(
+                                              color: isComplex ? const Color(0xFFE07B00) : primaryCol,
+                                              shape: BoxShape.circle,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
                                 ],
                               );
                             }),
                           ),
                   ),
+                  if (node.queryVector.filterFields.isNotEmpty || node.queryVector.sortFields.isNotEmpty) ...[
+                    const Divider(height: 1, thickness: 1),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFF8FAFC),
+                        borderRadius: BorderRadius.vertical(bottom: Radius.circular(6)),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(Icons.search, size: 12, color: Color(0xFF2E75B6)),
+                              const SizedBox(width: 4),
+                              const Text(
+                                'QUERY VECTOR',
+                                style: TextStyle(
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF2E75B6),
+                                ),
+                              ),
+                              const Spacer(),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                                decoration: BoxDecoration(
+                                  color: node.queryVector.estimatedIndexes == EstimatedIndex.composite
+                                      ? const Color(0xFFFEE2E2)
+                                      : (node.queryVector.estimatedIndexes == EstimatedIndex.single
+                                          ? const Color(0xFFD1FAE5)
+                                          : const Color(0xFFF1F5F9)),
+                                  borderRadius: BorderRadius.circular(3),
+                                  border: Border.all(
+                                    color: node.queryVector.estimatedIndexes == EstimatedIndex.composite
+                                        ? const Color(0xFFEF4444)
+                                        : (node.queryVector.estimatedIndexes == EstimatedIndex.single
+                                            ? const Color(0xFF10B981)
+                                            : const Color(0xFFCBD5E1)),
+                                  ),
+                                ),
+                                child: Text(
+                                  node.queryVector.estimatedIndexes == EstimatedIndex.composite
+                                      ? 'COMPOSITE'
+                                      : (node.queryVector.estimatedIndexes == EstimatedIndex.single ? 'SINGLE' : 'NONE'),
+                                  style: TextStyle(
+                                    fontSize: 7,
+                                    fontWeight: FontWeight.bold,
+                                    color: node.queryVector.estimatedIndexes == EstimatedIndex.composite
+                                        ? const Color(0xFFB91C1C)
+                                        : (node.queryVector.estimatedIndexes == EstimatedIndex.single
+                                            ? const Color(0xFF047857)
+                                            : const Color(0xFF475569)),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (node.queryVector.filterFields.isNotEmpty) ...[
+                            const SizedBox(height: 4),
+                            Text(
+                              'F: ${node.queryVector.filterFields.join(", ")}',
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontFamily: 'monospace',
+                                color: textDarkCol.withOpacity(0.8),
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                          if (node.queryVector.sortFields.isNotEmpty) ...[
+                            const SizedBox(height: 2),
+                            Text(
+                              'S: ${node.queryVector.sortFields.map((s) => "${s.field} ${s.direction.toUpperCase()}").join(", ")}',
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontFamily: 'monospace',
+                                color: textDarkCol.withOpacity(0.8),
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ],
                 ],
               ),
               // ── 4 Titik Koneksi Dinamis ──
-              // Atas: input handle (hierarchy)
-              Positioned(
-                top: -5,
-                left: 106,
-                child: GestureDetector(
-                  onTap: () {
-                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
-                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
-                  },
+              // Hanya ditampilkan dan aktif jika node terpilih
+              if (isSelected) ...[
+                // Atas: input handle (hierarchy)
+                Positioned(
+                  top: -5,
+                  left: 106,
+                  child: GestureDetector(
+                    onTap: () {
+                      ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                      ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                    },
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: primaryCol,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 1.5),
+                          boxShadow: [BoxShadow(color: primaryCol.withOpacity(0.5), blurRadius: 4)],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                // Bawah: output handle (hierarchy)
+                Positioned(
+                  bottom: -5,
+                  left: 106,
+                  child: GestureDetector(
+                    onTap: () {
+                      ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                      ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                    },
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: primaryCol,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 1.5),
+                          boxShadow: [BoxShadow(color: primaryCol.withOpacity(0.5), blurRadius: 4)],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                // Kiri: side input handle (referencing target)
+                Positioned(
+                  left: -5,
+                  top: 30,
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: Container(
                       width: 10,
                       height: 10,
                       decoration: BoxDecoration(
-                        color: primaryCol,
+                        color: Colors.white,
                         shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 1.5),
-                        boxShadow: [BoxShadow(color: primaryCol.withOpacity(0.5), blurRadius: 4)],
+                        border: Border.all(color: primaryCol, width: 2),
+                        boxShadow: [BoxShadow(color: primaryCol.withOpacity(0.3), blurRadius: 4)],
                       ),
                     ),
                   ),
                 ),
-              ),
-              // Bawah: output handle (hierarchy)
-              Positioned(
-                bottom: -5,
-                left: 106,
-                child: GestureDetector(
-                  onTap: () {
-                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
-                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
-                  },
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: primaryCol,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 1.5),
-                        boxShadow: [BoxShadow(color: primaryCol.withOpacity(0.5), blurRadius: 4)],
+                // Kanan: side output handle (hierarchy/referencing)
+                Positioned(
+                  right: -5,
+                  top: 30,
+                  child: GestureDetector(
+                    onTap: () {
+                      ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                      ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                    },
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: primaryCol,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 1.5),
+                          boxShadow: [BoxShadow(color: primaryCol.withOpacity(0.5), blurRadius: 4)],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // Kiri: side input handle (referencing target)
-              Positioned(
-                left: -5,
-                top: 30,
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Container(
-                    width: 10,
-                    height: 10,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: primaryCol, width: 2),
-                      boxShadow: [BoxShadow(color: primaryCol.withOpacity(0.3), blurRadius: 4)],
-                    ),
-                  ),
-                ),
-              ),
-              // Kanan: side output handle (hierarchy/referencing)
-              Positioned(
-                right: -5,
-                top: 30,
-                child: GestureDetector(
-                  onTap: () {
-                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
-                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
-                  },
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: primaryCol,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 1.5),
-                        boxShadow: [BoxShadow(color: primaryCol.withOpacity(0.5), blurRadius: 4)],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              ],
               // Error badge in top-right
               if (nodeErrors.isNotEmpty)
                 Positioned(

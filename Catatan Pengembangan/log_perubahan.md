@@ -206,3 +206,29 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Memasukkan teks sementara `'temp'` sebelum memasukkan `''` pada TextField nama properti di integration test untuk memastikan event `onChanged` terpicu pada framework.
 - **Pembersihan Log Analisis**:
   - Semua unit test lulus. `flutter analyze` bersih dari kesalahan kompilasi. E2E headed integration test lulus (`All tests passed!`). Tangkapan layar bukti pengujian interaktif visual disalin ke repositori.
+
+## [1.7.0] - 2026-07-07 (Iterasi 2b - Query Vector & Tipe Data Detail)
+
+### Added (Penambahan Fitur)
+- **Tipe Data Properti Terperinci & Terkapitalisasi (Capitalized Data Types)**:
+  - Memetakan tipe data `DataType.array` menjadi tampilan **"List"** di dropdown.
+  - Memperluas opsi tipe data di dropdown tambah dan edit properti dengan format terkapitalisasi: `String`, `Number`, `Boolean`, `Map`, `List`, `Timestamp`, `Geopoint`, dan `Reference` agar berfungsi penuh.
+  - Menambahkan properti extension `displayName` pada `DataTypeExtension` di [metamodel.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/core/metamodel.dart) untuk keseragaman visual di seluruh UI.
+- **Submit on Enter**:
+  - Menambahkan fitur `onSubmitted` (Enter) pada TextField penambahan properti baru dan inline editing properti di [sidebar_right.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/panels/sidebar_right.dart) sehingga properti otomatis tersimpan saat pengguna menekan tombol *Enter*.
+- **Konektor Bersyarat (Conditional Connection Handles)**:
+  - Membatasi visibilitas dan keaktifan titik-titik konektor bulat (atas, bawah, kiri, kanan) serta konektor properti di tepi node sehingga **hanya muncul dan aktif ketika node tersebut sedang terpilih** (`isSelected == true`).
+- **Peningkatan Input Query Vector via Dropdown Properti**:
+  - Mengubah input filter field (F) dan sort field (S) pada panel Query Vector di sidebar kanan menggunakan `DropdownButtonFormField<String>` yang berisi daftar property keys dari Entity Node yang terpilih. Ini mencegah typo dan menjaga validitas query vector.
+  - Menyertakan opsi `"-- Custom Field --"` yang akan memunculkan input text manual jika user ingin mengetik field metadata khusus (misal: `__name__` atau `createdAt`).
+- **Visualisasi Query Vector di Canvas**:
+  - Merender sub-panel/badge "QUERY VECTOR" yang cantik di bagian bawah kartu Entity Node di canvas jika node memiliki konfigurasi Query Vector (Filter atau Sort terisi), menampilkan formula `Q = <F, S, I>` (Filters, Sorts, dan badge estimasi indeks `SINGLE` / `COMPOSITE`).
+  - Menyesuaikan fungsi hit-test `_nodeRect` di [canvas_view.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/canvas_view.dart) untuk memperhitungkan tinggi tambahan kartu node agar operasi drag/click tetap presisi.
+- **Unit Test Baru (`test/property_editor_test.dart`)**:
+  - Menambahkan test case `'Query Vector: updateQueryVector and Index Estimation'` untuk memverifikasi perubahan state Query Vector dan estimasi indeks.
+
+### Fixed (Perbaikan Bug & Tes)
+- **Sinkronisasi Kasus Uji Integrasi (Case Sync)**:
+  - Memperbarui file pengujian `integration_test/app_test.dart` untuk menyesuaikan asersi asertif nama tipe data dari huruf kecil (`string`) menjadi huruf kapital (`String`) karena perluasan tipe data detail.
+- **Pembersihan Log Analisis**:
+  - Semua unit test lulus. E2E headed integration test dijalankan secara visual dan lulus (`All tests passed!`). Dev server lokal dijalankan pada port `5555` menyajikan `build/web` untuk peninjauan manual oleh user.

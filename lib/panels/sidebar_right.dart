@@ -33,6 +33,12 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
   final TextEditingController _sortFieldController = TextEditingController();
   String _sortDirection = 'asc';
 
+  // Query Vector Dropdowns
+  String? _selectedFilterField;
+  String? _selectedSortField;
+  bool _showCustomFilterInput = false;
+  bool _showCustomSortInput = false;
+
   String? _lastSelectedNodeId;
 
   @override
@@ -56,6 +62,14 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
       _editPropertyError = null;
       _addPropertyError = null;
       _showAddForm = false;
+
+      // Reset query vector states
+      _selectedFilterField = null;
+      _selectedSortField = null;
+      _showCustomFilterInput = false;
+      _showCustomSortInput = false;
+      _filterFieldController.clear();
+      _sortFieldController.clear();
     }
   }
 
@@ -106,6 +120,10 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
       case DataType.nullValue:
         return Icons.remove_circle_outline;
     }
+  }
+
+  String _getDataTypeDisplayName(DataType type) {
+    return type.displayName;
   }
 
   void _deletePropertyWithUndo(BuildContext context, String nodeId, PropertyNode prop, int originalIndex) {
@@ -165,7 +183,12 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
   }
 
   void _addFilterField(FDMNode node) {
-    final field = _filterFieldController.text.trim();
+    final String field;
+    if (_showCustomFilterInput) {
+      field = _filterFieldController.text.trim();
+    } else {
+      field = _selectedFilterField ?? '';
+    }
     if (field.isEmpty) return;
 
     final currentFilters = List<String>.from(node.queryVector.filterFields);
@@ -180,10 +203,19 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
 
     ref.read(diagramProvider.notifier).updateQueryVector(node.id, newQv);
     _filterFieldController.clear();
+    setState(() {
+      _selectedFilterField = null;
+      _showCustomFilterInput = false;
+    });
   }
 
   void _addSortField(FDMNode node) {
-    final field = _sortFieldController.text.trim();
+    final String field;
+    if (_showCustomSortInput) {
+      field = _sortFieldController.text.trim();
+    } else {
+      field = _selectedSortField ?? '';
+    }
     if (field.isEmpty) return;
 
     final currentSorts = List<SortField>.from(node.queryVector.sortFields);
@@ -198,6 +230,10 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
 
     ref.read(diagramProvider.notifier).updateQueryVector(node.id, newQv);
     _sortFieldController.clear();
+    setState(() {
+      _selectedSortField = null;
+      _showCustomSortInput = false;
+    });
   }
 
   void _removeFilterField(FDMNode node, String field) {
@@ -536,6 +572,24 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                                           _editPropertyError = _validatePropertyName(val, node, excludeKey: p.key);
                                         });
                                       },
+                                      onSubmitted: (val) {
+                                        final err = _validatePropertyName(val, node, excludeKey: p.key);
+                                        if (err == null) {
+                                          ref.read(diagramProvider.notifier).updateProperty(
+                                            node.id,
+                                            p.key,
+                                            p.copyWith(key: val.trim()),
+                                          );
+                                          setState(() {
+                                            _editingPropKey = null;
+                                            _editPropertyError = null;
+                                          });
+                                        } else {
+                                          setState(() {
+                                            _editPropertyError = err;
+                                          });
+                                        }
+                                      },
                                     ),
                                   ),
                                   const SizedBox(width: 8),
@@ -544,7 +598,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                                     items: DataType.values.where((t) => t != DataType.nullValue).map((t) {
                                       return DropdownMenuItem(
                                         value: t,
-                                        child: Text(t.nameString, style: const TextStyle(fontSize: 12)),
+                                        child: Text(_getDataTypeDisplayName(t), style: const TextStyle(fontSize: 12)),
                                       );
                                     }).toList(),
                                     onChanged: (val) {
@@ -644,7 +698,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                                     });
                                   },
                                   child: Text(
-                                    '${p.key}: ${p.dataType.nameString}${p.isUnbounded ? " (⚠️ 1MB)" : ""}',
+                                    '${p.key}: ${_getDataTypeDisplayName(p.dataType)}${p.isUnbounded ? " (⚠️ 1MB)" : ""}',
                                     style: TextStyle(
                                       fontSize: 11,
                                       fontWeight: FontWeight.bold,
@@ -737,6 +791,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                         _addPropertyError = _validatePropertyName(val, node);
                       });
                     },
+                    onSubmitted: (_) => _addProperty(node.id, node),
                   ),
                   const SizedBox(height: 8),
                   DropdownButtonFormField<DataType>(
@@ -749,7 +804,7 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                     items: DataType.values.where((t) => t != DataType.nullValue).map((t) {
                       return DropdownMenuItem(
                         value: t,
-                        child: Text(t.nameString, style: const TextStyle(fontSize: 12)),
+                        child: Text(_getDataTypeDisplayName(t), style: const TextStyle(fontSize: 12)),
                       );
                     }).toList(),
                     onChanged: (val) {
@@ -837,15 +892,56 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                 Row(
                   children: [
                     Expanded(
-                      child: TextField(
-                        controller: _filterFieldController,
-                        style: const TextStyle(fontSize: 11),
-                        decoration: const InputDecoration(
-                          hintText: 'Filter field (F)',
-                          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
+                      child: _showCustomFilterInput
+                          ? TextField(
+                              controller: _filterFieldController,
+                              style: TextStyle(fontSize: 11, color: textCol),
+                              decoration: InputDecoration(
+                                hintText: 'Custom filter field',
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                border: const OutlineInputBorder(),
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.close, size: 14),
+                                  onPressed: () {
+                                    setState(() {
+                                      _showCustomFilterInput = false;
+                                      _selectedFilterField = null;
+                                    });
+                                  },
+                                ),
+                              ),
+                            )
+                          : DropdownButtonFormField<String>(
+                              value: _selectedFilterField,
+                              decoration: const InputDecoration(
+                                labelText: 'Filter field (F)',
+                                contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                border: OutlineInputBorder(),
+                              ),
+                              style: TextStyle(fontSize: 11, color: textCol),
+                              items: [
+                                ...node.properties.map((p) => DropdownMenuItem(
+                                      value: p.key,
+                                      child: Text(p.key, style: TextStyle(fontSize: 11, color: textCol)),
+                                    )),
+                                DropdownMenuItem(
+                                  value: '__custom__',
+                                  child: Text('-- Custom Field --', style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: textCol.withOpacity(0.7))),
+                                ),
+                              ],
+                              onChanged: (val) {
+                                if (val == '__custom__') {
+                                  setState(() {
+                                    _showCustomFilterInput = true;
+                                    _filterFieldController.clear();
+                                  });
+                                } else {
+                                  setState(() {
+                                    _selectedFilterField = val;
+                                  });
+                                }
+                              },
+                            ),
                     ),
                     const SizedBox(width: 4),
                     IconButton(
@@ -860,15 +956,56 @@ class _SidebarRightState extends ConsumerState<SidebarRight> {
                 Row(
                   children: [
                     Expanded(
-                      child: TextField(
-                        controller: _sortFieldController,
-                        style: const TextStyle(fontSize: 11),
-                        decoration: const InputDecoration(
-                          hintText: 'Sort field (S)',
-                          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
+                      child: _showCustomSortInput
+                          ? TextField(
+                              controller: _sortFieldController,
+                              style: TextStyle(fontSize: 11, color: textCol),
+                              decoration: InputDecoration(
+                                hintText: 'Custom sort field',
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                border: const OutlineInputBorder(),
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.close, size: 14),
+                                  onPressed: () {
+                                    setState(() {
+                                      _showCustomSortInput = false;
+                                      _selectedSortField = null;
+                                    });
+                                  },
+                                ),
+                              ),
+                            )
+                          : DropdownButtonFormField<String>(
+                              value: _selectedSortField,
+                              decoration: const InputDecoration(
+                                labelText: 'Sort field (S)',
+                                contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                border: OutlineInputBorder(),
+                              ),
+                              style: TextStyle(fontSize: 11, color: textCol),
+                              items: [
+                                ...node.properties.map((p) => DropdownMenuItem(
+                                      value: p.key,
+                                      child: Text(p.key, style: TextStyle(fontSize: 11, color: textCol)),
+                                    )),
+                                DropdownMenuItem(
+                                  value: '__custom__',
+                                  child: Text('-- Custom Field --', style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: textCol.withOpacity(0.7))),
+                                ),
+                              ],
+                              onChanged: (val) {
+                                if (val == '__custom__') {
+                                  setState(() {
+                                    _showCustomSortInput = true;
+                                    _sortFieldController.clear();
+                                  });
+                                } else {
+                                  setState(() {
+                                    _selectedSortField = val;
+                                  });
+                                }
+                              },
+                            ),
                     ),
                     const SizedBox(width: 4),
                     DropdownButton<String>(

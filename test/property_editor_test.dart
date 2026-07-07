@@ -98,5 +98,40 @@ void main() {
       final updatedNode = container.read(diagramProvider).nodes.first;
       expect(updatedNode.properties[0].key, equals('full_name'));
     });
+
+    test('Query Vector: updateQueryVector and Index Estimation', () {
+      final container = ProviderContainer();
+      final notifier = container.read(diagramProvider.notifier);
+
+      final node = FDMNode(
+        id: 'node_1',
+        type: NodeType.entity,
+        name: 'User',
+        path: '/users/\$userId',
+        properties: [
+          PropertyNode(key: 'age', dataType: DataType.number),
+          PropertyNode(key: 'status', dataType: DataType.boolean),
+        ],
+        queryVector: QueryVector(),
+        position: Offset.zero,
+      );
+
+      notifier.state = DiagramState(nodes: [node]);
+
+      // Update query vector with a filter and sort
+      final qv = QueryVector(
+        filterFields: ['age'],
+        sortFields: [SortField(field: 'status', direction: 'asc')],
+        estimatedIndexes: EstimatedIndex.composite,
+      );
+      notifier.updateQueryVector('node_1', qv);
+
+      final updatedNode = container.read(diagramProvider).nodes.first;
+      expect(updatedNode.queryVector.filterFields.length, equals(1));
+      expect(updatedNode.queryVector.filterFields[0], equals('age'));
+      expect(updatedNode.queryVector.sortFields.length, equals(1));
+      expect(updatedNode.queryVector.sortFields[0].field, equals('status'));
+      expect(updatedNode.queryVector.estimatedIndexes, equals(EstimatedIndex.composite));
+    });
   });
 }

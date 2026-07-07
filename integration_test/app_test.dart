@@ -147,7 +147,7 @@ void main() {
       await Future.delayed(const Duration(seconds: 1));
 
       // Verify property added
-      expect(find.text('name: string'), findsOneWidget);
+      expect(find.text('name: String'), findsOneWidget);
 
       // 2. Form validation rules
       await tester.tap(find.text('Tambah property'));
@@ -175,9 +175,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // 3. Rename inline
-      await tester.ensureVisible(find.text('name: string'));
+      await tester.ensureVisible(find.text('name: String'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('name: string'));
+      await tester.tap(find.text('name: String'));
       await tester.pumpAndSettle();
 
       await tester.enterText(find.byKey(const Key('inline_edit_prop_name_input')), 'user_name');
@@ -187,7 +187,7 @@ void main() {
       await tester.pumpAndSettle();
       await Future.delayed(const Duration(seconds: 1));
 
-      expect(find.text('user_name: string'), findsOneWidget);
+      expect(find.text('user_name: String'), findsOneWidget);
 
       // 4. Delete property with SnackBar Undo
       await tester.ensureVisible(find.byKey(const Key('delete_prop_user_name')));
@@ -208,7 +208,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify restored
-      expect(find.text('user_name: string'), findsOneWidget);
+      expect(find.text('user_name: String'), findsOneWidget);
 
       await takeScreenshot(tester, '7_property_editor_validated');
       print('✅ Stage 4 Selesai');

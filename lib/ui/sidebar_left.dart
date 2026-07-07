@@ -337,7 +337,7 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
                       items: sourceProps.map((prop) {
                         return DropdownMenuItem<String>(
                           value: prop.key,
-                          child: Text('${prop.key}: ${prop.dataType.nameString}', style: const TextStyle(fontSize: 12)),
+                          child: Text('${prop.key}: ${prop.dataType.displayName}', style: const TextStyle(fontSize: 12)),
                         );
                       }).toList(),
                       onChanged: (val) {

@@ -125,102 +125,105 @@ class StructuralNodeWidget extends ConsumerWidget {
                 ),
               ),
               // ── 4 Titik Koneksi Dinamis ──
-              // Atas: input handle (hierarchy)
-              Positioned(
-                top: -5,
-                left: 97,
-                child: GestureDetector(
-                  onTap: () {
-                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
-                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
-                  },
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF2E75B6),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 1.5),
-                        boxShadow: [BoxShadow(color: const Color(0xFF2E75B6).withOpacity(0.5), blurRadius: 4)],
+              // Hanya ditampilkan dan aktif jika node terpilih
+              if (isSelected) ...[
+                // Atas: input handle (hierarchy)
+                Positioned(
+                  top: -5,
+                  left: 97,
+                  child: GestureDetector(
+                    onTap: () {
+                      ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                      ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                    },
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF2E75B6),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 1.5),
+                          boxShadow: [BoxShadow(color: const Color(0xFF2E75B6).withOpacity(0.5), blurRadius: 4)],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // Bawah: output handle (hierarchy)
-              Positioned(
-                bottom: -5,
-                left: 97,
-                child: GestureDetector(
-                  onTap: () {
-                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
-                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
-                  },
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF2E75B6),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 1.5),
-                        boxShadow: [BoxShadow(color: const Color(0xFF2E75B6).withOpacity(0.5), blurRadius: 4)],
+                // Bawah: output handle (hierarchy)
+                Positioned(
+                  bottom: -5,
+                  left: 97,
+                  child: GestureDetector(
+                    onTap: () {
+                      ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                      ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                    },
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF2E75B6),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 1.5),
+                          boxShadow: [BoxShadow(color: const Color(0xFF2E75B6).withOpacity(0.5), blurRadius: 4)],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // Kiri: side handle
-              Positioned(
-                left: -5,
-                top: 37,
-                child: GestureDetector(
-                  onTap: () {
-                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
-                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
-                  },
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: const Color(0xFF2E75B6), width: 2),
-                        boxShadow: [BoxShadow(color: const Color(0xFF2E75B6).withOpacity(0.3), blurRadius: 4)],
+                // Kiri: side handle
+                Positioned(
+                  left: -5,
+                  top: 37,
+                  child: GestureDetector(
+                    onTap: () {
+                      ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                      ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                    },
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: const Color(0xFF2E75B6), width: 2),
+                          boxShadow: [BoxShadow(color: const Color(0xFF2E75B6).withOpacity(0.3), blurRadius: 4)],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // Kanan: side handle
-              Positioned(
-                right: -5,
-                top: 37,
-                child: GestureDetector(
-                  onTap: () {
-                    ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
-                    ref.read(diagramProvider.notifier).startConnection(node.id, null);
-                  },
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF2E75B6),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 1.5),
-                        boxShadow: [BoxShadow(color: const Color(0xFF2E75B6).withOpacity(0.5), blurRadius: 4)],
+                // Kanan: side handle
+                Positioned(
+                  right: -5,
+                  top: 37,
+                  child: GestureDetector(
+                    onTap: () {
+                      ref.read(diagramProvider.notifier).setConnectionMode(EdgeType.hierarchy);
+                      ref.read(diagramProvider.notifier).startConnection(node.id, null);
+                    },
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF2E75B6),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 1.5),
+                          boxShadow: [BoxShadow(color: const Color(0xFF2E75B6).withOpacity(0.5), blurRadius: 4)],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
               // Error badge in top-right
               if (nodeErrors.isNotEmpty)
                 Positioned(

@@ -104,9 +104,13 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
   Rect _nodeRect(FDMNode node) {
     final double w = node.type == NodeType.structural ? 200 : 220;
     // Approximate height — nodes grow with properties, use a generous bound
-    final double h = node.type == NodeType.structural
+    double h = node.type == NodeType.structural
         ? 80
         : 60.0 + (node.properties.length * 38.0).clamp(38.0, 600.0);
+    if (node.type == NodeType.entity &&
+        (node.queryVector.filterFields.isNotEmpty || node.queryVector.sortFields.isNotEmpty)) {
+      h += 50.0;
+    }
     return Rect.fromLTWH(node.position.dx, node.position.dy, w, h);
   }
 
