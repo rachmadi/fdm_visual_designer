@@ -32,6 +32,8 @@
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `bca3502` | 2026-07-07 | Antigravity | docs: synchronize all formal IIDD logs (RTM, conversation, decision, duration, estimate vs actual, errors, interventions, tests, iteration summary) |
+| `1e40303` | 2026-07-07 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `568f72b` | 2026-07-07 | Antigravity | docs: fix character encoding corruption and format commit_history.md as clean standard ASCII |
 | `61ca282` | 2026-07-07 | Antigravity | docs: update commit history to log verbatim migration and README index update |
 | `1f5f16a` | 2026-07-07 | Antigravity | docs: move verbatim log to formal documentation folder, update README index, and add end-of-iteration tasks checklist |
@@ -65,8 +67,6 @@
 | `2a4fa97` | 2026-07-06 | Antigravity | docs: add technical note on 4-sided dynamic connection anchors for future iterations |
 | `8510f9c` | 2026-07-06 | Antigravity | feat: add Keyboard Shortcuts guide panel in sidebar left |
 | `c6db36d` | 2026-07-06 | Antigravity | docs: revert iterations 1b-7 back to pending in IIDD logs to align with current Iteration 1a focus |
-| `0b1118f` | 2026-07-06 | Antigravity | docs: finalize IIDD logs for human interventions, decisions, errors, and test logs |
-| `1e7dd72` | 2026-07-06 | Antigravity | docs: update requirement traceability matrix and summary files with actual completed progress |
 
 ---
 
