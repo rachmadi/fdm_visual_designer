@@ -64,7 +64,8 @@ Kalkulasi durasi secara otomatis di akhir iterasi.
 | 4 | Fix empty textfield & unique Keys | `sidebar_right.dart` | 08:33 (July 7) | 08:35 (July 7) | 2m | Tinggi | Bug fix |
 | 5 | Visual headed E2E test run | `app_test.dart` | 08:35 (July 7) | 08:38 (July 7) | 3m | Sedang | All passed |
 | 6 | Dokumen & Walkthrough | — | 08:38 (July 7) | 08:42 (July 7) | 4m | Rendah | Selesai |
-| — | **TOTAL ITERASI 2a** | — | — | — | **18m** | — | — |
+| 7 | Fix hit-test SnackBar Undo (Sesi 9) | `app_test.dart` | 08:45 (July 7) | 09:05 (July 7) | 20m | Tinggi | bypass hit-test menggunakan onPressed langsung |
+| — | **TOTAL ITERASI 2a** | — | — | — | **38m** | — | — |
 
 ---
 

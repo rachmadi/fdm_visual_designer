@@ -51,7 +51,8 @@
 | Refaktor input & Key | 0,5 jam | 08:33 | 08:35 | 2 menit | -28 menit | Selesai |
 | headed E2E test run | 0,5 jam | 08:35 | 08:38 | 3 menit | -27 menit | All passed |
 | Dokumen & Walkthrough | 0,5 jam | 08:38 | 08:42 | 4 menit | -26 menit | Selesai |
-| **Total Iterasi 2a** | **~6,5 jam** | **16:55** | **08:42** | **18 menit** | **-6 jam 12 m** | Selesai sangat cepat karena reuse state |
+| Perbaikan hit-test SnackBar Undo (Sesi 9) | 0,5 jam | 08:45 | 09:05 | 20 menit | -10 menit | Selesai |
+| **Total Iterasi 2a** | **~6,5 jam** | **16:55** | **09:05** | **38 menit** | **-5 jam 52 m** | Selesai sangat cepat karena reuse state |
 
 ---
 
@@ -69,18 +70,18 @@
 |---------|----------|-----------|---------|---------|
 | 1a | ~7,5 jam | 2 jam 11 m | -5 jam 19 m | 29.1% |
 | 1b | ~8 jam | 19 menit | -7 jam 41 m | 4.0% |
-| 2a | ~6,5 jam | 18 menit | -6 jam 12 m | 4.6% |
+| 2a | ~6,5 jam | 38 menit | -5 jam 52 m | 9.7% |
 | 2b | ~6 jam | — | — | — |
 | 3a | ~7 jam | — | — | — |
-| 3b | ~6,5 jam | — | — | — |
-| 4a | ~7 jam | — | — | — |
-| 4b | ~5,5 jam | — | — | — |
-| 5a | ~5 jam | — | — | — |
-| 5b | ~6 jam | — | — | — |
-| 6a | ~7 jam | — | — | — |
-| 6b | ~6,5 jam | — | — | — |
-| 7 | ~8 jam | — | — | — |
-| **Total** | **~87 jam** | **2 jam 48 m** | **-19 jam 12 m** | **12.7%** |
+| 3b | — | — | — | — |
+| 4a | — | — | — | — |
+| 4b | — | — | — | — |
+| 5a | — | — | — | — |
+| 5b | — | — | — | — |
+| 6a | — | — | — | — |
+| 6b | — | — | — | — |
+| 7 | — | — | — | — |
+| **Total** | **~22 jam** | **3 jam 8 m** | **-18 jam 52 m** | **14.2%** |
 
 ---
 

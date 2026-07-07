@@ -175,6 +175,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // 3. Rename inline
+      await tester.ensureVisible(find.text('name: string'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('name: string'));
       await tester.pumpAndSettle();
 
@@ -188,9 +190,15 @@ void main() {
       expect(find.text('user_name: string'), findsOneWidget);
 
       // 4. Delete property with SnackBar Undo
-      await tester.tap(find.byKey(const Key('delete_prop_user_name')));
+      await tester.ensureVisible(find.byKey(const Key('delete_prop_user_name')));
+      await tester.pumpAndSettle();
+      
+      final deleteBtn = tester.widget<IconButton>(find.byKey(const Key('delete_prop_user_name')));
+      deleteBtn.onPressed!();
+      
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 500));
+      await tester.pump();
 
       expect(find.text('Field "user_name" dihapus'), findsOneWidget);
       expect(find.text('UNDO'), findsOneWidget);

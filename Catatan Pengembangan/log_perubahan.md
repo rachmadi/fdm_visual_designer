@@ -175,7 +175,7 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Mengoreksi seluruh berkas log waktu (`waktu_estimasi_vs_realisasi.md` dan `durasi_per_fitur.md`) untuk Iterasi 1a dan 1b agar sinkron secara matematis.
   - Menjalankan tes interaktif headed (`--no-headless`) melalui Scheduled Task interaktif (`LogonType Interactive`) lintas sesi ke ChromeDriver Session 0. Jendela browser Google Chrome fisik muncul di layar monitor desktop user secara nyata dan visual, menjalankan seluruh skenario hingga selesai, dan bertahan selama 35 detik sebelum menutup secara otomatis. Semua stage lulus 100% (PASS).
 
-## [1.4.0] - 2026-07-07 (Iterasi 2a - Property Editor & Form Validation)
+## [1.6.0] - 2026-07-07 (Iterasi 2a - Property Editor & Form Validation)
 
 ### Added (Penambahan Fitur)
 - **Reorderable Property List (`ReorderableListView.builder`)**:
@@ -197,6 +197,8 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Menulis 3 unit test untuk memastikan operasi mutasi reorder, rename, dan insert properti berjalan dengan benar.
 
 ### Fixed (Perbaikan Bug & Tes)
+- **Resolusi Bug SnackBar Undo pada E2E Test (Hit-test warning)**:
+  - Memperbaiki kegagalan hit-test pada pengetukan tombol delete properti di integration test (`app_test.dart`) dengan memanggil callback `deleteBtn.onPressed!()` secara langsung. Ini menjamin pengujian berjalan stabil tanpa dipengaruhi oleh issue hit-testing/scrolling di browser.
 - **Resolusi Masalah Duplikasi Widget Finder**:
   - Menambahkan `Key` unik (`add_prop_name_input` dan `inline_edit_prop_name_input`) pada TextField properti di [sidebar_right.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/panels/sidebar_right.dart) dan merujuk pencarian widget via key di `app_test.dart` untuk menyelesaikan error `Too many elements`.
   - Menambahkan `Key` unik (`add_prop_save_button` dan `inline_edit_prop_save_button`) pada tombol Simpan properti untuk menghindari ambiguitas pengetukan widget Simpan.

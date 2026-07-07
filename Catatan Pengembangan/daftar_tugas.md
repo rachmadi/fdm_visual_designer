@@ -60,7 +60,7 @@
   - [x] Penempatan label nama Structural Node di kotak tab bagian atas
   - [x] Peningkatan visibilitas & kontras garis grid pada dark mode saat zoom out (strokeWidth = 1.0)
 
-## [1.1.0] - Property Editor & Form Validation (Iterasi 2a - Selesai)
+## [1.6.0] - Property Editor & Form Validation (Iterasi 2a - Selesai)
 
 - [x] Rombak UI list properti di sidebar kanan menggunakan `ReorderableListView`
 - [x] Implementasi inline editing (TextField & Dropdown) untuk nama dan tipe properti aktif di sidebar

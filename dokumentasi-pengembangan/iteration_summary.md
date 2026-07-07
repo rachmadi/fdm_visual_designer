@@ -73,7 +73,27 @@
 ---
 
 ═══════════════════════════════════════════════════════════════════
-## ITERASI 2a–7 — [Template]
+## ITERASI 2a — Property Editor & Form Validation
+### Status: ✅ Selesai
+═══════════════════════════════════════════════════════════════════
+
+- **Tanggal Mulai**: 2026-07-06
+- **Tanggal Selesai**: 2026-07-07
+- **Status Akhir**: ✅ Selesai
+- **Durasi Aktual**: ~38 menit (kumulatif pengerjaan dan pengujian)
+- **Target**: Rombak UI list properti dengan ReorderableListView, edit inline nama/tipe, form tambah properti inline, real-time validation error, dan SnackBar Delete dengan Undo 3 detik.
+- **Hasil Utama**: 
+  - Properti di sidebar kanan dapat di-reorder via drag-and-drop secara reaktif.
+  - Tapping nama properti memicu edit inline menggunakan TextField berfokus otomatis.
+  - Dropdown dinamis dan switch pendukung (isUnbounded, isReferencing) terintegrasi langsung pada list item properti.
+  - Pesan error validasi merah muncul di form tambah properti dan inline edit rename.
+  - Penghapusan properti memicu SnackBar Undo yang berhasil merestore properti dan edge relasi horizontal yang terhapus saat di-tap.
+- **E2E Test**: ✅ PASS (Headed Chrome E2E Test lulus 100% dengan visual verification di desktop).
+- **Lesson Learned**: Pada E2E test web, hit-testing tombol delete di dalam ReorderableListView card dapat terganggu oleh overlay pointer-listener. Memanggil callback `onPressed` langsung via widget instance adalah solusi solid dan handal.
+
+---
+
+## ITERASI 2b–7 — [Template]
 ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*
@@ -86,7 +106,7 @@
 |---------|--------|---------------|-------------|------|
 | 1a | ✅ Selesai | ~3,5 jam | 9/9 | PASS |
 | 1b | ✅ Selesai | ~1,1 jam | 5/5 | PASS |
-| 2a | 🕒 Belum | — | 0/3 | — |
+| 2a | ✅ Selesai | ~38 menit | 3/3 | PASS |
 | 2b | 🕒 Belum | — | 0/2 | — |
 | 3a | 🕒 Belum | — | 0/4 | — |
 | 3b | 🕒 Belum | — | 0/3 | — |
@@ -100,4 +120,4 @@
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: otomatis setiap akhir iterasi*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*

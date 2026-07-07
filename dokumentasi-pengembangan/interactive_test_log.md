@@ -142,7 +142,77 @@ Application finished.
 ---
 
 ═══════════════════════════════════════════════════════════════════
-## ITERASI 2a–7 — [Template]
+## ITERASI 2a — Property Editor & Form Validation
+### Status Pengujian: ✅ PASS (All Tests Passed)
+═══════════════════════════════════════════════════════════════════
+
+### Detail Sesi Pengujian 2a
+
+| Field | Nilai |
+|-------|-------|
+| Tanggal | 2026-07-07 |
+| Waktu Mulai | 08:52 WIB |
+| Waktu Selesai | 08:56 WIB |
+| Durasi Total | ~4 menit |
+| ChromeDriver Version | 149 |
+| Browser Dimension | 1600×1024 |
+| Headless Mode | Non-headless (headed) |
+| Status Akhir | ✅ PASS |
+
+### Daftar Test Case — Iterasi 2a
+
+| # | Test Case | Deskripsi | Status | Waktu | Catatan |
+|---|-----------|-----------|--------|-------|---------|
+| TC-2a-01 | Inline Add Form | Form tambah properti disembunyikan dan muncul saat tombol tambah diklik | ✅ Lulus | 08:53 | Menghemat ruang visual di panel kanan |
+| TC-2a-02 | Form Validation | Mencegah input nama properti kosong, awalan angka, duplikasi, non-alfanumerik | ✅ Lulus | 08:53 | Pesan error berwarna merah tampil real-time |
+| TC-2a-03 | Inline Rename | Mengetuk nama properti membuka input rename langsung | ✅ Lulus | 08:54 | Menyimpan data via Enter / tombol centang |
+| TC-2a-04 | Reorderable List | Mengatur ulang posisi properti di dalam node via drag and drop | ✅ Lulus | 08:54 | State di-update reaktif via Riverpod |
+| TC-2a-05 | SnackBar Undo Delete | Menghapus properti memunculkan SnackBar dengan tombol UNDO selama 3 detik | ✅ Lulus | 08:55 | Mengetuk UNDO mengembalikan properti & relasi horizontal |
+
+### Output Log Pengujian 2a
+
+```
+00:00 +0: FDM Visual Designer E2E Integration Tests Run Combined E2E Flow (Stage 1 to 3)
+=== Memulai Stage 1: Layout & Pembuatan Node ===
+✅ Stage 1 Selesai
+=== Memulai Stage 2: Zoom & Drag ===
+✅ Stage 2 Selesai
+=== Memulai Stage 3: 4 Titik Koneksi Dinamis ===
+✅ Stage 3 Selesai
+=== Memulai Stage 4: Property Editor & Validasi ===
+✅ Stage 4 Selesai
+=== Menahan jendela browser selama 35 detik... ===
+01:12 +1: FDM Visual Designer E2E Integration Tests (tearDownAll)
+01:12 +2: (tearDownAll)
+01:12 +3: All tests passed!
+All tests passed.
+Screenshot saved: 1_launch_screen.png
+Screenshot saved: 2_added_nodes_grid.png
+Screenshot saved: 3_selected_node_properties.png
+Screenshot saved: 4_zoomed_out_canvas.png
+Screenshot saved: 5_dragged_node_zoomed_out.png
+Screenshot saved: 6_nodes_with_4_handles.png
+Screenshot saved: 7_property_editor_validated.png
+Application finished.
+```
+
+### Screenshot Pengujian 2a
+
+> *(Screenshot disimpan di `dokumentasi-pengembangan/screenshots/iterasi_2a/`)*
+
+| File Screenshot | Deskripsi |
+|-----------------|-----------|
+| `1_launch_screen.png` | Tampilan canvas kosong awal aplikasi |
+| `2_added_nodes_grid.png` | Keadaan setelah 10 node ditambahkan dengan layout grid teratur |
+| `3_selected_node_properties.png` | Seleksi node pertama menampilkan editor properties |
+| `4_zoomed_out_canvas.png` | Tampilan canvas setelah di-pinch zoom out |
+| `5_dragged_node_zoomed_out.png` | Posisi node baru setelah digeser pada tingkat zoom out |
+| `6_nodes_with_4_handles.png` | Menampilkan 4 handle bulat di sekeliling node |
+| `7_property_editor_validated.png` | Form pengeditan properti divalidasi dan snackbar terhapus ditampilkan |
+
+---
+
+## ITERASI 2b–7 — [Template]
 ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*
@@ -155,7 +225,7 @@ Application finished.
 |---------|-------------|----------|---------|---------|--------|
 | 1a | 2026-07-06 | 8 | 8 | 0 | ✅ Lulus |
 | 1b | 2026-07-06 | 5 | 5 | 0 | ✅ Lulus |
-| 2a | — | — | 0 | 0 | 🕒 Belum |
+| 2a | 2026-07-07 | 5 | 5 | 0 | ✅ Lulus |
 | 2b | — | — | 0 | 0 | 🕒 Belum |
 | 3a | — | — | 0 | 0 | 🕒 Belum |
 | 3b | — | — | 0 | 0 | 🕒 Belum |
