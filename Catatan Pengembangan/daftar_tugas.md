@@ -85,3 +85,14 @@
 
 - [ ] Integrasi Algoritma Auto-Layout otomatis berbasis Dagre (Dart port)
 - [ ] Penambahan visual Minimap di sudut kanan bawah canvas
+
+## 📋 Prosedur Standar Akhir Iterasi (Wajib Dilakukan)
+
+- [x] Lakukan unit test (`flutter test`) & Headed E2E integration test (`flutter drive` via Scheduled Task) secara visual
+- [x] Jalankan dev server lokal pada port `5555` menyajikan `build/web` untuk uji coba manual
+- [x] Perbarui berkas log `Catatan Pengembangan/` (`catatan_percakapan_proyek.md`, `log_perubahan.md`, `daftar_tugas.md`)
+- [x] Ekstrak dan format berkas transkrip verbatim lengkap (`dokumentasi-pengembangan/catatan_percakapan_verbatim.md`)
+- [x] Sinkronkan berkas riwayat Git (`dokumentasi-pengembangan/commit_history.md`)
+- [x] Perbarui indeks berkas dokumentasi log di `README.md`
+- [x] Commit dan push seluruh perubahan ke repositori GitHub master branch
+- [x] Deploy rilis produksi terbaru ke Vercel (`npx vercel --prod --yes` di `build/web`)

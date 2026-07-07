@@ -33,6 +33,7 @@ Seluruh berkas dokumentasi log pengembangan proyek dapat diakses langsung melalu
 
 ### 💬 Riwayat & Aktivitas Sesi
 *   [conversation_log.md](dokumentasi-pengembangan/conversation_log.md) — Log percakapan kronologis antara Intent Architect dan Agen sejak hari pertama.
+*   [catatan_percakapan_verbatim.md](dokumentasi-pengembangan/catatan_percakapan_verbatim.md) — Log percakapan verbatim word-for-word lengkap antara Intent Architect dan Agen sejak awal proyek.
 *   [human_intervention.md](dokumentasi-pengembangan/human_intervention.md) — Log pencatatan intervensi, koreksi, dan keputusan Intent Architect.
 *   [commit_history.md](dokumentasi-pengembangan/commit_history.md) — Log riwayat commit git kumulatif per iterasi.
 

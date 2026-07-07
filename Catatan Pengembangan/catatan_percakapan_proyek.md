@@ -598,10 +598,15 @@ Application finished.
   - **Build Web & Server**: Menjalankan kembali build produksi web dan menyajikannya via dev server lokal pada port `5555`.
 - **Revisi Simbol Structural Node**:
   - Memperbarui `FolderPainter` di [structural_node.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/structural_node.dart) agar memiliki sudut-sudut yang membulat (rounded) dengan radius `6.0` dan garis pembatas horizontal yang memisahkan bagian tab atas dengan badan folder bawah.
-- **Verbatim Conversation Log**:
-  - Membuat berkas catatan percakapan verbatim word-for-word lengkap di [catatan_percakapan_verbatim.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Catatan%20Pengembangan/catatan_percakapan_verbatim.md).
+- **Verbatim Conversation Log Formal**:
+  - Menghapus berkas sementara di folder `Catatan Pengembangan/` dan membuat berkas formal transkrip verbatim lengkap di [catatan_percakapan_verbatim.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/catatan_percakapan_verbatim.md).
+  - Menyaring berkas verbatim log agar bersih dari tag XML sistem dan hanya menyisakan dialog murni antara IA dan Agen dengan detail pemikiran Agen yang utuh.
+  - Memasukkan berkas verbatim log ke indeks dokumentasi utama di [README.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/README.md).
+- **Prosedur Standar & Komitmen Konsistensi**:
+  - Menambahkan checklist Prosedur Standar Akhir Iterasi ke dalam berkas [daftar_tugas.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Catatan%20Pengembangan/daftar_tugas.md) dan [task.md](file:///C:/Users/dosen/.gemini/antigravity/brain/46d6a818-cddd-4c15-a851-901fbb8559e7/task.md) untuk menjamin kepatuhan pengerjaan tugas secara konsisten.
+  - Menyinkronkan seluruh riwayat commit Git ke dalam [commit_history.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/commit_history.md).
 - **Git Commit & Vercel Production Deployment**:
-  - Melakukan commit berkas perubahan ke GitHub repositori.
+  - Melakukan commit seluruh perubahan ke GitHub repositori.
   - Mendeploy build produksi web secara sukses ke Vercel di domain resmi [fdm-vd.vercel.app](https://fdm-vd.vercel.app).
 
 **Tabel Durasi Pengerjaan & Pengujian:**
@@ -616,8 +621,10 @@ Application finished.
 | Kompilasi build produksi web & pembaruan dokumentasi awal | 16:27 | 16:30 | ~3 menit |
 | Penanganan interaktif visual headed E2E test via scheduled task | 16:30 | 16:35 | ~5 menit |
 | Revisi visual structural node (rounded + garis pemisah) & uji ulang | 16:35 | 16:41 | ~6 menit |
-| Pembuatan catatan verbatim, Git commit & push, serta deploy ke Vercel | 16:41 | 16:45 | ~4 menit |
-| **Total Sesi 11** | **16:15** | **16:45** | **~30 menit** |
+| Pembuatan catatan verbatim awal, Git commit & push, serta deploy Vercel | 16:41 | 16:45 | ~4 menit |
+| Penyesuaian isi verbatim log (detail Agen + hapus XML tag) & Git push | 16:45 | 16:56 | ~11 menit |
+| Pemindahan verbatim log ke folder formal, update index README, daftar_tugas, commit_history | 16:56 | 17:05 | ~9 menit |
+| **Total Sesi 11** | **16:15** | **17:05** | **~50 menit** |
 
 
 
