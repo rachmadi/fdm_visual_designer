@@ -32,6 +32,8 @@
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `1f5f16a` | 2026-07-07 | Antigravity | docs: move verbatim log to formal documentation folder, update README index, and add end-of-iteration tasks checklist |
+| `aad0ab1` | 2026-07-07 | Antigravity | docs: append final synchronization commit to commit_history.md |
 | `da4cd06` | 2026-07-07 | Antigravity | docs: synchronize commit_history.md with all recent commits |
 | `7409a10` | 2026-07-07 | Antigravity | docs: restore all Agen planning and thought details in verbatim log while keeping clean formatting |
 | `c950ff6` | 2026-07-07 | Antigravity | docs: format verbatim conversation log to remove system XML tags and isolate final dialog messages |
@@ -65,8 +67,6 @@
 | `1e7dd72` | 2026-07-06 | Antigravity | docs: update requirement traceability matrix and summary files with actual completed progress |
 | `cf84058` | 2026-07-06 | Antigravity | fix: resolve browser shortcuts conflict and register global keyboard handler |
 | `f43ba7a` | 2026-07-06 | Antigravity | docs: update development notes for shortcuts and dark mode session |
-| `b795425` | 2026-07-06 | Antigravity | fix: finalize keyboard shortcuts and dark mode specifications in main and entity node |
-| `d40e667` | 2026-07-06 | Antigravity | fix: finalize scheduled interactive headed E2E test session |
 
 ---
 
