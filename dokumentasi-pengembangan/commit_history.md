@@ -32,6 +32,7 @@
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `568f72b` | 2026-07-07 | Antigravity | docs: fix character encoding corruption and format commit_history.md as clean standard ASCII |
 | `61ca282` | 2026-07-07 | Antigravity | docs: update commit history to log verbatim migration and README index update |
 | `1f5f16a` | 2026-07-07 | Antigravity | docs: move verbatim log to formal documentation folder, update README index, and add end-of-iteration tasks checklist |
 | `aad0ab1` | 2026-07-07 | Antigravity | docs: append final synchronization commit to commit_history.md |
@@ -66,7 +67,6 @@
 | `c6db36d` | 2026-07-06 | Antigravity | docs: revert iterations 1b-7 back to pending in IIDD logs to align with current Iteration 1a focus |
 | `0b1118f` | 2026-07-06 | Antigravity | docs: finalize IIDD logs for human interventions, decisions, errors, and test logs |
 | `1e7dd72` | 2026-07-06 | Antigravity | docs: update requirement traceability matrix and summary files with actual completed progress |
-| `cf84058` | 2026-07-06 | Antigravity | fix: resolve browser shortcuts conflict and register global keyboard handler |
 
 ---
 
