@@ -32,6 +32,7 @@
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `da4cd06` | 2026-07-07 | Antigravity | docs: synchronize commit_history.md with all recent commits |
 | `7409a10` | 2026-07-07 | Antigravity | docs: restore all Agen planning and thought details in verbatim log while keeping clean formatting |
 | `c950ff6` | 2026-07-07 | Antigravity | docs: format verbatim conversation log to remove system XML tags and isolate final dialog messages |
 | `b558b75` | 2026-07-07 | Antigravity | docs: generate complete verbatim conversation log between IA and Agen from project start |
@@ -66,7 +67,6 @@
 | `f43ba7a` | 2026-07-06 | Antigravity | docs: update development notes for shortcuts and dark mode session |
 | `b795425` | 2026-07-06 | Antigravity | fix: finalize keyboard shortcuts and dark mode specifications in main and entity node |
 | `d40e667` | 2026-07-06 | Antigravity | fix: finalize scheduled interactive headed E2E test session |
-| `d7b320d` | 2026-07-06 | Antigravity | fix: finalize unsandboxed ChromeDriver headed integration test logs |
 
 ---
 
