@@ -32,6 +32,8 @@
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `6fb3789` | 2026-07-08 | Antigravity | docs: remove 00 prefix from documentation filenames for consistency |
+| `5a1cc9f` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `29dba46` | 2026-07-08 | Antigravity | docs: rename Indonesian log files to English and update all references |
 | `b45eb0c` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `7d51df6` | 2026-07-08 | Antigravity | docs: update conversation log, project conversation log, and regenerate verbatim log with Sesi 12 entries |
@@ -65,8 +67,6 @@
 | `a168e56` | 2026-07-06 | Antigravity | docs(decision): rewrite decision_log.md to include all key technical decisions from day one (June 27) onwards |
 | `6462d90` | 2026-07-06 | Antigravity | docs(conversation): fully rewrite conversation_log.md to include all sessions from day one (June 27) onwards |
 | `1c155f2` | 2026-07-06 | Antigravity | docs(drift): replace 'pengguna/user' with 'Intent Architect' in context_drift_log.md |
-| `ec47412` | 2026-07-06 | Antigravity | docs(drift): fully rewrite context_drift_log.md using the exact format and tables from the Revisi 3 specifications |
-| `fa4a93f` | 2026-07-06 | Antigravity | docs(documentation-pengembangan): fill in context drift CD-001 with canvas architecture details and join RTM table rows |
 
 ---
 
