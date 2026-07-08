@@ -637,7 +637,7 @@ Koreksi Penyelarasan Garis Waktu Iterasi IIDD (Pembersihan label Iterasi 7) & Ve
 
 ### Aktivitas Utama:
 - **Koreksi Status Timeline Log IIDD**:
-  - Mengoreksi RTM matrix [00_requirement_traceability_matrix.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/00_requirement_traceability_matrix.md) untuk mengembalikan status Iterasi 3a s.d. 7 ke Belum Dimulai (19/50 REQ selesai).
+  - Mengoreksi RTM matrix [requirement_traceability_matrix.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/requirement_traceability_matrix.md) untuk mengembalikan status Iterasi 3a s.d. 7 ke Belum Dimulai (19/50 REQ selesai).
   - Menyisir berkas log formal IIDD (`commit_history.md`, `decision_log.md`, `error_log.md`, `human_intervention.md`, dan `feature_duration_log.md`) untuk membersihkan penyebutan label "Iterasi 7" ganda dan menggantinya ke Iterasi 2b/1b.
   - Memasukkan tugas pemeriksaan konsistensi berkas log IIDD pada berkas [daftar_tugas.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Catatan%20Pengembangan/daftar_tugas.md) dan `task.md` Agen di setiap akhir iterasi.
   - Menyelaraskan asersi hasil pengetesan integration test pada `validation_log.md` agar bebas dari sebutan 7 stages yang ambigu.

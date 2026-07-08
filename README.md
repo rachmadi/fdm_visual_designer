@@ -21,13 +21,13 @@ Aplikasi berbasis web untuk merancang skema Firebase Database (Firestore & Realt
 Seluruh berkas dokumentasi log pengembangan proyek dapat diakses langsung melalui tautan indeks relatif berikut:
 
 ### 📋 Perencanaan & Ringkasan Progres
-*   [00_time_estimation.md](dokumentasi-pengembangan/00_time_estimation.md) — Rangkuman estimasi waktu pengerjaan per iterasi sesuai spesifikasi.
+*   [time_estimation.md](dokumentasi-pengembangan/time_estimation.md) — Rangkuman estimasi waktu pengerjaan per iterasi sesuai spesifikasi.
 *   [estimated_vs_actual_time.md](dokumentasi-pengembangan/estimated_vs_actual_time.md) — Perbandingan matematis estimasi vs durasi pengerjaan riil.
 *   [feature_duration_log.md](dokumentasi-pengembangan/feature_duration_log.md) — Log pencatatan durasi detail per fitur secara granular.
 *   [iteration_summary.md](dokumentasi-pengembangan/iteration_summary.md) — Ringkasan pencapaian dan *lesson learned* di setiap akhir iterasi.
 
 ### 🎯 Requirements & Keputusan Desain
-*   [00_requirement_traceability_matrix.md](dokumentasi-pengembangan/00_requirement_traceability_matrix.md) — Matriks ketertelusuran requirement (RTM) dari spesifikasi ke kode implementasi.
+*   [requirement_traceability_matrix.md](dokumentasi-pengembangan/requirement_traceability_matrix.md) — Matriks ketertelusuran requirement (RTM) dari spesifikasi ke kode implementasi.
 *   [decision_log.md](dokumentasi-pengembangan/decision_log.md) — Log keputusan arsitektural dan desain teknis penting sepanjang proyek.
 *   [context_drift_log.md](dokumentasi-pengembangan/context_drift_log.md) — Pencatatan penyimpangan (drift) spesifikasi awal (Bagian A & B).
 
