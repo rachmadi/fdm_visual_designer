@@ -138,8 +138,49 @@ Screenshot saved: 7_property_editor_validated.png
 
 ---
 
+═══════════════════════════════════════════════════════════════════
+## ITERASI 2b — Query Vector & Tipe Data Detail
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 2b–7 — [Template]
+
+### Tanggal Validasi: 2026-07-07
+
+### Hasil Keandalan Kompilasi (`flutter analyze`)
+```
+Analyzing fdm_visual_designer...
+No issues found! (analyzed 45 files)
+```
+
+### Hasil Unit Test (`flutter test`)
+```
+00:04 +13: All tests passed!
+```
+- Menambahkan test case baru untuk memverifikasi fungsionalitas updateQueryVector dan estimasi index.
+
+### Hasil Integration Test (Headed)
+```
+01:12 +3: All tests passed!
+Screenshot saved: 1_launch_screen.png
+Screenshot saved: 2_added_nodes_grid.png
+Screenshot saved: 3_selected_node_properties.png
+Screenshot saved: 4_zoomed_out_canvas.png
+Screenshot saved: 5_dragged_node_zoomed_out.png
+Screenshot saved: 6_nodes_with_4_handles.png
+Screenshot saved: 7_property_editor_validated.png
+```
+
+### Ringkasan Validasi Iterasi 2b
+
+| Jenis Validasi | Status | Catatan |
+|----------------|--------|---------|
+| `flutter analyze` | ✅ Lulus | Kompilasi bersih tanpa error |
+| Unit Test | ✅ Lulus | Lulus semua 13 unit test |
+| Integration Test (headed) | ✅ Lulus | Stage 1 s.d. 7 sukses |
+| Manual Review UI | ✅ Lulus | Panel Query Vector dan badge formula visual di canvas ter-render rapi |
+
+---
+
+## ═══════════════════════════════════════════════════════════════════
+## ITERASI 3–7 — [Template]
 ## ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*

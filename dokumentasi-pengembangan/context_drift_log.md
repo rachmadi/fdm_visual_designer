@@ -184,8 +184,36 @@ Tidak ada dampak negatif. Solusi test driver ini dapat dijadikan acuan untuk pen
 
 ---
 
+═══════════════════════════════════════════════════════════════════
+## ITERASI 2b — 2026-07-07 s.d. 2026-07-07 17:05 WIB
+═══════════════════════════════════════════════════════════════════
+
+## Intent Awal
+Menyempurnakan properti Query Vector di sidebar kanan, kapitalisasi dropdown tipe data, visibilitas handle konektor reaktif, dan visualisasi estimasi index pada canvas.
+
+## Eksekusi Aktual
+Fitur Query Vector dan visualisasinya di canvas berhasil diimplementasikan sepenuhnya. Selama iterasi, visualisasi Structural Node direvisi agar bersudut tumpul dengan garis pemisah, dan skrip verbatim log state-machine dibuat.
+
+---
+
+## Bagian A — Drift yang Diketahui
+
+| Aspek | Intent Awal | Eksekusi Aktual | Alasan Drift | Sumber | Disetujui IA? |
+|---|---|---|---|---|---|
+| Desain Structural Node | Tab lurus slanted tanpa garis pembatas | Tab bersudut melengkung (radius 6.0) dengan garis pembatas horizontal di y = 22 | IA meminta visualisasi yang lebih estetik dan presisi menyerupai package UML | IA | Ya |
+
+---
+
+## Bagian B — Drift Inisiatif Agen
+
+| No | Yang Dilakukan Agen | Kategori | Ada di Spesifikasi? | Alasan Agen | Dampak | Diterima IA? |
+|---|---|---|---|---|---|---|
+| 1 | Skrip State-Machine PowerShell untuk verbatim log | B2 — Keputusan teknis | Tidak | Transkrip obrolan JSONL sangat kotor dengan XML tag dan data log internal; skrip otomatis membersihkan dan merapikannya | Minor (otomatisasi berkas log) | Ya |
+
+---
+
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 2b–7 — [Template]
+## ITERASI 3–7 — [Template]
 ## ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*

@@ -81,16 +81,16 @@
 | 1b | ~8 jam | 19 menit | -7 jam 41 m | 4.0% |
 | 2a | ~6,5 jam | 38 menit | -5 jam 52 m | 9.7% |
 | 2b | ~6 jam | 50 menit | -5 jam 10 m | 13.9% |
-| 3a | ~7 jam | 2 jam 0 m | -5 jam 0 m | 28.6% |
-| 3b | ~6,5 jam | 1 jam 30 m | -5 jam 0 m | 23.1% |
-| 4a | ~7 jam | 2 jam 30 m | -4 jam 30 m | 35.7% |
-| 4b | ~5,5 jam | 30 menit | -5 jam 0 m | 9.1% |
-| 5a | ~5 jam | 30 menit | -4 jam 30 m | 10.0% |
-| 5b | ~6 jam | 30 menit | -5 jam 30 m | 8.3% |
-| 6a | ~7 jam | 30 menit | -6 jam 30 m | 7.1% |
-| 6b | ~6,5 jam | 30 menit | -6 jam 0 m | 7.7% |
-| 7 | ~8 jam | 1 jam 30 m | -6 jam 30 m | 18.8% |
-| **Total** | **~87 jam** | **13 jam 28 m** | **-73 jam 32 m** | **15.5%** |
+| 3a | ~7 jam | — | — | — |
+| 3b | ~6,5 jam | — | — | — |
+| 4a | ~7 jam | — | — | — |
+| 4b | ~5,5 jam | — | — | — |
+| 5a | ~5 jam | — | — | — |
+| 5b | ~6 jam | — | — | — |
+| 6a | ~7 jam | — | — | — |
+| 6b | ~6,5 jam | — | — | — |
+| 7 | ~8 jam | — | — | — |
+| **Total** | **~28 jam** | **3 jam 58 m** | **-24 jam 2 m** | **14.2%** |
 
 ---
 

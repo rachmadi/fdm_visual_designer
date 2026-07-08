@@ -80,6 +80,7 @@
 - [x] Sesuaikan `_nodeRect` di `CanvasView` untuk hit-testing Entity Node yang memiliki Query Vector
 - [x] Tambahkan unit test untuk updateQueryVector dan estimasi indeks
 - [x] Jalankan headed E2E integration test untuk menguji fitur baru secara interaktif dan visual
+- [x] Periksa secara menyeluruh dan perbarui seluruh dokumen log IIDD (RTM, estimasi, durasi, dll.) agar konsisten secara matematis
 
 ## Rencana Selanjutnya (Peningkatan Masa Depan)
 
@@ -90,6 +91,7 @@
 
 - [x] Lakukan unit test (`flutter test`) & Headed E2E integration test (`flutter drive` via Scheduled Task) secara visual
 - [x] Jalankan dev server lokal pada port `5555` menyajikan `build/web` untuk uji coba manual
+- [x] Periksa secara menyeluruh dan perbarui seluruh dokumen log IIDD (RTM, estimasi, durasi, error, dll.) agar konsisten secara matematis
 - [x] Perbarui berkas log `Catatan Pengembangan/` (`catatan_percakapan_proyek.md`, `log_perubahan.md`, `daftar_tugas.md`)
 - [x] Ekstrak dan format berkas transkrip verbatim lengkap (`dokumentasi-pengembangan/catatan_percakapan_verbatim.md`)
 - [x] Sinkronkan berkas riwayat Git (`dokumentasi-pengembangan/commit_history.md`)

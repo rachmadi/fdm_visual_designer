@@ -69,23 +69,10 @@
 
 ---
 
-═══════════════════════════════════════════════════════════════════
-## ITERASI 3a s.d. 7 — Fitur Lanjutan & Finalisasi
-### Status: ✅ Selesai
+## ITERASI 3a–7 — [Template]
 ═══════════════════════════════════════════════════════════════════
 
-- **Tanggal Selesai**: 2026-07-07
-- **Durasi Aktual**: 9 jam 40 m (kumulatif)
-- **Status Akhir**: ✅ Selesai
-- **Fitur Selesai**: 
-  - **Iterasi 3a (Edge System)**: Routing Bézier Cubic, garis putus-putus (*dashed Bézier*) untuk referencing, double arrowheads untuk denormalization, dan label float.
-  - **Iterasi 3b (Security Boundary)**: Pembuatan resizable boundary (PUBLIC & PRIVATE/OWNER), deteksi containment node di dalam area boundary, serta validasi overlap.
-  - **Iterasi 4a (WFR Validator Engine)**: Mesin validasi reaktif 8 aturan semantik (R1-R8) dan rendering overlay badge error/warning merah/kuning di pojok node.
-  - **Iterasi 4b (Toolbar)**: Ekspor PNG resolusi tinggi via RepaintBoundary, ekspor SVG, ekspor/impor skema JSON diagram, dan zoom buttons.
-  - **Iterasi 5a & 5b (Sidebars & Visuals)**: Palette drag-drop sidebar kiri, detail panel properti, responsif layout, dan opacity gelap reaktif.
-  - **Iterasi 6a & 6b (Undo/Redo & Alignment)**: Command Pattern stack undo/redo untuk operasi diagram, alignment tools (align top/middle/bottom/left), snapping grid.
-  - **Iterasi 7 (Final Polishing)**: Pintasan keyboard global komprehensif, pencegahan *default action* tab browser (Ctrl+D/E/L), mode tema dinamis Light/Dark mode, dan headed E2E integration test visual via Scheduled Task.
-- **REQ yang Ditutup**: REQ-020 s.d. REQ-050
+*[Blok-blok ini akan diisi pada iterasi yang sesuai]*
 
 ---
 
@@ -97,16 +84,16 @@
 | 1b | ✅ Selesai | 19 m | 5/5 | PASS |
 | 2a | ✅ Selesai | 38 m | 3/3 | PASS |
 | 2b | ✅ Selesai | 50 m | 2/2 | PASS |
-| 3a | ✅ Selesai | 2 jam 0 m | 4/4 | PASS |
-| 3b | ✅ Selesai | 1 jam 30 m | 3/3 | PASS |
-| 4a | ✅ Selesai | 2 jam 30 m | 9/9 | PASS |
-| 4b | ✅ Selesai | 30 m | 4/4 | PASS |
-| 5a | ✅ Selesai | 30 m | 2/2 | PASS |
-| 5b | ✅ Selesai | 30 m | 2/2 | PASS |
-| 6a | ✅ Selesai | 30 m | 2/2 | PASS |
-| 6b | ✅ Selesai | 30 m | 4/4 | PASS |
-| 7 | ✅ Selesai | 1 jam 30 m | 1/1 | PASS |
-| **Total** | **✅ Selesai** | **13 jam 28 m** | **50/50** | **PASS** |
+| 3a | 🕒 Belum | — | 0/4 | — |
+| 3b | 🕒 Belum | — | 0/3 | — |
+| 4a | 🕒 Belum | — | 0/9 | — |
+| 4b | 🕒 Belum | — | 0/4 | — |
+| 5a | 🕒 Belum | — | 0/2 | — |
+| 5b | 🕒 Belum | — | 0/2 | — |
+| 6a | 🕒 Belum | — | 0/2 | — |
+| 6b | 🕒 Belum | — | 0/4 | — |
+| 7 | 🕒 Belum | — | 0/1 | — |
+| **Total** | **⚠️ Partial** | **3 jam 58 m** | **19/50** | **PASS** |
 
 ---
 
