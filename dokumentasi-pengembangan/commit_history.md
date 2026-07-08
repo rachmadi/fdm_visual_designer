@@ -32,6 +32,8 @@
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `f3b4a64` | 2026-07-08 | Antigravity | docs: revert future iterations status to pending in RTM/logs, and add documentation check task to checklist |
+| `63ed11a` | 2026-07-07 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `bca3502` | 2026-07-07 | Antigravity | docs: synchronize all formal IIDD logs (RTM, conversation, decision, duration, estimate vs actual, errors, interventions, tests, iteration summary) |
 | `1e40303` | 2026-07-07 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `568f72b` | 2026-07-07 | Antigravity | docs: fix character encoding corruption and format commit_history.md as clean standard ASCII |
@@ -65,8 +67,6 @@
 | `bdb2ea2` | 2026-07-06 | Antigravity | feat(structural_node): refactor collection shape to UML package and place label inside tab; style(canvas): increase contrast and stroke width of dark mode grid lines for improved zoom-out visibility; test(app_test): merge E2E tests into a single flow to prevent browser restarts and add 35s hold delay; docs(agents): add rule to forbid user browser force-kills during headed tests |
 | `96765f0` | 2026-07-06 | Antigravity | docs: start Iteration 1b (Node Interaction) in RTM and iteration summary |
 | `2a4fa97` | 2026-07-06 | Antigravity | docs: add technical note on 4-sided dynamic connection anchors for future iterations |
-| `8510f9c` | 2026-07-06 | Antigravity | feat: add Keyboard Shortcuts guide panel in sidebar left |
-| `c6db36d` | 2026-07-06 | Antigravity | docs: revert iterations 1b-7 back to pending in IIDD logs to align with current Iteration 1a focus |
 
 ---
 
