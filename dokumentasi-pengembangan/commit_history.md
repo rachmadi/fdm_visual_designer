@@ -32,6 +32,8 @@
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `877893f` | 2026-07-08 | Antigravity | docs: completely purge fabricated Iterasi 7 from time estimation, estimated time vs actual, iteration summary, and interactive test log |
+| `2819b4e` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `6fb3789` | 2026-07-08 | Antigravity | docs: remove 00 prefix from documentation filenames for consistency |
 | `5a1cc9f` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `29dba46` | 2026-07-08 | Antigravity | docs: rename Indonesian log files to English and update all references |
@@ -65,8 +67,6 @@
 | `20708b6` | 2026-07-06 | Antigravity | docs: populate validation_log.md and correct dates and durasi in iteration_summary.md for Iterasi 1a and 1b |
 | `73c1f8b` | 2026-07-06 | Antigravity | docs(intervention): update human_intervention.md with all new interventions (total 14) |
 | `a168e56` | 2026-07-06 | Antigravity | docs(decision): rewrite decision_log.md to include all key technical decisions from day one (June 27) onwards |
-| `6462d90` | 2026-07-06 | Antigravity | docs(conversation): fully rewrite conversation_log.md to include all sessions from day one (June 27) onwards |
-| `1c155f2` | 2026-07-06 | Antigravity | docs(drift): replace 'pengguna/user' with 'Intent Architect' in context_drift_log.md |
 
 ---
 
