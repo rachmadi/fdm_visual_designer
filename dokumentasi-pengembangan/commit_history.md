@@ -32,6 +32,7 @@
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `4f2b989` | 2026-07-08 | Antigravity | docs: correct all iteration 7 labels to iteration 1b/2b across formal documentation logs |
 | `593b0a3` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `f3b4a64` | 2026-07-08 | Antigravity | docs: revert future iterations status to pending in RTM/logs, and add documentation check task to checklist |
 | `63ed11a` | 2026-07-07 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
@@ -66,7 +67,6 @@
 | `94628fd` | 2026-07-06 | Antigravity | docs(documentation-pengembangan): correct waktu_estimasi_vs_realisasi.md component duration mapping to be mathematically consistent |
 | `befeb6f` | 2026-07-06 | Antigravity | docs(documentation-pengembangan): update iteration duration and feature duration tables for Iterasi 1a and 1b |
 | `bdb2ea2` | 2026-07-06 | Antigravity | feat(structural_node): refactor collection shape to UML package and place label inside tab; style(canvas): increase contrast and stroke width of dark mode grid lines for improved zoom-out visibility; test(app_test): merge E2E tests into a single flow to prevent browser restarts and add 35s hold delay; docs(agents): add rule to forbid user browser force-kills during headed tests |
-| `96765f0` | 2026-07-06 | Antigravity | docs: start Iteration 1b (Node Interaction) in RTM and iteration summary |
 
 ---
 
