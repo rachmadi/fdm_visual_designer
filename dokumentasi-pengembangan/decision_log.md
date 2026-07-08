@@ -206,7 +206,7 @@
 - **Alternatif yang Ditolak**: Menggunakan `flutter drive` langsung di sandboxed terminal (menghasilkan headed browser di background session 0/headless yang tidak terlihat oleh IA).
 - **Alasan Pemilihan**: Scheduled Task interaktif adalah satu-satunya mekanisme Windows yang dapat melompati isolasi sesi background untuk memunculkan GUI window di desktop aktif pengguna.
 - **Dampak**: Browser Chrome dapat terbuka secara fisik di layar desktop IA untuk verifikasi visual langsung.
-- **Iterasi Terdampak**: 7
+- **Iterasi Terdampak**: 2b
 
 ---
 
@@ -230,7 +230,7 @@
 - **Alternatif yang Ditolak**: Menyalin log secara manual (rawan kesalahan/hilang data) atau memfilter mentah berbasis keyword (menghilangkan detail penjelasan penting Agen).
 - **Alasan Pemilihan**: Otomatisasi penulisan log verbatim yang akurat dan bersih dari awal proyek tanpa ada bias ringkasan.
 - **Dampak**: Catatan verbatim yang dihasilkan menjadi sangat bersih, rapi, dan mudah dibaca oleh IA.
-- **Iterasi Terdampak**: 7
+- **Iterasi Terdampak**: 2b
 
 ---
 

@@ -24,8 +24,8 @@
 | 1 | 2026-06-27 | 11:15 | Pra-1a | Intent Architect meminta migrasi dari React/TypeScript ke **Flutter Web** di tengah inisialisasi proyek | Pembersihan total file React; reinisialisasi proyek Flutter; penyusunan ulang rencana implementasi | Perubahan Stack |
 | 2 | 2026-07-06 | 10:30 | 1a (Setup) | Intent Architect meminta pembuatan 13 file log dokumentasi IIDD sesuai spesifikasi Revisi 3 Final sebelum implementasi dimulai | Pembuatan folder `dokumentasi-pengembangan/` dan 13 file log; menunda implementasi kode utama | Permintaan Dokumentasi |
 | 3 | 2026-07-06 | 10:45 | 1a | Intent Architect melaporkan bug zoom drift di mana 10 node berkumpul di kanan bawah saat di-zoom | Memperbaiki matrix inversi delta drag, membatalkan drag jika terdeteksi multi-touch, dan menonaktifkan constraint InteractiveViewer | Koreksi Teknis |
-| 4 | 2026-07-06 | 11:04 | 7 | Intent Architect mengidentifikasi headed browser tidak muncul secara fisik di desktop | Memindahkan eksekusi ChromeDriver dan `flutter drive` menjadi `unsandboxed` agar tampil secara nyata | Koreksi Teknis |
-| 5 | 2026-07-06 | 11:30 | 7 | Intent Architect melaporkan pintasan keyboard tidak berfungsi dan berbenturan dengan browser | Mendaftarkan handler `HardwareKeyboard` global dan mencegat event browser default pada `keydown` | Koreksi Teknis |
+| 4 | 2026-07-06 | 11:04 | 1b | Intent Architect mengidentifikasi headed browser tidak muncul secara fisik di desktop | Memindahkan eksekusi ChromeDriver dan `flutter drive` menjadi `unsandboxed` agar tampil secara nyata | Koreksi Teknis |
+| 5 | 2026-07-06 | 11:30 | 1b | Intent Architect melaporkan pintasan keyboard tidak berfungsi dan berbenturan dengan browser | Mendaftarkan handler `HardwareKeyboard` global dan mencegat event browser default pada `keydown` | Koreksi Teknis |
 | 6 | 2026-07-06 | 16:12 | 1b | Intent Architect meminta kustomisasi simbol collection menyerupai UML package dan grid diperjelas warnanya pada dark mode | Mengubah FolderPainter menjadi rectangular UML package tab dan grid menjadi strokeWidth = 1.0 (Color 0xFF5A6A80) | Perubahan Desain |
 | 7 | 2026-07-06 | 16:20 | 1b | Intent Architect meminta penempatan label structural node diletakkan di kotak bagian atas | Memposisikan nama structural node secara absolut di tab persegi atas dan path di bagian main body | Perubahan Desain |
 | 8 | 2026-07-06 | 16:24 | 1b | Intent Architect menegaskan larangan menutup browser Intent Architect (tidak boleh taskkill chrome.exe) | Menghapus skrip cleanup usang dan membatasi cleanup hanya pada chromedriver.exe/dart.exe | Koreksi Teknis |
@@ -36,9 +36,9 @@
 | 13 | 2026-07-06 | 16:43 | 1b | Intent Architect meminta conversation log dibuat lengkap sejak hari pertama | Menulis ulang conversation_log.md mulai dari sesi 27 Juni 2026 | Koreksi Teknis |
 | 14 | 2026-07-06 | 16:46 | 1b | Intent Architect meminta decision log dibuat lengkap sejak hari pertama | Menulis ulang decision_log.md mulai dari sesi 27 Juni 2026 | Koreksi Teknis |
 | 15 | 2026-07-07 | 16:15 | 2b | Intent Architect meminta visual structural node disempurnakan (rounded + garis pemisah) | Memodifikasi `FolderPainter` di `structural_node.dart` dengan radius 6.0 dan garis horizontal pemisah | Perubahan Desain |
-| 16 | 2026-07-07 | 16:15 | 7 | Intent Architect meminta catatan percakapan verbatim tanpa istilah user/pengguna dari awal proyek | Membuat berkas transkrip verbatim lengkap di `dokumentasi-pengembangan/catatan_percakapan_verbatim.md` | Permintaan Dokumentasi |
-| 17 | 2026-07-07 | 17:00 | 7 | Intent Architect melaporkan format acak (garbled encoding) pada `commit_history.md` | Memperbaiki skrip update commit untuk menulis UTF-8 tanpa BOM dan menghilangkan karakter non-ASCII | Koreksi Teknis |
-| 18 | 2026-07-07 | 17:06 | 7 | Intent Architect menegaskan seluruh dokumen/log IIDD wajib diperbarui di setiap akhir sesi secara konsisten | Melakukan sinkronisasi penuh pada seluruh berkas log IIDD (RTM, durasi, waktu, conversation, dll.) | Permintaan Dokumentasi |
+| 16 | 2026-07-07 | 16:15 | 2b | Intent Architect meminta catatan percakapan verbatim tanpa istilah user/pengguna dari awal proyek | Membuat berkas transkrip verbatim lengkap di `dokumentasi-pengembangan/catatan_percakapan_verbatim.md` | Permintaan Dokumentasi |
+| 17 | 2026-07-07 | 17:00 | 2b | Intent Architect melaporkan format acak (garbled encoding) pada `commit_history.md` | Memperbaiki skrip update commit untuk menulis UTF-8 tanpa BOM dan menghilangkan karakter non-ASCII | Koreksi Teknis |
+| 18 | 2026-07-07 | 17:06 | 2b | Intent Architect menegaskan seluruh dokumen/log IIDD wajib diperbarui di setiap akhir sesi secara konsisten | Melakukan sinkronisasi penuh pada seluruh berkas log IIDD (RTM, durasi, waktu, conversation, dll.) | Permintaan Dokumentasi |
 
 ---
 
@@ -74,4 +74,4 @@
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-08*

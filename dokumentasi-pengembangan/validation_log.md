@@ -174,7 +174,7 @@ Screenshot saved: 7_property_editor_validated.png
 |----------------|--------|---------|
 | `flutter analyze` | ✅ Lulus | Kompilasi bersih tanpa error |
 | Unit Test | ✅ Lulus | Lulus semua 13 unit test |
-| Integration Test (headed) | ✅ Lulus | Stage 1 s.d. 7 sukses |
+| Integration Test (headed) | ✅ Lulus | Seluruh Stage E2E test sukses |
 | Manual Review UI | ✅ Lulus | Panel Query Vector dan badge formula visual di canvas ter-render rapi |
 
 ---

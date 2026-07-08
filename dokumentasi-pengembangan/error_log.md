@@ -206,7 +206,7 @@
 
 ### E-013: StateProvider Undefined pada Riverpod 3.x
 
-- **Iterasi**: 7
+- **Iterasi**: 2b
 - **Tanggal**: 2026-07-06
 - **Jenis Error**: Compile
 - **Lokasi**: `lib/main.dart`
@@ -220,7 +220,7 @@
 
 ### E-014: Keyboard Shortcuts Kehilangan Fokus Input
 
-- **Iterasi**: 7
+- **Iterasi**: 2b
 - **Tanggal**: 2026-07-06
 - **Jenis Error**: Logic
 - **Lokasi**: `lib/main.dart`
