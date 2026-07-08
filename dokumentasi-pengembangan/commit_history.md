@@ -32,6 +32,8 @@
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `29dba46` | 2026-07-08 | Antigravity | docs: rename Indonesian log files to English and update all references |
+| `b45eb0c` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `7d51df6` | 2026-07-08 | Antigravity | docs: update conversation log, project conversation log, and regenerate verbatim log with Sesi 12 entries |
 | `d7563fe` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `4f2b989` | 2026-07-08 | Antigravity | docs: correct all iteration 7 labels to iteration 1b/2b across formal documentation logs |
@@ -65,8 +67,6 @@
 | `1c155f2` | 2026-07-06 | Antigravity | docs(drift): replace 'pengguna/user' with 'Intent Architect' in context_drift_log.md |
 | `ec47412` | 2026-07-06 | Antigravity | docs(drift): fully rewrite context_drift_log.md using the exact format and tables from the Revisi 3 specifications |
 | `fa4a93f` | 2026-07-06 | Antigravity | docs(documentation-pengembangan): fill in context drift CD-001 with canvas architecture details and join RTM table rows |
-| `11c415c` | 2026-07-06 | Antigravity | docs: add project-wide documentation accuracy rules and record Sesi 6 activities |
-| `94628fd` | 2026-07-06 | Antigravity | docs(documentation-pengembangan): correct waktu_estimasi_vs_realisasi.md component duration mapping to be mathematically consistent |
 
 ---
 
