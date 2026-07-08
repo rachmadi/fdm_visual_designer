@@ -21,9 +21,9 @@ Aplikasi berbasis web untuk merancang skema Firebase Database (Firestore & Realt
 Seluruh berkas dokumentasi log pengembangan proyek dapat diakses langsung melalui tautan indeks relatif berikut:
 
 ### 📋 Perencanaan & Ringkasan Progres
-*   [00_estimasi_waktu.md](dokumentasi-pengembangan/00_estimasi_waktu.md) — Rangkuman estimasi waktu pengerjaan per iterasi sesuai spesifikasi.
-*   [waktu_estimasi_vs_realisasi.md](dokumentasi-pengembangan/waktu_estimasi_vs_realisasi.md) — Perbandingan matematis estimasi vs durasi pengerjaan riil.
-*   [durasi_per_fitur.md](dokumentasi-pengembangan/durasi_per_fitur.md) — Log pencatatan durasi detail per fitur secara granular.
+*   [00_time_estimation.md](dokumentasi-pengembangan/00_time_estimation.md) — Rangkuman estimasi waktu pengerjaan per iterasi sesuai spesifikasi.
+*   [estimated_vs_actual_time.md](dokumentasi-pengembangan/estimated_vs_actual_time.md) — Perbandingan matematis estimasi vs durasi pengerjaan riil.
+*   [feature_duration_log.md](dokumentasi-pengembangan/feature_duration_log.md) — Log pencatatan durasi detail per fitur secara granular.
 *   [iteration_summary.md](dokumentasi-pengembangan/iteration_summary.md) — Ringkasan pencapaian dan *lesson learned* di setiap akhir iterasi.
 
 ### 🎯 Requirements & Keputusan Desain
@@ -33,7 +33,7 @@ Seluruh berkas dokumentasi log pengembangan proyek dapat diakses langsung melalu
 
 ### 💬 Riwayat & Aktivitas Sesi
 *   [conversation_log.md](dokumentasi-pengembangan/conversation_log.md) — Log percakapan kronologis antara Intent Architect dan Agen sejak hari pertama.
-*   [catatan_percakapan_verbatim.md](dokumentasi-pengembangan/catatan_percakapan_verbatim.md) — Log percakapan verbatim word-for-word lengkap antara Intent Architect dan Agen sejak awal proyek.
+*   [verbatim_conversation_log.md](dokumentasi-pengembangan/verbatim_conversation_log.md) — Log percakapan verbatim word-for-word lengkap antara Intent Architect dan Agen sejak awal proyek.
 *   [human_intervention.md](dokumentasi-pengembangan/human_intervention.md) — Log pencatatan intervensi, koreksi, dan keputusan Intent Architect.
 *   [commit_history.md](dokumentasi-pengembangan/commit_history.md) — Log riwayat commit git kumulatif per iterasi.
 

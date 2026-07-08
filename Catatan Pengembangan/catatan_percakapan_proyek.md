@@ -468,7 +468,7 @@ Application finished.
   - Menyepakati aturan wajib baru bahwa seluruh dokumen log pengembangan, RTM, log waktu, dan log perubahan adalah **sangat penting dan wajib diisi secara akurat dan konsisten secara matematis**.
   - Menambahkan klausul aturan ini secara permanen ke [`.agents/AGENTS.md`](file:///E:/rachmadi/Antigravity/.agents/AGENTS.md).
 - **Koreksi Data Log Waktu**:
-  - Mengoreksi seluruh nilai kosong `—` dan data dummy pada [`waktu_estimasi_vs_realisasi.md`](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/waktu_estimasi_vs_realisasi.md) dan [`durasi_per_fitur.md`](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/durasi_per_fitur.md) untuk Iterasi 1a dan Iterasi 1b.
+  - Mengoreksi seluruh nilai kosong `—` dan data dummy pada [`estimated_vs_actual_time.md`](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/estimated_vs_actual_time.md) dan [`feature_duration_log.md`](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/feature_duration_log.md) untuk Iterasi 1a dan Iterasi 1b.
   - Memastikan seluruh selisih waktu mulai-selesai sinkron secara matematis dengan realisasi durasi pengerjaan aktual.
 
 **Tabel Durasi Pengerjaan & Pengujian:**
@@ -476,8 +476,8 @@ Application finished.
 | Aktivitas | Mulai | Selesai | Durasi |
 |-----------|-------|---------|--------|
 | Perumusan aturan akurasi dokumentasi dan penulisan di `.agents/AGENTS.md` | 16:34 | 16:36 | ~2 menit |
-| Koreksi tabel waktu mulai, selesai, realisasi di `waktu_estimasi_vs_realisasi.md` | 16:36 | 16:39 | ~3 menit |
-| Koreksi durasi per fitur secara detail di `durasi_per_fitur.md` | 16:39 | 16:41 | ~2 menit |
+| Koreksi tabel waktu mulai, selesai, realisasi di `estimated_vs_actual_time.md` | 16:36 | 16:39 | ~3 menit |
+| Koreksi durasi per fitur secara detail di `feature_duration_log.md` | 16:39 | 16:41 | ~2 menit |
 | Commit git lokal dan sinkronisasi push ke GitHub master | 16:41 | 16:43 | ~2 menit |
 | **Total Sesi** | **16:34** | **16:43** | **~9 menit** |
 
@@ -599,11 +599,11 @@ Application finished.
 - **Revisi Simbol Structural Node**:
   - Memperbarui `FolderPainter` di [structural_node.dart](file:///E:/rachmadi/Antigravity/fdm_visual_designer/lib/canvas/nodes/structural_node.dart) agar memiliki sudut-sudut yang membulat (rounded) dengan radius `6.0` dan garis pembatas horizontal yang memisahkan bagian tab atas dengan badan folder bawah.
 - **Verbatim Conversation Log Formal**:
-  - Menghapus berkas sementara di folder `Catatan Pengembangan/` dan membuat berkas formal transkrip verbatim lengkap di [catatan_percakapan_verbatim.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/catatan_percakapan_verbatim.md).
+  - Menghapus berkas sementara di folder `Catatan Pengembangan/` dan membuat berkas formal transkrip verbatim lengkap di [verbatim_conversation_log.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/verbatim_conversation_log.md).
   - Menyaring berkas verbatim log agar bersih dari tag XML sistem dan hanya menyisakan dialog murni antara IA dan Agen dengan detail pemikiran Agen yang utuh.
   - Memasukkan berkas verbatim log ke indeks dokumentasi utama di [README.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/README.md).
 - **Prosedur Standar & Komitmen Konsistensi**:
-  - Menambahkan checklist Prosedur Standar Akhir Iterasi ke dalam berkas [daftar_tugas.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Catatan%20Pengembangan/daftar_tugas.md) dan [task.md](file:///C:/Users/dosen/.gemini/antigravity/brain/46d6a818-cddd-4c15-a851-901fbb8559e7/task.md) untuk menjamin kepatuhan pengerjaan tugas secara konsisten.
+  - Menambahkan checklist Prosedur Standar Akhir Iterasi ke dalam berkas [daftar_tugas.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Catatan%20Pengembangan/daftar_tugas.md) and [task.md](file:///C:/Users/dosen/.gemini/antigravity/brain/46d6a818-cddd-4c15-a851-901fbb8559e7/task.md) untuk menjamin kepatuhan pengerjaan tugas secara konsisten.
   - Menyinkronkan seluruh riwayat commit Git ke dalam [commit_history.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/commit_history.md).
 - **Git Commit & Vercel Production Deployment**:
   - Melakukan commit seluruh perubahan ke GitHub repositori.
@@ -638,11 +638,11 @@ Koreksi Penyelarasan Garis Waktu Iterasi IIDD (Pembersihan label Iterasi 7) & Ve
 ### Aktivitas Utama:
 - **Koreksi Status Timeline Log IIDD**:
   - Mengoreksi RTM matrix [00_requirement_traceability_matrix.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/00_requirement_traceability_matrix.md) untuk mengembalikan status Iterasi 3a s.d. 7 ke Belum Dimulai (19/50 REQ selesai).
-  - Menyisir berkas log formal IIDD (`commit_history.md`, `decision_log.md`, `error_log.md`, `human_intervention.md`, dan `durasi_per_fitur.md`) untuk membersihkan penyebutan label "Iterasi 7" ganda dan menggantinya ke Iterasi 2b/1b.
+  - Menyisir berkas log formal IIDD (`commit_history.md`, `decision_log.md`, `error_log.md`, `human_intervention.md`, dan `feature_duration_log.md`) untuk membersihkan penyebutan label "Iterasi 7" ganda dan menggantinya ke Iterasi 2b/1b.
   - Memasukkan tugas pemeriksaan konsistensi berkas log IIDD pada berkas [daftar_tugas.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Catatan%20Pengembangan/daftar_tugas.md) dan `task.md` Agen di setiap akhir iterasi.
   - Menyelaraskan asersi hasil pengetesan integration test pada `validation_log.md` agar bebas dari sebutan 7 stages yang ambigu.
 - **Sinkronisasi Otomatis Verbatim Log**:
-  - Menjalankan kembali skrip state-machine PowerShell [parse_transcript.ps1](file:///C:/Users/dosen/.gemini/antigravity/brain/46d6a818-cddd-4c15-a851-901fbb8559e7/scratch/parse_transcript.ps1) untuk mengekstrak riwayat obrolan kata-demi-kata murni ke dalam [catatan_percakapan_verbatim.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/cataten_percakapan_verbatim.md).
+  - Menjalankan kembali skrip state-machine PowerShell [parse_transcript.ps1](file:///C:/Users/dosen/.gemini/antigravity/brain/46d6a818-cddd-4c15-a851-901fbb8559e7/scratch/parse_transcript.ps1) untuk mengekstrak riwayat obrolan kata-demi-kata murni ke dalam [verbatim_conversation_log.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/verbatim_conversation_log.md).
 
 **Tabel Durasi Pengerjaan & Pengujian Sesi 12:**
 
