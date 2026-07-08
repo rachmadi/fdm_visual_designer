@@ -7406,3 +7406,72 @@ Semua berkas log yang diperbarui beserta log commit history (`update_commit_hist
 **IA:**
 > Penamaan file dokumentasi di repository tidak konsisten. Namai semua dengan bahasa inggris. Sebelumnya, cek ulang spesifikasi revisi 3 jika ada aturan penamaan
 
+**Agen:**
+Saya telah menyisir dan mengganti nama seluruh berkas dokumentasi log IIDD di dalam folder `dokumentasi-pengembangan/` menjadi **bahasa Inggris secara konsisten**, serta menyinkronkan seluruh referensi berkas terkait:
+
+### 1. Hasil Pengecekan Spesifikasi Revisi 3:
+- Berdasarkan verifikasi ulang bab 1 s.d 7 spesifikasi FDM Visual Designer, **tidak terdapat aturan penamaan khusus (naming rules)** untuk berkas log IIDD. Spesifikasi hanya mewajibkan keberadaan log kumulatif per iterasi (seperti matriks RTM, log intervensi, log kueri, dll.) tanpa mendikte nama berkas fisiknya.
+
+---
+
+### 2. Rename Berkas ke Bahasa Inggris (via `git mv`):
+Untuk menjaga riwayat commit Git agar tetap utuh, perubahan penamaan berkas dilakukan menggunakan perintah `git mv` sebagai berikut:
+- `00_estimasi_waktu.md` âž¡ï¸ **[00_time_estimation.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/00_time_estimation.md)**
+- `waktu_estimasi_vs_realisasi.md` âž¡ï¸ **[estimated_vs_actual_time.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/estimated_vs_actual_time.md)**
+- `durasi_per_fitur.md` âž¡ï¸ **[feature_duration_log.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/feature_duration_log.md)**
+- `catatan_percakapan_verbatim.md` âž¡ï¸ **[verbatim_conversation_log.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/verbatim_conversation_log.md)**
+
+---
+
+### 3. Pembaruan Referensi Berkas Terkait:
+- **[README.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/README.md)**: Memperbarui seluruh tautan indeks relatif dokumentasi agar mengarah ke nama berkas bahasa Inggris yang baru.
+- **[Catatan Pengembangan/catatan_percakapan_proyek.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Catatan%20Pengembangan/catatan_percakapan_proyek.md)**: Mengubah penyebutan tautan dan nama berkas log waktu/durasi/verbatim ke bahasa Inggris di sepanjang histori catatan sesi.
+- **Script Generator Verbatim**: Memperbarui variabel `$outputPath` pada [parse_transcript.ps1](file:///C:/Users/dosen/.gemini/antigravity/brain/46d6a818-cddd-4c15-a851-901fbb8559e7/scratch/parse_transcript.ps1) dan variabel `output_path` pada `parse_transcript.py` agar secara otomatis menulis transkrip langsung ke berkas `verbatim_conversation_log.md`.
+- **Ekstraksi Ulang Verbatim**: Mengeksekusi ulang `parse_transcript.ps1` untuk menulis konten transkrip verbatim lengkap ke dalam `verbatim_conversation_log.md` yang baru.
+
+> [!NOTE]
+> Khusus untuk berkas di dalam folder `Catatan Pengembangan/` (`catatan_percakapan_proyek.md`, `log_perubahan.md`, dan `daftar_tugas.md`), penamaan foldernya dipertahankan sesuai dengan spesifikasi aturan wajib proyek pada **`AGENTS.md`** yang mewajibkan penulisan log di jalur tersebut untuk menghindari kegagalan deteksi kepatuhan otomatis.
+
+---
+
+### 4. Komitmen Git & Push ke GitHub:
+Seluruh berkas rename, tautan indeks README, dan log commit history (`update_commit_history.ps1`) telah di-push secara sukses ke repositori GitHub master:
+- Commit Rename & Update Referensi Berkas: `b45eb0c..29dba46 master -> master`
+- Commit Sinkronisasi Akhir Tabel Commit: `29dba46..5a1cc9f master -> master`
+
+
+---
+
+### Percakapan 130
+
+**IA:**
+> Angka 00 di awal nama dokumen membuatnya tidak konsisten dengan penamaan dokumen lain
+
+**Agen:**
+Saya telah merapikan dan menghapus awalan angka **`00_`** di seluruh berkas dokumentasi formal log IIDD serta menyinkronkan seluruh referensi tautannya:
+
+### 1. Rename Berkas (via `git mv`):
+- `00_time_estimation.md` âž¡ï¸ **[time_estimation.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/time_estimation.md)**
+- `00_requirement_traceability_matrix.md` âž¡ï¸ **[requirement_traceability_matrix.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/requirement_traceability_matrix.md)**
+
+---
+
+### 2. Pembaruan Referensi Berkas Terkait:
+- **[README.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/README.md)**: Memperbarui tautan indeks relatif `00_time_estimation.md` dan `00_requirement_traceability_matrix.md` menjadi **`time_estimation.md`** dan **`requirement_traceability_matrix.md`**.
+- **[Catatan Pengembangan/catatan_percakapan_proyek.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Catatan%20Pengembangan/catatan_percakapan_proyek.md)**: Menyinkronkan penyebutan nama berkas RTM ke bahasa Inggris tanpa awalan `00_` pada deskripsi aktivitas Sesi 12.
+
+---
+
+### 3. Komitmen Git & Push ke GitHub:
+Perubahan penataan nama berkas ini beserta sinkronisasi log commit history (`update_commit_history.ps1`) telah di-commit dan didorong secara sukses ke repositori GitHub master:
+- Commit Hapus Awalan Angka 00: `5a1cc9f..6fb3789 master -> master`
+- Commit Sinkronisasi Akhir Tabel Commit: `6fb3789..2819b4e master -> master`
+
+
+---
+
+### Percakapan 131
+
+**IA:**
+> Sebelumnya, agen bilang bahwa iterasi 7 sudah dihapuskan, tapi terlihat jelas masih ada (lihat gambar). Cek ulang semua dokumen yang berisi tulisan iterasi 7
+

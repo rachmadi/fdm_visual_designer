@@ -255,8 +255,7 @@ Application finished.
 | 5b | — | — | 0 | 0 | 🕒 Belum |
 | 6a | — | — | 0 | 0 | 🕒 Belum |
 | 6b | — | — | 0 | 0 | 🕒 Belum |
-| 7 | — | — | 0 | 0 | 🕒 Belum |
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-08*

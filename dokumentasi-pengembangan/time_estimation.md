@@ -22,7 +22,6 @@
 | 10 | **Iterasi 5b** | Sidebar Kiri: Palette Node; Sidebar Kanan: Detail Panel; Layout responsif | ~6 jam | Layout adaptif & drag-drop dari palette |
 | 11 | **Iterasi 6a** | Undo/Redo Stack; Command Pattern; History Panel | ~7 jam | Command stack & memento pattern |
 | 12 | **Iterasi 6b** | Multi-select; Group Move; Alignment Tools; Grid Snap | ~6,5 jam | Algoritma alignment & snapping |
-| 13 | **Iterasi 7** | Pengujian Integrasi Final, Polishing UI, Dokumentasi Akhir | ~8 jam | Full integration test + dokumentasi teknis lengkap |
 
 ---
 
@@ -30,11 +29,10 @@
 
 | Kategori | Total Estimasi |
 |----------|----------------|
-| **Total Estimasi Keseluruhan** | **~87 jam** |
+| **Total Estimasi Keseluruhan** | **~79 jam** |
 | Fase Fondasi (Iterasi 1a–1b) | ~15,5 jam |
 | Fase Core Features (Iterasi 2a–4b) | ~38,5 jam |
-| Fase Polish & Advanced (Iterasi 5a–6b) | ~24,5 jam |
-| Fase Finalisasi (Iterasi 7) | ~8 jam |
+| Fase Polish & Advanced (Iterasi 5a–6b) | **~25 jam** |
 
 ---
 

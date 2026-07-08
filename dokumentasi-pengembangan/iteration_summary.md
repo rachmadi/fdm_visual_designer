@@ -69,7 +69,7 @@
 
 ---
 
-## ITERASI 3a–7 — [Template]
+## ITERASI 3a–6b — [Template]
 ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*
@@ -91,8 +91,7 @@
 | 5a | 🕒 Belum | — | 0/2 | — |
 | 5b | 🕒 Belum | — | 0/2 | — |
 | 6a | 🕒 Belum | — | 0/2 | — |
-| 6b | 🕒 Belum | — | 0/4 | — |
-| 7 | 🕒 Belum | — | 0/1 | — |
+| 6b | 🕒 Belum | — | 0/5 | — |
 | **Total** | **⚠️ Partial** | **3 jam 58 m** | **19/50** | **PASS** |
 
 ---

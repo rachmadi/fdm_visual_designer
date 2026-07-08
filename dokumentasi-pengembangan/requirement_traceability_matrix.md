@@ -71,7 +71,7 @@
 | 47 | REQ-047 | Group move: pindahkan semua node yang terseleksi sekaligus | 6b | 🕒 Belum dimulai | — |
 | 48 | REQ-048 | Alignment tools: align left, center, right, top, middle, bottom | 6b | 🕒 Belum dimulai | — |
 | 49 | REQ-049 | Grid snap: node terkunci ke grid saat dipindahkan | 6b | 🕒 Belum dimulai | — |
-| 50 | REQ-050 | Headed integration test lulus untuk semua fitur sebelum rilis | 7 | 🕒 Belum dimulai | — |
+| 50 | REQ-050 | Headed integration test lulus untuk semua fitur sebelum rilis | 6b | 🕒 Belum dimulai | — |
 
 ---
 
@@ -90,8 +90,7 @@
 | 5a | 2 | 0 | 0 | 2 |
 | 5b | 2 | 0 | 0 | 2 |
 | 6a | 2 | 0 | 0 | 2 |
-| 6b | 4 | 0 | 0 | 4 |
-| 7 | 1 | 0 | 0 | 1 |
+| 6b | 5 | 0 | 0 | 5 |
 | **Total** | **50** | **19** | **0** | **31** |
 
 ---
