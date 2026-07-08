@@ -41,10 +41,10 @@
 | 17 | REQ-017 | Validasi form properti: nama field tidak boleh kosong | 2a | ✅ Selesai | `lib/panels/sidebar_right.dart` |
 | 18 | REQ-018 | Property Panel untuk Query Vector Node: edit vector queries | 2b | ✅ Selesai | `lib/panels/sidebar_right.dart` |
 | 19 | REQ-019 | Dukungan tipe properti: String, Number, Boolean, Map, List, Timestamp | 2b | ✅ Selesai | `lib/core/metamodel.dart` |
-| 20 | REQ-020 | Edge tipe Referencing: garis panah dengan label "ref" | 3a | 🕒 Belum dimulai | — |
-| 21 | REQ-021 | Edge tipe Denormalized: garis panah putus-putus dengan label "den" | 3a | 🕒 Belum dimulai | — |
-| 22 | REQ-022 | Edge tipe Embedding: garis tebal solid dengan label "emb" | 3a | 🕒 Belum dimulai | — |
-| 23 | REQ-023 | Routing kurva Bézier untuk edge agar tidak saling menimpa | 3a | 🕒 Belum dimulai | — |
+| 20 | REQ-020 | Edge tipe Referencing: garis panah putus-putus berarah tunggal (->) dengan asterisk (*) | 3a | ✅ Selesai | `lib/canvas/edges_painter.dart` |
+| 21 | REQ-021 | Edge tipe Denormalization: garis tebal dengan kepala panah ganda (<<-->) dan label inline | 3a | ✅ Selesai | `lib/canvas/edges_painter.dart` |
+| 22 | REQ-022 | Dynamic Anchor Switching: anchor koneksi berpindah otomatis berdasarkan posisi relatif node | 3a | ✅ Selesai | `lib/canvas/edges_painter.dart` |
+| 23 | REQ-023 | Routing kurva Bézier cubic untuk seluruh tipe edge agar tidak saling menimpa | 3a | ✅ Selesai | `lib/canvas/edges_painter.dart` |
 | 24 | REQ-024 | Security Boundary: gambar area boundary dengan klik-drag | 3b | 🕒 Belum dimulai | — |
 | 25 | REQ-025 | Security Boundary: resize handle di sudut dan tepi | 3b | 🕒 Belum dimulai | — |
 | 26 | REQ-026 | Security Boundary: deteksi node yang berada di dalam area | 3b | 🕒 Belum dimulai | — |
@@ -83,7 +83,7 @@
 | 1b | 5 | 5 | 0 | 0 |
 | 2a | 3 | 3 | 0 | 0 |
 | 2b | 2 | 2 | 0 | 0 |
-| 3a | 4 | 0 | 0 | 4 |
+| 3a | 4 | 4 | 0 | 0 |
 | 3b | 3 | 0 | 0 | 3 |
 | 4a | 9 | 0 | 0 | 9 |
 | 4b | 4 | 0 | 0 | 4 |
@@ -91,7 +91,7 @@
 | 5b | 2 | 0 | 0 | 2 |
 | 6a | 2 | 0 | 0 | 2 |
 | 6b | 5 | 0 | 0 | 5 |
-| **Total** | **50** | **19** | **0** | **31** |
+| **Total** | **50** | **23** | **0** | **27** |
 
 ---
 

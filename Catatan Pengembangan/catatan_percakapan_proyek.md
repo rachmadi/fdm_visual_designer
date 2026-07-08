@@ -633,14 +633,23 @@ Application finished.
 ## ═══
 
 ### Topik:
-Koreksi Penyelarasan Garis Waktu Iterasi IIDD (Pembersihan label Iterasi 7) & Verbatim Transcript Sync.
+Koreksi Penyelarasan Garis Waktu Iterasi IIDD (Pembersihan label Iterasi 7), Audit & Verifikasi Interaktif Iterasi 3a (Edge System).
 
 ### Aktivitas Utama:
 - **Koreksi Status Timeline Log IIDD**:
-  - Mengoreksi RTM matrix [requirement_traceability_matrix.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/requirement_traceability_matrix.md) untuk mengembalikan status Iterasi 3a s.d. 7 ke Belum Dimulai (19/50 REQ selesai).
+  - Mengoreksi RTM matrix [requirement_traceability_matrix.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/requirement_traceability_matrix.md) untuk membersihkan referensi fiktif Iterasi 7 (total progres riil: 19/50 REQ selesai di awal sesi).
   - Menyisir berkas log formal IIDD (`commit_history.md`, `decision_log.md`, `error_log.md`, `human_intervention.md`, dan `feature_duration_log.md`) untuk membersihkan penyebutan label "Iterasi 7" ganda dan menggantinya ke Iterasi 2b/1b.
-  - Memasukkan tugas pemeriksaan konsistensi berkas log IIDD pada berkas [daftar_tugas.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Catatan%20Pengembangan/daftar_tugas.md) dan `task.md` Agen di setiap akhir iterasi.
-  - Menyelaraskan asersi hasil pengetesan integration test pada `validation_log.md` agar bebas dari sebutan 7 stages yang ambigu.
+- **Vercel Production Deployment**:
+  - Membangun ulang build produksi web (`flutter build web --release`) dan mendeploy secara sukses ke Vercel untuk memastikan keselarasan live app dengan codebase.
+- **Audit & Sinkronisasi RTM Iterasi 3a (Edge System)**:
+  - Melakukan crosscheck edges terhadap spesifikasi asli (`spesifikasi.txt`) dan Panduan Notasi Visual FDM (`panduan.txt`).
+  - Menemukan bahwa tipe edge "Embedding" adalah fiktif dan tidak ada di spesifikasi asli. Codebase asli sudah 100% patuh terhadap spesifikasi (dashed single-arrow untuk referencing, thick double-arrowhead untuk denormalisasi, Bézier routing, dan dynamic anchor).
+  - Mengoreksi deskripsi REQ-020 s.d. REQ-022 di RTM agar selaras dengan Panduan Notasi dan menandai status REQ-020 s.d. REQ-023 sebagai Selesai (`✅ Selesai`).
+- **Verifikasi Interaktif Headed E2E & Analisis Screenshot**:
+  - Menjalankan unit tests (`flutter test`) dan headed E2E integration test (`flutter drive` via ChromeDriver port 4444).
+  - Mengambil 6 screenshot pengujian E2E, menyalin ke folder formal `screenshots/iterasi_3a/` & folder brain artifacts, melakukan analisis visual secara langsung untuk asersi pass/fail, dan mencatatnya di `interactive_test_log.md`.
+- **Workspace Rules Update**:
+  - Menambahkan aturan wajib penulisan rencana pengujian interaktif dan analisis visual screenshot ke dalam [.agents/AGENTS.md](file:///E:/rachmadi/Antigravity/.agents/AGENTS.md).
 - **Sinkronisasi Otomatis Verbatim Log**:
   - Menjalankan kembali skrip state-machine PowerShell [parse_transcript.ps1](file:///C:/Users/dosen/.gemini/antigravity/brain/46d6a818-cddd-4c15-a851-901fbb8559e7/scratch/parse_transcript.ps1) untuk mengekstrak riwayat obrolan kata-demi-kata murni ke dalam [verbatim_conversation_log.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/verbatim_conversation_log.md).
 
@@ -652,7 +661,12 @@ Koreksi Penyelarasan Garis Waktu Iterasi IIDD (Pembersihan label Iterasi 7) & Ve
 | Pembersihan & penyisiran label Iterasi 7 ganda pada berkas log formal | 10:38 | 10:45 | ~7 menit |
 | Penambahan tugas kepatuhan konsistensi log di daftar_tugas & task.md | 10:45 | 10:47 | ~2 menit |
 | Ekstraksi otomatis verbatim log obrolan Sesi 12 via skrip PowerShell | 10:47 | 10:50 | ~3 menit |
-| **Total Sesi 12** | **10:30** | **10:50** | **~20 menit** |
+| Pembersihan Iterasi 7 dari sisa tabel dan push commit Git | 10:50 | 11:00 | ~10 menit |
+| Kompilasi build produksi Flutter Web & Deploy ke Vercel | 11:00 | 11:05 | ~5 menit |
+| Audit Edge System, crosscheck spesifikasi/panduan notasi, & update implementation_plan.md | 11:05 | 11:15 | ~10 menit |
+| Penambahan aturan pengujian headed & visual analysis ke AGENTS.md | 11:15 | 11:18 | ~3 menit |
+| Eksekusi unit test, ChromeDriver background, headed E2E, copy/analisis screenshot, & sync log | 11:18 | 11:23 | ~5 menit |
+| **Total Sesi 12** | **10:30** | **11:23** | **~53 menit** |
 
 
 

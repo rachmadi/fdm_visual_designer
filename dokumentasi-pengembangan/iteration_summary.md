@@ -69,7 +69,20 @@
 
 ---
 
-## ITERASI 3a–6b — [Template]
+## ITERASI 3a — Edge System: Referencing & Denormalization
+═══════════════════════════════════════════════════════════════════
+
+- **Tanggal Mulai**: 2026-07-08
+- **Tanggal Selesai**: 2026-07-08
+- **Status Akhir**: ✅ Selesai
+- **Durasi Aktual**: 0 m (Audit & Verifikasi Kode Terimplementasi)
+- **Target**: Penyelarasan notasi garis panah putus-putus referencing dengan asterisk (*), garis tebal double arrowhead denormalisasi dengan label nama field, Bézier routing, dan dynamic anchor switching.
+- **REQ yang Ditutup**: REQ-020 s.d. REQ-023
+- **Lesson Learned**: Penyelarasan dini terhadap Panduan Notasi Visual mencegah implementasi fitur menyimpang (seperti Embedding edge) yang berpotensi merusak spesifikasi skema diagram JSON.
+
+---
+
+## ITERASI 3b–6b — [Template]
 ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*
@@ -84,7 +97,7 @@
 | 1b | ✅ Selesai | 19 m | 5/5 | PASS |
 | 2a | ✅ Selesai | 38 m | 3/3 | PASS |
 | 2b | ✅ Selesai | 50 m | 2/2 | PASS |
-| 3a | 🕒 Belum | — | 0/4 | — |
+| 3a | ✅ Selesai | 0 m | 4/4 | PASS |
 | 3b | 🕒 Belum | — | 0/3 | — |
 | 4a | 🕒 Belum | — | 0/9 | — |
 | 4b | 🕒 Belum | — | 0/4 | — |
@@ -92,8 +105,8 @@
 | 5b | 🕒 Belum | — | 0/2 | — |
 | 6a | 🕒 Belum | — | 0/2 | — |
 | 6b | 🕒 Belum | — | 0/5 | — |
-| **Total** | **⚠️ Partial** | **3 jam 58 m** | **19/50** | **PASS** |
+| **Total** | **⚠️ Partial** | **3 jam 58 m** | **23/50** | **PASS** |
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-08*

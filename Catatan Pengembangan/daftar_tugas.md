@@ -82,6 +82,13 @@
 - [x] Jalankan headed E2E integration test untuk menguji fitur baru secara interaktif dan visual
 - [x] Periksa secara menyeluruh dan perbarui seluruh dokumen log IIDD (RTM, estimasi, durasi, dll.) agar konsisten secara matematis
 
+## [1.7.2] - Edge System Alignment (Iterasi 3a - Selesai)
+
+- [x] Audit edge system terhadap spesifikasi Revisi 3 & Panduan Notasi (Referencing, Denormalization, Bézier, Dynamic Anchor)
+- [x] Koreksi deskripsi dan status REQ-020 s.d. REQ-023 di RTM menjadi Selesai (✅)
+- [x] Sinkronisasi seluruh log IIDD (estimasi waktu, rekap test log, summary)
+- [x] Jalankan headed E2E integration test, capture 6 screenshot, dan lakukan analisis visual asersi pass/fail
+
 ## Rencana Selanjutnya (Peningkatan Masa Depan)
 
 - [ ] Integrasi Algoritma Auto-Layout otomatis berbasis Dagre (Dart port)

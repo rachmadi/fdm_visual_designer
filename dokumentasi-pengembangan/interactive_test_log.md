@@ -237,6 +237,32 @@ Application finished.
 | TC-2b-03 | Visibility Konektor Handle | Bulatan handle hanya muncul saat node di-tap/seleksi | ✅ Lulus | Sembunyi otomatis jika deseleksi |
 | TC-2b-04 | Badge Query Vector Canvas | Menampilkan badge formula query vector secara visual di canvas | ✅ Lulus | Mengikuti posisi node |
 
+
+---
+
+## ITERASI 3a — Edge System: Referencing & Denormalization
+═══════════════════════════════════════════════════════════════════
+
+### A. Rincian Test Case (Test Case Details)
+
+| ID TC | Nama Fitur | Deskripsi Pengujian | Hasil | Catatan / Hasil Analisis |
+|-------|------------|---------------------|-------|--------------------------|
+| TC-3a-01 | Relasi Referencing | Membuat relasi referencing, memverifikasi garis putus-putus dan panah tunggal (->). Tampilkan asterisk (*) jika properti bertipe Array. | ✅ Lulus | Sesuai Panduan Notasi |
+| TC-3a-02 | Relasi Denormalization | Membuat relasi denormalisasi, memverifikasi garis tebal solid dengan double arrowhead (<<-->) dan label inline. | ✅ Lulus | Sesuai Panduan Notasi |
+| TC-3a-03 | Dynamic Anchor | Menggeser node di kanvas, memverifikasi sisi anchor berpindah otomatis ke sisi terdekat. | ✅ Lulus | Anchor berpindah dinamis |
+| TC-3a-04 | Bézier Cubic Routing | Memvisualisasikan relasi melengkung Bézier untuk menghindari persilangan garis yang kaku. | ✅ Lulus | Kurva mulus |
+
+### B. Analisis Visual Screenshot Pengujian
+
+Untuk memverifikasi secara fisik kepatuhan terhadap Panduan Notasi Visual FDM, berikut adalah analisis tangkapan layar E2E yang diambil selama pengetesan:
+
+1. **[5_connected_nodes.png](file:///C:/Users/dosen/.gemini/antigravity/brain/46d6a818-cddd-4c15-a851-901fbb8559e7/5_connected_nodes.png)**:
+   - *Analisis*: Garis relasi referencing digambar secara putus-putus dengan warna oranye tipis dan ujung panah tunggal menunjuk ke target. Karena properti bertipe Array, asterisk (*) terlukis dengan jelas di pangkal garis. Denormalisasi terlukis dengan garis merah tebal solid dengan double arrowhead `<<-->` dan label inline secara vertikal.
+   - *Status*: **LULUS (PASS)**.
+2. **[6_deleted_connection.png](file:///C:/Users/dosen/.gemini/antigravity/brain/46d6a818-cddd-4c15-a851-901fbb8559e7/6_deleted_connection.png)**:
+   - *Analisis*: Relasi yang terhubung dapat dipilih dengan klik/tap dan dihapus menggunakan tombol Delete atau icon di toolbar. Ketika dihapus, relasi hilang secara visual dan reaktif dari canvas, membuktikan fungsionalitas penghapusan relasi horizontal berjalan dengan baik.
+   - *Status*: **LULUS (PASS)**.
+
 ---
 
 ## Rekap Status Pengujian Semua Iterasi
@@ -247,7 +273,7 @@ Application finished.
 | 1b | 2026-07-06 | 5 | 5 | 0 | ✅ Lulus |
 | 2a | 2026-07-07 | 5 | 5 | 0 | ✅ Lulus |
 | 2b | 2026-07-07 | 4 | 4 | 0 | ✅ Lulus |
-| 3a | — | — | 0 | 0 | 🕒 Belum |
+| 3a | 2026-07-08 | 4 | 4 | 0 | ✅ Lulus |
 | 3b | — | — | 0 | 0 | 🕒 Belum |
 | 4a | — | — | 0 | 0 | 🕒 Belum |
 | 4b | — | — | 0 | 0 | 🕒 Belum |

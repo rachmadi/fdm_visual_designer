@@ -259,3 +259,22 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Berhasil dideploy secara final ke Vercel ([fdm-vd.vercel.app](https://fdm-vd.vercel.app)) untuk memudahkan pengujian terpisah oleh IA.
 - **Hasil Akhir**:
   - Semua unit test lulus. E2E headed integration test (`flutter drive`) sukses 100% dengan 6 screenshot tersimpan. Build web sukses dan disajikan pada port `5555`.
+
+## [1.7.2] - 2026-07-08 (Iterasi 3a - Edge System Audit & Verification)
+
+### Changed (Perubahan / Audit)
+- **Koreksi RTM & Log Purgation**:
+  - Menyisir berkas log IIDD untuk menghapus semua referensi "Iterasi 7" fiktif dari rekap estimasi, rekap status pengujian, dan summary.
+  - Memetakan ulang REQ-050 ke Iterasi 6b (sehingga total requirement proyek menjadi 50 REQ yang terbagi ke 12 sub-iterasi: 1a s.d. 6b).
+  - Mengubah seluruh nama berkas dokumentasi log IIDD ke bahasa Inggris secara konsisten (misalnya `time_estimation.md`, `requirement_traceability_matrix.md`, dll.) dan memperbarui indeks `README.md`.
+  - Mengoreksi deskripsi REQ-020 s.d. REQ-022 di RTM untuk menyesuaikan dengan spesifikasi asli dan Panduan Notasi Visual FDM (Referencing: dashed line single-arrow + asterisk; Denormalization: thick solid line double arrowhead + inline label; tanpa Embedding edge).
+  - Menandai status requirement REQ-020 s.d. REQ-023 sebagai Selesai (`✅ Selesai`) pada RTM.
+
+### Added (Penambahan & Aturan Workspace)
+- **Aturan Rencana Verifikasi di AGENTS.md**:
+  - Menambahkan aturan wajib untuk menyusun pengujian interaktif headed (non-headless) secara rinci di bagian Rencana Verifikasi pada setiap Implementation Plan, serta kewajiban Agen untuk mengambil dan menganalisis visual screenshot per stage untuk asersi pass/fail.
+- **Verifikasi Interaktif Headed E2E**:
+  - Menjalankan unit tests (`flutter test`) dan headed E2E integration test (`flutter drive` via ChromeDriver port 4444).
+  - Mengambil 6 screenshot pengujian E2E, menyalin ke folder formal `screenshots/iterasi_3a/` & folder brain artifacts, melakukan analisis visual secara langsung untuk asersi pass/fail, dan mencatatnya di `interactive_test_log.md`.
+- **Deployment ke Vercel**:
+  - Membangun ulang build produksi web (`flutter build web --release`) dan mendeploy secara sukses ke Vercel untuk memastikan keselarasan live app dengan codebase.
