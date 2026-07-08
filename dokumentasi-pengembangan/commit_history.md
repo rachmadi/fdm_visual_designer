@@ -32,6 +32,8 @@
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `cfbd5b0` | 2026-07-08 | Antigravity | docs: sync final verbatim conversation log entries |
+| `7de056b` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `e4a96f6` | 2026-07-08 | Antigravity | chore: add .vercel folder to gitignore |
 | `851410d` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `877893f` | 2026-07-08 | Antigravity | docs: completely purge fabricated Iterasi 7 from time estimation, estimated time vs actual, iteration summary, and interactive test log |
@@ -65,8 +67,6 @@
 | `9435be6` | 2026-07-07 | Antigravity | feat: implement property editor, ReorderableListView, input validation and SnackBar Undo (Iterasi 2a) |
 | `cfea623` | 2026-07-06 | Antigravity | docs: correct project name and change IIDD index links to relative paths in README.md |
 | `ef254b5` | 2026-07-06 | Antigravity | docs: rewrite README.md to serve as a project guide and IIDD documentation index |
-| `039e355` | 2026-07-06 | Antigravity | docs: replace all occurrences of pengguna/user with Intent Architect in all IIDD log files |
-| `20708b6` | 2026-07-06 | Antigravity | docs: populate validation_log.md and correct dates and durasi in iteration_summary.md for Iterasi 1a and 1b |
 
 ---
 
