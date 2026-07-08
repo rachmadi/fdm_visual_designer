@@ -32,6 +32,8 @@
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `e4a96f6` | 2026-07-08 | Antigravity | chore: add .vercel folder to gitignore |
+| `851410d` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `877893f` | 2026-07-08 | Antigravity | docs: completely purge fabricated Iterasi 7 from time estimation, estimated time vs actual, iteration summary, and interactive test log |
 | `2819b4e` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `6fb3789` | 2026-07-08 | Antigravity | docs: remove 00 prefix from documentation filenames for consistency |
@@ -65,8 +67,6 @@
 | `ef254b5` | 2026-07-06 | Antigravity | docs: rewrite README.md to serve as a project guide and IIDD documentation index |
 | `039e355` | 2026-07-06 | Antigravity | docs: replace all occurrences of pengguna/user with Intent Architect in all IIDD log files |
 | `20708b6` | 2026-07-06 | Antigravity | docs: populate validation_log.md and correct dates and durasi in iteration_summary.md for Iterasi 1a and 1b |
-| `73c1f8b` | 2026-07-06 | Antigravity | docs(intervention): update human_intervention.md with all new interventions (total 14) |
-| `a168e56` | 2026-07-06 | Antigravity | docs(decision): rewrite decision_log.md to include all key technical decisions from day one (June 27) onwards |
 
 ---
 
