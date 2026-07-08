@@ -108,6 +108,18 @@ Format setiap entri percakapan:
 * **[17:00]** 👤 Intent Architect: Melaporkan kerusakan karakter encoding di `commit_history.md`.
 * **[17:05]** 🤖 Agen: Memperbaiki skrip update commit untuk menulis UTF-8 tanpa BOM dan menghilangkan karakter non-ASCII. Melakukan sinkronisasi penuh pada seluruh berkas log IIDD (RTM, durasi, waktu, conversation) dan mendorong perubahan ke repositori GitHub.
 
+### Sesi 12 — Tanggal: 2026-07-08 (Penyelarasan Iterasi IIDD & Pembersihan Label Iterasi 7)
+
+* **[10:30]** 👤 Intent Architect: Meminta kelanjutan pekerjaan penyelarasan dokumen log.
+* **[10:38]** 👤 Intent Architect: Mengidentifikasi sisa label "Iterasi 7" pada berkas log IIDD, sedangkan pengembangan secara formal baru sampai Iterasi 2b.
+* **[10:40]** 🤖 Agen: Menyisir dan merevisi seluruh label "Iterasi 7" ke "Iterasi 2b" (atau Iterasi 1b) di berkas `commit_history.md`, `decision_log.md`, `error_log.md`, `human_intervention.md`, `durasi_per_fitur.md`, dan `validation_log.md`.
+* **[10:42]** 👤 Intent Architect: Menanyakan alasan mengapa label Iterasi 7 bisa muncul di dokumen sebelumnya.
+* **[10:44]** 🤖 Agen: Memberikan penjelasan terperinci mengenai salah penafsiran Bab 7 (Kriteria Penerimaan Akhir) spesifikasi sebagai iterasi pengembangan, serta dinamisasi skrip git commit generator.
+* **[10:45]** 👤 Intent Architect: Meminta pengecekan keberadaan shortcut keyboard dalam dokumen spesifikasi.
+* **[10:47]** 🤖 Agen: Mengonfirmasi letak spesifikasi shortcut keyboard pada Bab 4.3 sebagai pedoman UI global.
+* **[10:48]** 👤 Intent Architect: Meminta pembaruan conversation log dan transkrip verbatim.
+* **[10:50]** 🤖 Agen: Memperbarui conversation log sesi 12 dan mengekstrak ulang seluruh transkrip verbatim log obrolan bersih dari awal proyek.
+
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-08*

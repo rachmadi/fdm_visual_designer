@@ -626,6 +626,35 @@ Application finished.
 | Pemindahan verbatim log ke folder formal, update index README, daftar_tugas, commit_history | 16:56 | 17:05 | ~9 menit |
 | **Total Sesi 11** | **16:15** | **17:05** | **~50 menit** |
 
+---
+
+## ═══
+## SESI 12 — Tanggal: 2026-07-08
+## ═══
+
+### Topik:
+Koreksi Penyelarasan Garis Waktu Iterasi IIDD (Pembersihan label Iterasi 7) & Verbatim Transcript Sync.
+
+### Aktivitas Utama:
+- **Koreksi Status Timeline Log IIDD**:
+  - Mengoreksi RTM matrix [00_requirement_traceability_matrix.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/00_requirement_traceability_matrix.md) untuk mengembalikan status Iterasi 3a s.d. 7 ke Belum Dimulai (19/50 REQ selesai).
+  - Menyisir berkas log formal IIDD (`commit_history.md`, `decision_log.md`, `error_log.md`, `human_intervention.md`, dan `durasi_per_fitur.md`) untuk membersihkan penyebutan label "Iterasi 7" ganda dan menggantinya ke Iterasi 2b/1b.
+  - Memasukkan tugas pemeriksaan konsistensi berkas log IIDD pada berkas [daftar_tugas.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Catatan%20Pengembangan/daftar_tugas.md) dan `task.md` Agen di setiap akhir iterasi.
+  - Menyelaraskan asersi hasil pengetesan integration test pada `validation_log.md` agar bebas dari sebutan 7 stages yang ambigu.
+- **Sinkronisasi Otomatis Verbatim Log**:
+  - Menjalankan kembali skrip state-machine PowerShell [parse_transcript.ps1](file:///C:/Users/dosen/.gemini/antigravity/brain/46d6a818-cddd-4c15-a851-901fbb8559e7/scratch/parse_transcript.ps1) untuk mengekstrak riwayat obrolan kata-demi-kata murni ke dalam [catatan_percakapan_verbatim.md](file:///E:/rachmadi/Antigravity/fdm_visual_designer/dokumentasi-pengembangan/cataten_percakapan_verbatim.md).
+
+**Tabel Durasi Pengerjaan & Pengujian Sesi 12:**
+
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| Koreksi status requirement RTM, estimasi waktu, & iteration summary | 10:30 | 10:38 | ~8 menit |
+| Pembersihan & penyisiran label Iterasi 7 ganda pada berkas log formal | 10:38 | 10:45 | ~7 menit |
+| Penambahan tugas kepatuhan konsistensi log di daftar_tugas & task.md | 10:45 | 10:47 | ~2 menit |
+| Ekstraksi otomatis verbatim log obrolan Sesi 12 via skrip PowerShell | 10:47 | 10:50 | ~3 menit |
+| **Total Sesi 12** | **10:30** | **10:50** | **~20 menit** |
+
+
 
 
 
