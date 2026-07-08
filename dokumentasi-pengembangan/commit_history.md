@@ -32,6 +32,8 @@
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `0d1c54c` | 2026-07-08 | Antigravity | docs: sync final verbatim log deployment fixes |
+| `3958d8b` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `1b58a7e` | 2026-07-08 | Antigravity | docs: sync final verbatim conversation log entries |
 | `254a0af` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `132c8d3` | 2026-07-08 | Antigravity | docs: complete Iterasi 3a Edge System audit, RTM alignment, and visual E2E verification |
@@ -65,8 +67,6 @@
 | `e05723f` | 2026-07-07 | Antigravity | docs: update changelog and conversation log with structural node visual revision and Vercel deployment details |
 | `d4dfbdf` | 2026-07-07 | Antigravity | feat: implement query vector visual controls, custom capitalized data types, conditional connection handles, and structural node layout separation |
 | `eb58dd3` | 2026-07-07 | Antigravity | feat(iter-2b): implement query vector dropdowns, conditional handles, enter submit, and visual canvas query vector badge |
-| `cb00cd1` | 2026-07-07 | Antigravity | fix: ignore global shortcuts when typing in a TextField and clean unused fields/variables |
-| `1c4432b` | 2026-07-07 | Antigravity | docs & test: update documentation and fix E2E integration test for Iteration 2a |
 
 ---
 
