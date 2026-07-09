@@ -82,7 +82,9 @@
 | Audit deskripsi RTM | 2 jam | 11:18 | 11:21 | 3 menit | -117 menit | Selesai |
 | Pengujian visual ChromeDriver | 3 jam | 11:21 | 11:25 | 4 menit | -176 menit | Selesai |
 | Sinkronisasi berkas log IIDD | 2 jam | 11:25 | 11:30 | 5 menit | -115 menit | Selesai |
-| **Total Iterasi 3a** | **~7 jam** | **11:18** | **11:30** | **12 menit** | **-6 jam 48 m** | Selesai |
+| Investigasi riwayat E2E & chrome issue (Sesi 13) | 1,5 jam | 09:05 | 09:25 | 20 menit | -70 menit | Selesai |
+| Koreksi Scheduled Task E2E & test run (Sesi 14) | 1,5 jam | 09:25 | 09:49 | 24 menit | -66 menit | Selesai |
+| **Total Iterasi 3a** | **~7 jam** | **11:18** | **09:49** | **56 menit** | **-6 jam 4 m** | Selesai |
 
 ---
 
@@ -94,7 +96,7 @@
 | 1b | ~8 jam | 19 menit | -7 jam 41 m | 4.0% |
 | 2a | ~6,5 jam | 38 menit | -5 jam 52 m | 9.7% |
 | 2b | ~6 jam | 50 menit | -5 jam 10 m | 13.9% |
-| 3a | ~7 jam | 12 menit | -6 jam 48 m | 2.9% |
+| 3a | ~7 jam | 56 menit | -6 jam 4 m | 13.3% |
 | 3b | ~6,5 jam | — | — | — |
 | 4a | ~7 jam | — | — | — |
 | 4b | ~5,5 jam | — | — | — |
@@ -102,8 +104,8 @@
 | 5b | ~6 jam | — | — | — |
 | 6a | ~7 jam | — | — | — |
 | 6b | ~6,5 jam | — | — | — |
-| **Total (Iterasi Selesai)** | **~35 jam** | **4 jam 10 m** | **-30 jam 50 m** | **11.9%** |
+| **Total (Iterasi Selesai)** | **~35 jam** | **4 jam 54 m** | **-30 jam 6 m** | **14.0%** |
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-08*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-09*

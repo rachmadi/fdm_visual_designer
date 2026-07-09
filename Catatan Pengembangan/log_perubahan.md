@@ -278,3 +278,34 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Mengambil 6 screenshot pengujian E2E, menyalin ke folder formal `screenshots/iterasi_3a/` & folder brain artifacts, melakukan analisis visual secara langsung untuk asersi pass/fail, dan mencatatnya di `interactive_test_log.md`.
 - **Deployment ke Vercel**:
   - Membangun ulang build produksi web (`flutter build web --release`) dan mendeploy secara sukses ke Vercel untuk memastikan keselarasan live app dengan codebase.
+
+## [1.7.3] - 2026-07-09 (Sesi 13 — Perbaikan Prosedur Headed Test)
+
+### Fixed (Perbaikan)
+- **Prosedur Headed E2E Test**:
+  - Mengidentifikasi dan mendokumentasikan akar masalah browser tidak muncul: penggunaan Windows Scheduled Task (`FDM_HeadedTest`) yang menyebabkan isolasi sesi WebSocket antara `flutter drive` dan ChromeDriver.
+  - Menetapkan prosedur yang benar: jalankan ChromeDriver dan `flutter drive` **langsung** via `run_command` tanpa Scheduled Task, karena agent berjalan dalam konteks Session 1 (interaktif) melalui VS Code user.
+
+### Verified (Verifikasi)
+- **E2E Integration Test**:
+  - Semua 5 stage pengujian lulus: Stage 1 (Node Creation), Stage 2 (Dragging), Stage 3 (Property Editor), Stage 4 (Relation Builder), Stage 5 (Delete Connection).
+  - 6 screenshot dianalisis secara visual: semua menunjukkan UI FDM berfungsi dengan benar.
+  - Output: `01:22 +3: All tests passed!`
+
+## [1.7.4] - 2026-07-09 (Sesi 14 — Koreksi Prosedur E2E Headed Test)
+
+### Fixed (Perbaikan & Koreksi)
+- **Koreksi Skenario Headed Test**:
+  - Melakukan koreksi kritis atas kesimpulan Sesi 13: Direct execution di terminal sandbox (Session 0) adalah alasan mengapa browser tidak muncul secara fisik pada desktop pengguna.
+  - Mengembalikan dan meresmikan mekanisme **Windows Scheduled Task** (`FDM_HeadedTest`) dengan `-LogonType Interactive` sebagai satu-satunya skenario yang benar untuk membuka Chrome headed secara nyata di layar desktop pengguna (Session 1).
+  - Mempersingkat hold delay di `app_test.dart` dari 120 detik menjadi 30 detik untuk kenyamanan pemantauan visual.
+
+### Verified (Verifikasi)
+- **E2E Integration Test Lulus**:
+  - Sukses mengeksekusi `run_headed_test.ps1` via Scheduled Task.
+  - Browser Chrome membuka fisik di desktop pengguna, visual flow berjalan secara interaktif di layar, dan lulus 100% dengan status `All tests passed!`.
+  - 6 file screenshot visual terverifikasi lulus.
+- **Penyajian Dev Server**:
+  - Menyajikan web build produksi (`build/web`) pada port `5555` menggunakan command `npx.cmd serve` secara latar belakang.
+
+

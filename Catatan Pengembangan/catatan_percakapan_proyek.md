@@ -670,5 +670,116 @@ Koreksi Penyelarasan Garis Waktu Iterasi IIDD (Pembersihan label Iterasi 7), Aud
 
 
 
+---
+
+## Sesi 13 — 2026-07-09 (Investigasi & Perbaikan Prosedur Headed Test)
+
+### Kronologi
+
+- **Konteks Awal**: Sesi dimulai dengan masalah browser tidak muncul saat headed E2E test. Agen-agen sebelumnya (Sesi 12 lanjutan) menggunakan pendekatan Windows Scheduled Task (`FDM_HeadedTest`) namun selalu gagal atau browser tidak terlihat.
+- **Investigasi Riwayat**: Menelusuri `transcript.jsonl` dan log task untuk menemukan run yang benar-benar sukses.
+
+### Temuan Kritis: Akar Masalah Prosedur Scheduled Task
+
+Melalui analisis `task-5413.log` s.d. `task-5552.log`, ditemukan bahwa **SEMUA run via Scheduled Task gagal** dengan error `Unable to start a WebDriver session`. Log yang menunjukkan "All tests passed" di transcript sebelumnya adalah **kutipan dari run lebih awal** (`task-5316`), bukan output run terkini.
+
+**Perbedaan kritis**:
+- `task-5316` (berhasil): Dijalankan **langsung** via `run_command` tanpa Scheduled Task.
+- `task-5413` – `task-5552` (semua gagal): Dijalankan **via Windows Scheduled Task**.
+
+### Penjelasan Teknis
+
+Agent berjalan di dalam VS Code yang diluncurkan user dari desktop Windows (Session 1 interaktif). Oleh karena itu, **semua proses yang diluncurkan via `run_command` sudah otomatis berjalan di Session 1** — tidak memerlukan Scheduled Task sama sekali.
+
+Penggunaan Scheduled Task adalah **over-engineering** yang tidak perlu dan justru memperparah masalah karena menambahkan lapisan isolasi proses yang tidak kompatibel dengan ChromeDriver WebSocket.
+
+### Prosedur yang BENAR untuk Headed E2E Test
+
+```powershell
+# Langkah 1: Jalankan ChromeDriver sebagai background task
+<path_chromedriver> --port=4444
+# (contoh: E:\rachmadi\Antigravity\fdm_visual_designer\node_modules\chromedriver\lib\chromedriver\chromedriver.exe --port=4444)
+
+# Langkah 2: Verifikasi ChromeDriver siap
+Invoke-RestMethod -Uri 'http://127.0.0.1:4444/status' -Method Get
+
+# Langkah 3: Jalankan flutter drive LANGSUNG (bukan via Scheduled Task)
+flutter drive --driver=test_driver\integration_test.dart --target=integration_test\app_test.dart -d chrome --no-headless --browser-dimension=1600x1024
+
+# Langkah 4: Setelah selesai, hentikan ChromeDriver
+# (manage_task kill atau taskkill /F /IM chromedriver.exe)
+```
+
+> ⚠️ **JANGAN gunakan Windows Scheduled Task** untuk E2E test. Pendekatan ini menyebabkan isolasi sesi yang memblokir koneksi WebSocket antara flutter drive dan ChromeDriver.
+
+### Hasil Pengujian Sesi 13
+
+- **Status**: ✅ **LULUS — All tests passed!**
+- **Durasi**: ~1 menit 22 detik
+- **Stage yang diverifikasi**:
+  - ✅ Stage 1: Layout & Node Creation
+  - ✅ Stage 2: Node Selection & Dragging
+  - ✅ Stage 3: Property Editor
+  - ✅ Stage 4: Relation Builder (No-Duplicates & Context-Aware)
+  - ✅ Stage 5: Select & Edit/Delete Connection via Canvas
+- **Screenshot**: 6 screenshot tersimpan dan teranalisis secara visual
+
+### Analisis Visual Screenshot
+
+| Screenshot | Deskripsi | Status |
+|------------|-----------|--------|
+| `1_launch_screen.png` | Tampilan awal FDM: canvas kosong, sidebar kiri (palette + relation builder), sidebar kanan (properties) | ✅ Lulus |
+| `2_added_nodes_grid.png` | 2 node ditambahkan: `new_collection` (Structural) dan `NewEntity` (Entity) terpilih dengan property editor terbuka | ✅ Lulus |
+| `3_selected_node_properties.png` | Property editor menampilkan Query Vector dengan Filter field dan Sort field | ✅ Lulus |
+| `4_query_vector_single_field.png` | Query Vector dikonfigurasi dengan filter + sort, badge "SINGLE" terlihat | ✅ Lulus |
+| `5_connected_nodes.png` | Kedua node terhubung dengan edge Hierarchy, Relation Builder menampilkan source/target yang benar | ✅ Lulus |
+| `6_deleted_connection.png` | Edge dihapus, canvas kembali ke state tanpa koneksi, "All rules passed!" di validation report | ✅ Lulus |
+
+**Tabel Durasi Pengerjaan & Pengujian Sesi 13:**
+
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| Investigasi riwayat transcript untuk menemukan akar masalah | 09:05 | 09:10 | ~5 menit |
+| Analisis log task historis (task-5413 s.d. task-5552) | 09:10 | 09:13 | ~3 menit |
+| Identifikasi prosedur benar (task-5316 = run langsung) | 09:13 | 09:14 | ~1 menit |
+| Cleanup scheduled tasks dan proses zombie | 09:14 | 09:15 | ~1 menit |
+| Eksekusi ChromeDriver + flutter drive langsung | 09:15 | 09:16 | ~1 menit |
+| Tunggu test selesai & verifikasi output | 09:16 | 09:17 | ~1 menit |
+| Analisis visual 6 screenshot | 09:17 | 09:20 | ~3 menit |
+| Update dokumentasi (catatan, log, daftar tugas) | 09:20 | 09:25 | ~5 menit |
+| **Total Sesi 13** | **09:05** | **09:25** | **~20 menit** |
+
+---
+
+## Sesi 14 — 2026-07-09 (Koreksi Mekanisme Headed Test & Konfirmasi Skenario Sukses)
+
+### Kronologi & Temuan Kritis
+
+- **Koreksi Terhadap Temuan Sesi 13**: 
+  - Analisis pada Sesi 13 yang menyimpulkan bahwa Scheduled Task tidak dapat membuka browser adalah **salah**.
+  - Faktanya, direct execution `run_command` dari agen berjalan di dalam sandbox terminal terisolasi (Session 0), sehingga browser Chrome yang terbuka tidak terlihat di desktop aktif pengguna (Session 1).
+  - Mekanisme **Windows Scheduled Task** (`FDM_HeadedTest`) dengan opsi `-LogonType Interactive` adalah **satu-satunya cara yang berhasil** memunculkan jendela browser Chrome fisik secara interaktif langsung pada desktop visual pengguna (Session 1).
+- **Hasil Pengujian**:
+  - Menjalankan kembali skrip `run_headed_test.ps1` yang meregistrasikan tugas terjadwal Windows untuk mengeksekusi `run_test.bat`.
+  - Browser Chrome berhasil muncul di layar monitor pengguna, mengeksekusi seluruh 5 tahapan pengujian, dan menahan layar selama 30 detik (sebagaimana diatur ulang di `app_test.dart`).
+  - Seluruh pengujian lulus 100% dengan status `All tests passed!`.
+  - Berhasil menyajikan dev server lokal pada port `5555` menyajikan `build/web` menggunakan `npx.cmd serve`.
+
+### Skenario Standar untuk Pengujian Headed Selanjutnya
+
+Setiap kali melakukan pengujian headed test interaktif, Agen **wajib** menggunakan mekanisme Windows Scheduled Task:
+1. Pastikan tidak ada proses ChromeDriver atau Chrome sisa menggunakan `cleanup.ps1`.
+2. Daftarkan dan jalankan tugas terjadwal melalui file `run_headed_test.ps1`.
+3. Skrip akan memicu `run_test.bat` secara interaktif di layar pengguna, memantau tugas hingga selesai, dan mencetak hasilnya.
+
+**Tabel Durasi Pengerjaan & Pengujian Sesi 14:**
+
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| Koreksi logika E2E & terminasi proses direct sandboxed | 09:25 | 09:36 | ~11 menit |
+| Eksekusi E2E headed via Scheduled Task `run_headed_test.ps1` | 09:36 | 09:42 | ~6 menit |
+| Verifikasi hasil pengujian interaktif & capture visual | 09:42 | 09:43 | ~1 menit |
+| Web release build, npx.cmd serve port 5555, & update log | 09:43 | 09:49 | ~6 menit |
+| **Total Sesi 14** | **09:25** | **09:49** | **~24 menit** |
 
 

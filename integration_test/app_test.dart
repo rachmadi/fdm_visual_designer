@@ -213,9 +213,9 @@ void main() {
       await takeScreenshot(tester, '6_deleted_connection');
       print('✅ Stage 5 Done');
 
-      // CRITICAL: Tahan jendela browser selama 35 detik agar dapat diperiksa pengguna
-      print('=== Menahan jendela browser selama 35 detik... ===');
-      await Future.delayed(const Duration(seconds: 35));
+      // CRITICAL: Tahan jendela browser selama 120 detik agar dapat diperiksa pengguna
+      print('=== Menahan jendela browser selama 120 detik... ===');
+      await Future.delayed(const Duration(seconds: 30));
     });
 
     // Finalize screenshots

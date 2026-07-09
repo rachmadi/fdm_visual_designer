@@ -86,8 +86,23 @@ Kalkulasi durasi secara otomatis di akhir iterasi.
 
 ---
 
+═══════════════════════════════════════════════════════════════════
+## ITERASI 3a — Edge System: Referencing & Denormalization
+═══════════════════════════════════════════════════════════════════
+
+| # | Fitur / Komponen | File Utama | Mulai | Selesai | Durasi | Kesulitan | Catatan |
+|---|-----------------|-----------|-------|---------|--------|-----------|---------|
+| 1 | Audit deskripsi RTM & crosscheck spesifikasi | `requirement_traceability_matrix.md` | 11:18 (July 8) | 11:21 (July 8) | 3m | Rendah | Selesai |
+| 2 | Pengujian visual E2E ChromeDriver & scheduled task | `app_test.dart` | 11:21 (July 8) | 11:25 (July 8) | 4m | Sedang | Selesai |
+| 3 | Sinkronisasi berkas log IIDD | — | 11:25 (July 8) | 11:30 (July 8) | 5m | Rendah | Selesai |
+| 4 | Investigasi riwayat E2E & chrome issue (Sesi 13) | `headed_test.log` | 09:05 (July 9) | 09:25 (July 9) | 20m | Tinggi | Investigasi Session 0 vs Session 1 |
+| 5 | Koreksi Scheduled Task E2E & test run (Sesi 14) | `run_headed_test.ps1` | 09:25 (July 9) | 09:49 (July 9) | 24m | Sedang | Lolos 100% (All tests passed!) |
+| — | **TOTAL ITERASI 3a** | — | — | — | **56m** | — | — |
+
+---
+
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 3–7 — [Template]
+## ITERASI 3b–6b — [Template]
 ## ═══════════════════════════════════════════════════════════════════
 
 *[Blok-blok ini akan diisi pada iterasi yang sesuai]*
@@ -104,4 +119,4 @@ Kalkulasi durasi secara otomatis di akhir iterasi.
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-09*

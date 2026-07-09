@@ -273,7 +273,7 @@ Untuk memverifikasi secara fisik kepatuhan terhadap Panduan Notasi Visual FDM, b
 | 1b | 2026-07-06 | 5 | 5 | 0 | ✅ Lulus |
 | 2a | 2026-07-07 | 5 | 5 | 0 | ✅ Lulus |
 | 2b | 2026-07-07 | 4 | 4 | 0 | ✅ Lulus |
-| 3a | 2026-07-08 | 4 | 4 | 0 | ✅ Lulus |
+| 3a | 2026-07-09 | 4 | 4 | 0 | ✅ Lulus |
 | 3b | — | — | 0 | 0 | 🕒 Belum |
 | 4a | — | — | 0 | 0 | 🕒 Belum |
 | 4b | — | — | 0 | 0 | 🕒 Belum |
@@ -284,4 +284,4 @@ Untuk memverifikasi secara fisik kepatuhan terhadap Panduan Notasi Visual FDM, b
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-08*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-09*
