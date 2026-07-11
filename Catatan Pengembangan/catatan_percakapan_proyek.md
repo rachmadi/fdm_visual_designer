@@ -795,7 +795,33 @@ Setiap kali melakukan pengujian headed test interaktif, Agen **wajib** menggunak
 
 ---
 
-## Sesi 15 — Rencana Pengerjaan Berikutnya
+## Sesi 15 — 2026-07-11 (Eksekusi Revisi Skema Dokumentasi IIDD)
 
-- Melanjutkan pengembangan ke **Iterasi 3b** (sesuai RTM)
-- Memulai dengan headed E2E test menggunakan mekanisme Scheduled Task yang telah terverifikasi
+### Kronologi & Temuan Kritis
+
+* **Pemeriksaan Dokumen Revisi**:
+  * Mengekstrak dan membaca berkas [Catatan Revisi Dokumentasi FDM Visual Designer.docx](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Dokumen/Catatan%20Revisi%20Dokumentasi%20FDM%20Visual%20Designer.docx) menggunakan `read_docx.ps1`.
+  * Mengidentifikasi 13 poin pembaruan, termasuk standardisasi konsep waktu (ET, AAET, HIT, RT, DGT), GOR, metrik AER dan EER, log Cascading Drift, Agent Proposal, tipe intervensi baru (7 klasifikasi), domain keputusan/autonomy level, dan Cross-Artifact Integrity Check.
+* **Pembaruan Berkas**:
+  * Merevisi seluruh berkas log IIDD terkait di folder `dokumentasi-pengembangan/` dengan menambahkan skema dan template prospektif baru.
+  * Menyelaraskan data durasi kartu dashboard progres di summary agar sinkron dengan time log (total aktual: 4 jam 54 menit).
+  * Melakukan commit, push ke master branch, dan mendokumentasikan hasil audit integrity check (`PASS`).
+
+**Tabel Durasi Pengerjaan & Pengujian Sesi 15:**
+
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| Membaca dan menelaah dokumen revisi DOCX | 11:21 | 11:23 | 2 menit |
+| Penyusunan Rencana Implementasi & Persetujuan IA | 11:23 | 11:24 | 1 menit |
+| Eksekusi revisi format log waktu & durasi | 11:24 | 11:25 | 1 menit |
+| Eksekusi revisi log drift, intervensi, & keputusan | 11:25 | 11:26 | 1 menit |
+| Eksekusi revisi log validasi, error, dashboard & RTM | 11:26 | 11:27 | 1 menit |
+| Verifikasi integrity check, commit & push Git | 11:27 | 11:28 | 1 menit |
+| **Total Sesi 15** | **11:21** | **11:28** | **7 menit** |
+
+---
+
+## Sesi 16 — Rencana Pengerjaan Berikutnya
+
+- Memulai pekerjaan teknis pada iterasi berikutnya menggunakan skema pelaporan dan validasi yang baru.
+

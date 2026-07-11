@@ -308,4 +308,17 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
 - **Penyajian Dev Server**:
   - Menyajikan web build produksi (`build/web`) pada port `5555` menggunakan command `npx.cmd serve` secara latar belakang.
 
+## [1.7.5] - 2026-07-11 (Sesi 15 — Eksekusi Revisi Skema Dokumentasi IIDD)
+
+### Changed (Perubahan / Audit)
+- **Revisi Skema Dokumentasi IIDD**:
+  - Merevisi seluruh skema dan template log di folder `dokumentasi-pengembangan/` agar sesuai dengan keputusan tata kelola baru.
+  - Memperbarui `estimated_vs_actual_time.md` dengan konsep AER/EER dan model breakdown 5 kategori waktu.
+  - Memperbarui `feature_duration_log.md` dengan sistem penandaan `GOV` dan metrik GOR.
+  - Menambahkan log Cascading Drift dan Agent Proposal di `context_drift_log.md`.
+  - Melakukan reklasifikasi retrospektif 18 intervensi pada `human_intervention.md` ke dalam 7 jenis intervensi baru.
+  - Memperbarui format log di `decision_log.md`, `validation_log.md`, `error_log.md`, dan RTM.
+  - Menyelaraskan total durasi pengerjaan di summary dengan time log menjadi `4 jam 54 m` dan menambahkan checklist integrity check.
+
+
 
