@@ -34,6 +34,7 @@ Seluruh berkas dokumentasi log pengembangan proyek dapat diakses langsung melalu
 ### 💬 Riwayat & Aktivitas Sesi
 *   [conversation_log.md](dokumentasi-pengembangan/conversation_log.md) — Log percakapan kronologis antara Intent Architect dan Agen sejak hari pertama.
 *   [verbatim_conversation_log.md](dokumentasi-pengembangan/verbatim_conversation_log.md) — Log percakapan verbatim word-for-word lengkap antara Intent Architect dan Agen sejak awal proyek.
+*   [iave_dataset.md](dokumentasi-pengembangan/iave_dataset.md) — Derived dataset penelitian tata kelola AI berbasis episode (IAVE).
 *   [human_intervention.md](dokumentasi-pengembangan/human_intervention.md) — Log pencatatan intervensi, koreksi, dan keputusan Intent Architect.
 *   [commit_history.md](dokumentasi-pengembangan/commit_history.md) — Log riwayat commit git kumulatif per iterasi.
 
@@ -41,6 +42,7 @@ Seluruh berkas dokumentasi log pengembangan proyek dapat diakses langsung melalu
 *   [validation_log.md](dokumentasi-pengembangan/validation_log.md) — Hasil audit validasi (analyze, unit test, integration test).
 *   [interactive_test_log.md](dokumentasi-pengembangan/interactive_test_log.md) — Log hasil pengujian headed integration test interaktif di browser.
 *   [error_log.md](dokumentasi-pengembangan/error_log.md) — Daftar error, bug runtime/compile, dan langkah resolusinya.
+*   [documentation_corrections.md](dokumentasi-pengembangan/documentation_corrections.md) — Log perbaikan dokumentasi historis.
 
 ---
 
