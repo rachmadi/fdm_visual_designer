@@ -27,11 +27,17 @@
 ---
 
 -------------------------------------------------------------------
-## Riwayat Git Commit Proyek (Iterasi 1a s.d. Iterasi 2b)
+## Riwayat Git Commit Proyek
 -------------------------------------------------------------------
 
 | Hash | Tanggal | Author | Pesan Commit |
 |------|---------|--------|--------------|
+| `6dd902f` | 2026-07-11 | Antigravity | docs: align RTM status gaps, correct node architecture terminology, and update integrity check proofs |
+| `c7c0581` | 2026-07-11 | Antigravity | docs: add IAVE dataset, documentation corrections log, and update README index |
+| `8897aff` | 2026-07-11 | Antigravity | docs: update conversation logs, changelog, and task checklist for Sesi 15 close |
+| `9f7e605` | 2026-07-11 | Antigravity | docs: align project documentation schemas with revision 3 specifications |
+| `50f8810` | 2026-07-09 | Antigravity | docs: close Sesi 14 - document Vercel deploy and session summary in catatan_percakapan_proyek |
+| `920cc13` | 2026-07-09 | Antigravity | docs: synchronize final commit log entry in commit_history.md for Sesi 14 |
 | `868f032` | 2026-07-09 | Antigravity | docs: correct E2E headed test procedure to use Scheduled Task & update logs for Sesi 14 |
 | `2270932` | 2026-07-08 | Antigravity | docs: synchronize final commit log entry in commit_history.md |
 | `3335dc8` | 2026-07-08 | Antigravity | docs: sync final verbatim conversation log entries for Sesi 12 close |
@@ -72,4 +78,4 @@
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-09*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*

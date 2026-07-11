@@ -790,38 +790,47 @@ Setiap kali melakukan pengujian headed test interaktif, Agen **wajib** menggunak
 - ✅ Headed E2E Integration Test lulus 100% via Scheduled Task (browser fisik di layar pengguna)
 - ✅ Semua dokumen log IIDD diperbarui secara akurat dan konsisten secara matematis
 - ✅ Commit & push ke GitHub: `920cc13` (master)
-- ✅ Dev server berjalan di `http://localhost:5555`
-- ✅ Produksi tersedia di **https://fdm-vd.vercel.app**
 
----
-
-## Sesi 15 — 2026-07-11 (Eksekusi Revisi Skema Dokumentasi IIDD)
+## Sesi 15 — 2026-07-11 (Eksekusi & Penyelarasan Kritis Dokumentasi Proyek)
 
 ### Kronologi & Temuan Kritis
 
-* **Pemeriksaan Dokumen Revisi**:
-  * Mengekstrak dan membaca berkas [Catatan Revisi Dokumentasi FDM Visual Designer.docx](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Dokumen/Catatan%20Revisi%20Dokumentasi%20FDM%20Visual%20Designer.docx) menggunakan `read_docx.ps1`.
-  * Mengidentifikasi 13 poin pembaruan, termasuk standardisasi konsep waktu (ET, AAET, HIT, RT, DGT), GOR, metrik AER dan EER, log Cascading Drift, Agent Proposal, tipe intervensi baru (7 klasifikasi), domain keputusan/autonomy level, dan Cross-Artifact Integrity Check.
-* **Pembaruan Berkas**:
-  * Merevisi seluruh berkas log IIDD terkait di folder `dokumentasi-pengembangan/` dengan menambahkan skema dan template prospektif baru.
-  * Menyelaraskan data durasi kartu dashboard progres di summary agar sinkron dengan time log (total aktual: 4 jam 54 menit).
-  * Melakukan commit, push ke master branch, dan mendokumentasikan hasil audit integrity check (`PASS`).
+* **Pemeriksaan Dokumen Revisi Ke-1 & Ke-2**:
+  * Mengekstrak dan membaca berkas [Catatan Revisi Dokumentasi FDM Visual Designer.docx](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Dokumen/Catatan%20Revisi%20Dokumentasi%20FDM%20Visual%20Designer.docx) (11:21 WIB) dan berkas [Catatan Revisi Dokumentasi Proyek.docx](file:///E:/rachmadi/Antigravity/fdm_visual_designer/Dokumen/Catatan%20Revisi%20Dokumentasi%20Proyek.docx) (12:40 WIB) menggunakan skrip `read_docx.ps1`.
+  * Mengidentifikasi 13 poin perubahan skema tata kelola log IIDD (AER, EER, GOR, Cascading Drift, Agent Proposal, 7 tipe intervensi, Autonomy domain, 6 gerbang status REQ, ART).
+  * Mengidentifikasi 8 poin perbaikan presisi dari IA: pengaturan gap Security Boundary (REQ-024 s.d. REQ-026) menjadi `Partially Implemented`, pemisahan validasi engine WFR dari UI badge, verifikasi metadata validasi (tidak fiktif), penggantian tautan screenshot absolut menjadi relatif, perubahan terminologi dari "Three-Node" ke "Two-Node with Query Vector", pemecahan entri log koreksi (`COR-001` s.d. `COR-003`), dan pembuatan tabel bukti integrity check.
+* **Eksekusi Perubahan**:
+  * Mengubah 10 berkas dokumentasi log IIDD secara komprehensif, mencakup status RTM, istilah arsitektur node, perbaikan waktu, dan perbaikan tautan.
+  * Menyelaraskan total durasi pengerjaan di summary dengan time log menjadi `4 jam 54 m` dan mendokumentasikan tabel bukti integrity check dengan status `PASS`.
+  * Melakukan commit & push Git.
 
 **Tabel Durasi Pengerjaan & Pengujian Sesi 15:**
 
 | Aktivitas | Mulai | Selesai | Durasi |
 |-----------|-------|---------|--------|
-| Membaca dan menelaah dokumen revisi DOCX | 11:21 | 11:23 | 2 menit |
-| Penyusunan Rencana Implementasi & Persetujuan IA | 11:23 | 11:24 | 1 menit |
-| Eksekusi revisi format log waktu & durasi | 11:24 | 11:25 | 1 menit |
-| Eksekusi revisi log drift, intervensi, & keputusan | 11:25 | 11:26 | 1 menit |
-| Eksekusi revisi log validasi, error, dashboard & RTM | 11:26 | 11:27 | 1 menit |
-| Verifikasi integrity check, commit & push Git | 11:27 | 11:28 | 1 menit |
-| **Total Sesi 15** | **11:21** | **11:28** | **7 menit** |
+| Membaca dan proposal rencana revisi skema log IIDD | 11:21 | 11:24 | 3 menit |
+| Eksekusi perubahan skema 10 log IIDD (Commit 9f7e605) | 11:24 | 11:26 | 2 menit |
+| Sinkronisasi sisa poin (iave_dataset & corrections) (Commit 8897aff) | 11:26 | 11:28 | 2 menit |
+| Menelaah dokumen revisi ke-2 dari IA (Catatan Revisi Dokumentasi Proyek.docx) | 12:40 | 12:44 | 4 menit |
+| Penyusunan Rencana Implementasi (Revisi 2) & Persetujuan IA | 12:44 | 12:45 | 1 menit |
+| Eksekusi penyelarasan istilah arsitektur, RTM gap, & validation metadata | 12:45 | 12:48 | 3 menit |
+| Pengisian log koreksi, tautan screenshot relatif, & tabel bukti check | 12:48 | 12:50 | 2 menit |
+| Pembaruan dokumen Catatan Pengembangan & finalisasi sesi | 12:50 | 12:52 | 2 menit |
+| **Total Sesi 15** | **11:21** | **12:52** | **1 jam 31 m** |
+
+> [!NOTE]
+> Sesi 15 mengalami jeda tunggu (idle) antara pukul 11:28 WIB s.d. 12:40 WIB selagi Intent Architect memeriksa hasil commit pertama di repositori GitHub. Waktu jeda (idle) ini tidak dihitung ke dalam durasi pengerjaan aktif.
+
+### Status Akhir Sesi 15
+
+- ✅ Seluruh 13 berkas log IIDD dan file Catatan Pengembangan diselaraskan secara matematis
+- ✅ Status RTM diselaraskan dengan codebase riil beserta catatan gap
+- ✅ Terminologi "Three-Node" diubah ke "Two-Node with Query Vector" untuk kepatuhan visual
+- ✅ Cross-Artifact Integrity Check terdokumentasi dalam tabel bukti terstruktur (Status: `PASS`)
+- ✅ Commit & push ke GitHub master branch sukses
 
 ---
 
 ## Sesi 16 — Rencana Pengerjaan Berikutnya
 
-- Memulai pekerjaan teknis pada iterasi berikutnya menggunakan skema pelaporan dan validasi yang baru.
-
+- Memulai implementasi fitur-fitur teknis baru pada iterasi selanjutnya menggunakan skema pelaporan dan validasi yang baru diselaraskan.

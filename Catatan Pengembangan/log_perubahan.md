@@ -320,5 +320,22 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Memperbarui format log di `decision_log.md`, `validation_log.md`, `error_log.md`, dan RTM.
   - Menyelaraskan total durasi pengerjaan di summary dengan time log menjadi `4 jam 54 m` dan menambahkan checklist integrity check.
 
+## [1.7.6] - 2026-07-11 (Sesi 15 — Penyelarasan Kritis Dokumentasi Proyek)
+
+### Changed (Perubahan / Audit)
+- **Koreksi Istilah Arsitektur Node (Two-Node + Query Vector)**:
+  - Mengoreksi seluruh istilah "Three-Node Architecture" dan "3 tipe node" menjadi **"Two-Node Architecture with Query Vector"** di seluruh 10 berkas IIDD.
+  - Memperbarui `README.md` dan RTM (`REQ-005` & `REQ-008`) untuk menegaskan bahwa Query Vector adalah data properti/badge Entity Node dan bukan canvas node terpisah.
+- **Penyelarasan Durasi & Tabel Bukti Integrity Check**:
+  - Mengubah durasi aktual Iterasi 3a di `iteration_summary.md` menjadi `56 m` (sebelumnya tercatat keliru `0 m`).
+  - Membangun tabel bukti Cross-Artifact Integrity Check terperinci pada `iteration_summary.md` untuk membuktikan zero-drift dengan status PASS.
+- **Pengisian Log Koreksi Historis Terpisah**:
+  - Menambahkan entri `COR-001` (Koreksi istilah arsitektur), `COR-002` (Durasi Iterasi 3a), dan `COR-003` (Penyelarasan status RTM) pada `documentation_corrections.md`.
+- **Penguatan Validasi & Tautan Relatif Screenshot**:
+  - Mengatur status REQ-024 s.d. REQ-026 menjadi `Partially Implemented` (dengan catatan gap riil) dan WFR Engine REQ-027 s.d. REQ-034 menjadi `Technically Validated`.
+  - Memasukkan metadata validasi autentik tanpa perkiraan fiktif pada `validation_log.md`.
+  - Mengganti tautan screenshot absolut `file:///` menjadi relatif (seperti `screenshots/iterasi_3a/...`) pada `interactive_test_log.md`.
+
+
 
 

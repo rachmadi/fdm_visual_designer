@@ -1,4 +1,4 @@
-# 💬 Conversation Log — FDM Visual Designer
+﻿# 💬 Conversation Log — FDM Visual Designer
 ## Format: Kumulatif per Iterasi | Spesifikasi: Revisi 3 Final
 
 > File ini mencatat kronologi percakapan antara Intent Architect (IA) dan Agen selama sesi pengembangan.
@@ -17,7 +17,7 @@ Format setiap entri percakapan:
 ---
 
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
+## ITERASI 1a — Fondasi Canvas & Two-Node Architecture with Query Vector
 ═══════════════════════════════════════════════════════════════════
 
 ### Sesi 1 — Tanggal: 2026-06-27 (Inisialisasi & Setup)

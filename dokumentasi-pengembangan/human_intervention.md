@@ -1,4 +1,4 @@
-# 🙋 Human Intervention Log — FDM Visual Designer
+﻿# 🙋 Human Intervention Log — FDM Visual Designer
 ## Format: Kumulatif per Sesi | Spesifikasi: Revisi 3 Final
 
 > File ini mencatat semua intervensi yang dilakukan Intent Architect selama sesi pengembangan.

@@ -1,4 +1,4 @@
-# ⏱️ Estimasi vs Realisasi Waktu — FDM Visual Designer
+﻿# ⏱️ Estimasi vs Realisasi Waktu — FDM Visual Designer
 ## Format: Kumulatif per Iterasi | Spesifikasi: Revisi 3 Final
 
 > File ini membandingkan estimasi waktu dari spesifikasi dengan waktu aktual pengerjaan.
@@ -26,7 +26,7 @@ Mulai Iterasi 3b, waktu pengembangan dicatat dalam 5 kategori berikut:
 
 
 ═══════════════════════════════════════════════════════════════════
-## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
+## ITERASI 1a — Fondasi Canvas & Two-Node Architecture with Query Vector
 ═══════════════════════════════════════════════════════════════════
 
 | Komponen | Estimasi | Waktu Mulai | Waktu Selesai | Realisasi | Deviasi | Catatan |

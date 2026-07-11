@@ -1,4 +1,4 @@
-# ⏲️ Durasi Per Fitur — FDM Visual Designer
+﻿# ⏲️ Durasi Per Fitur — FDM Visual Designer
 ## Format: Kumulatif per Iterasi | Spesifikasi: Revisi 3 Final
 
 > File ini mencatat durasi aktual pengerjaan setiap fitur secara granular.
@@ -32,7 +32,7 @@ Kalkulasi durasi dan GOR secara otomatis di akhir iterasi.
 ---
 
 ═══════════════════════════════════════════════════════════════════
-## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
+## ITERASI 1a — Fondasi Canvas & Two-Node Architecture with Query Vector
 ═══════════════════════════════════════════════════════════════════
 
 | # | Fitur / Komponen | File Utama | Mulai | Selesai | Durasi | Kesulitan | Catatan |
@@ -43,10 +43,10 @@ Kalkulasi durasi dan GOR secara otomatis di akhir iterasi.
 | 4 | Inversi matriks koordinat screen→canvas | `canvas_view.dart` | 11:12 (July 6) | 11:14 (July 6) | 2m | Tinggi | Kritis |
 | 5 | Metamodel `StorageNode` | `metamodel.dart` | 11:40 (June 27) | 11:50 (June 27) | 10m | Rendah | Selesai |
 | 6 | Metamodel `EntityNode` | `metamodel.dart` | 11:50 (June 27) | 12:00 (June 27) | 10m | Rendah | Selesai |
-| 7 | Metamodel `QueryVectorNode` | `metamodel.dart` | 12:00 (June 27) | 12:08 (June 27) | 8m | Rendah | Selesai |
+| 7 | Metamodel Query Vector | `metamodel.dart` | 12:00 (June 27) | 12:08 (June 27) | 8m | Rendah | Selesai |
 | 8 | `StorageNodePainter` | `structural_node.dart` | 12:08 (June 27) | 12:18 (June 27) | 10m | Sedang | Selesai |
 | 9 | `EntityNodePainter` | `entity_node.dart` | 12:18 (June 27) | 12:28 (June 27) | 10m | Sedang | Selesai |
-| 10 | `QueryVectorPainter` | `query_vector.dart` | 12:28 (June 27) | 12:37 (June 27) | 9m | Sedang | Selesai |
+| 10 | `QueryVectorPainter (Badge visual pada EntityNode)` | `entity_node.dart` | 12:28 (June 27) | 12:37 (June 27) | 9m | Sedang | Selesai |
 | 11 | Riverpod `DiagramNotifier` | `state.dart` | 12:37 (June 27) | 13:13 (June 27) | 36m | Sedang | Selesai |
 | 12 | Unit test fondasi | `test/foundation_test.dart` | 13:13 (June 27) | 13:21 (June 27) | 8m | Rendah | Selesai |
 | 13 | Integration test headed 1a | `integration_test/app_test.dart` | 11:25 (July 6) | 11:51 (July 6) | 26m | Sedang | Selesai |

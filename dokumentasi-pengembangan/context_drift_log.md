@@ -1,4 +1,4 @@
-# 📉 Context Drift Log — FDM Visual Designer
+﻿# 📉 Context Drift Log — FDM Visual Designer
 ## Format: Kumulatif per Iterasi | Spesifikasi: Revisi 3 Final
 
 > File ini mencatat setiap penyimpangan (drift) dari spesifikasi awal yang terjadi selama sesi pengembangan.
@@ -27,7 +27,7 @@ Setiap drift dikategorikan berdasarkan sumbernya:
 ## ═══════════════════════════════════════════════════════════════════
 
 ## Intent Awal
-Membuat fondasi kanvas FDM Visual Designer menggunakan arsitektur 3 tipe node (`StorageNode`, `EntityNode`, `QueryVectorNode`) dan workspace interaktif menggunakan `InteractiveViewer` dengan inversi matriks koordinat untuk transformasi screen-space ke canvas-space.
+Membuat fondasi kanvas FDM Visual Designer menggunakan arsitektur 2 tipe node (`StorageNode`, `EntityNode`, `Query Vector (Badge/Properti)`) dan workspace interaktif menggunakan `InteractiveViewer` dengan inversi matriks koordinat untuk transformasi screen-space ke canvas-space.
 
 ## Eksekusi Aktual
 Canvas berhasil dibuat menggunakan `InteractiveViewer` + controller + inversi matriks koordinat. Metamodel dasar dan 3 CustomPainter dibuat dan lulus pengujian unit WFR serta integration test.

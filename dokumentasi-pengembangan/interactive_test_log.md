@@ -27,7 +27,7 @@ flutter drive \
 ---
 
 ═══════════════════════════════════════════════════════════════════
-## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
+## ITERASI 1a — Fondasi Canvas & Two-Node Architecture with Query Vector
 ### Status Pengujian: ✅ PASS (All Tests Passed)
 ═══════════════════════════════════════════════════════════════════
 
@@ -53,7 +53,7 @@ flutter drive \
 | TC-1a-03 | Zoom Gesture | Canvas bisa di-zoom in/out dengan pinch atau scroll | ✅ Lulus | 10:57 | Lancet, single-pointer tracking bekerja |
 | TC-1a-04 | StorageNode Render | Node Storage (persegi panjang) tampil di posisi yang benar | ✅ Lulus | 10:58 | folder tab (Structural) ter-render |
 | TC-1a-05 | EntityNode Render | Node Entity (oval) tampil di posisi yang benar | ✅ Lulus | 10:58 | Entity node ter-render dengan benar |
-| TC-1a-06 | QueryVectorNode Render | Node Query Vector (dokumen) tampil di posisi yang benar | ✅ Lulus | 10:58 | Query vector tampil di sidebar kanan |
+| TC-1a-06 | Query Vector (Badge/Properti) Render | Node Query Vector (dokumen) tampil di posisi yang benar | ✅ Lulus | 10:58 | Query vector tampil di sidebar kanan |
 | TC-1a-07 | Koordinat Akurat | Posisi node tidak bergeser saat zoom berubah | ✅ Lulus | 10:59 | Fix matrix inversion + single pointer |
 | TC-1a-08 | State Persistence | State node tidak hilang setelah pan/zoom | ✅ Lulus | 10:59 | Terjaga dalam DiagramNotifier state |
 
@@ -256,10 +256,10 @@ Application finished.
 
 Untuk memverifikasi secara fisik kepatuhan terhadap Panduan Notasi Visual FDM, berikut adalah analisis tangkapan layar E2E yang diambil selama pengetesan:
 
-1. **[5_connected_nodes.png](file:///C:/Users/dosen/.gemini/antigravity/brain/46d6a818-cddd-4c15-a851-901fbb8559e7/5_connected_nodes.png)**:
+1. **[5_connected_nodes.png](screenshots/iterasi_3a/5_connected_nodes.png)**:
    - *Analisis*: Garis relasi referencing digambar secara putus-putus dengan warna oranye tipis dan ujung panah tunggal menunjuk ke target. Karena properti bertipe Array, asterisk (*) terlukis dengan jelas di pangkal garis. Denormalisasi terlukis dengan garis merah tebal solid dengan double arrowhead `<<-->` dan label inline secara vertikal.
    - *Status*: **LULUS (PASS)**.
-2. **[6_deleted_connection.png](file:///C:/Users/dosen/.gemini/antigravity/brain/46d6a818-cddd-4c15-a851-901fbb8559e7/6_deleted_connection.png)**:
+2. **[6_deleted_connection.png](screenshots/iterasi_3a/6_deleted_connection.png)**:
    - *Analisis*: Relasi yang terhubung dapat dipilih dengan klik/tap dan dihapus menggunakan tombol Delete atau icon di toolbar. Ketika dihapus, relasi hilang secara visual dan reaktif dari canvas, membuktikan fungsionalitas penghapusan relasi horizontal berjalan dengan baik.
    - *Status*: **LULUS (PASS)**.
 
@@ -284,4 +284,4 @@ Untuk memverifikasi secara fisik kepatuhan terhadap Panduan Notasi Visual FDM, b
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-09*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*

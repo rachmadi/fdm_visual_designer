@@ -1,4 +1,4 @@
-# 🐛 Error Log — FDM Visual Designer
+﻿# 🐛 Error Log — FDM Visual Designer
 ## Format: Kumulatif per Iterasi | Spesifikasi: Revisi 3 Final
 
 > File ini mencatat semua error yang ditemukan selama pengembangan beserta resolusinya.
@@ -136,7 +136,7 @@
 ---
 
 ═══════════════════════════════════════════════════════════════════
-## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
+## ITERASI 1a — Fondasi Canvas & Two-Node Architecture with Query Vector
 ═══════════════════════════════════════════════════════════════════
 
 ### E-008: Matrix4.translate Deprecation & translateByDouble Positional Argument Error

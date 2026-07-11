@@ -7,7 +7,7 @@
 ---
 
 ═══════════════════════════════════════════════════════════════════
-## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
+## ITERASI 1a — Fondasi Canvas & Two-Node Architecture with Query Vector
 ### Status: ✅ Selesai
 ═══════════════════════════════════════════════════════════════════
 
@@ -75,10 +75,23 @@
 - **Tanggal Mulai**: 2026-07-08
 - **Tanggal Selesai**: 2026-07-08
 - **Status Akhir**: ✅ Selesai
-- **Durasi Aktual**: 0 m (Audit & Verifikasi Kode Terimplementasi)
+- **Durasi Aktual**: 56 m
 - **Target**: Penyelarasan notasi garis panah putus-putus referencing dengan asterisk (*), garis tebal double arrowhead denormalisasi dengan label nama field, Bézier routing, dan dynamic anchor switching.
 - **REQ yang Ditutup**: REQ-020 s.d. REQ-023
 - **Lesson Learned**: Penyelarasan dini terhadap Panduan Notasi Visual mencegah implementasi fitur menyimpang (seperti Embedding edge) yang berpotensi merusak spesifikasi skema diagram JSON.
+
+#### Cross-Artifact Integrity Check (Iterasi 3a)
+
+| Artefak | Item yang Dicek | Nilai Sebelum | Nilai Sesudah | Hasil | Commit Perbaikan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `iteration_summary.md` | Durasi Aktual Iterasi 3a | `0 m` | `56 m` | `PASS` | `6dd902f` |
+| `requirement_traceability_matrix.md` | Status REQ-024 s.d. REQ-026 | `🕒 Belum dimulai` | `Partially Implemented` (dengan catatan gap) | `PASS` | `6dd902f` |
+| `requirement_traceability_matrix.md` | Status REQ-027 s.d. REQ-034 | `🕒 Belum dimulai` | `Technically Validated` (lulus unit test) | `PASS` | `6dd902f` |
+| `requirement_traceability_matrix.md` | Status REQ-035, REQ-036, REQ-038 | `🕒 Belum dimulai` | `Implemented` / `Implemented (dengan gap)` | `PASS` | `6dd902f` |
+| `README.md` & log-log IIDD | Nama Arsitektur Node | `Three-Node Architecture` | `Two-Node Architecture with Query Vector` | `PASS` | `6dd902f` |
+| `interactive_test_log.md` | Tautan Screenshot | `file:///C:/Users/...` | `screenshots/iterasi_3a/...` (tautan relatif) | `PASS` | `6dd902f` |
+
+*Integrity Check Hasil*: **`PASS`**
 
 ---
 

@@ -26,10 +26,14 @@ Setiap requirement berprogres melalui gerbang status berikut hingga ditutup seca
 ---
 
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
+## ITERASI 1a — Fondasi Canvas & Two-Node Architecture with Query Vector
 ## ═══════════════════════════════════════════════════════════════════
 
 ### Tanggal Validasi: 2026-07-06
+- **Commit SHA**: Tidak tersedia
+- **Versi Flutter/Dart**: Tidak tersedia
+- **Perintah Dijalankan**: `flutter analyze` & `flutter test`
+- **Lokasi Bukti**: `dokumentasi-pengembangan/screenshots/iterasi_1a/`
 
 ### Hasil Flutter Analyze
 ```
@@ -66,6 +70,10 @@ No issues found! (analyzed 42 files)
 ## ═══════════════════════════════════════════════════════════════════
 
 ### Tanggal Validasi: 2026-07-06
+- **Commit SHA**: Tidak tersedia
+- **Versi Flutter/Dart**: Tidak tersedia
+- **Perintah Dijalankan**: `flutter analyze` & `flutter test`
+- **Lokasi Bukti**: `dokumentasi-pengembangan/screenshots/iterasi_1b/`
 
 ### Hasil Flutter Analyze
 ```
@@ -108,6 +116,10 @@ Screenshot saved: 6_nodes_with_4_handles.png
 ## ═══════════════════════════════════════════════════════════════════
 
 ### Tanggal Validasi: 2026-07-07
+- **Commit SHA**: Tidak tersedia
+- **Versi Flutter/Dart**: Tidak tersedia
+- **Perintah Dijalankan**: `flutter analyze` & `flutter test`
+- **Lokasi Bukti**: `dokumentasi-pengembangan/screenshots/iterasi_2a/`
 
 ### Hasil Keandalan Kompilasi (`flutter analyze`)
 ```
@@ -152,6 +164,10 @@ Screenshot saved: 7_property_editor_validated.png
 ## ═══════════════════════════════════════════════════════════════════
 
 ### Tanggal Validasi: 2026-07-07
+- **Commit SHA**: Tidak tersedia
+- **Versi Flutter/Dart**: Tidak tersedia
+- **Perintah Dijalankan**: `flutter analyze` & `flutter test`
+- **Lokasi Bukti**: `dokumentasi-pengembangan/screenshots/iterasi_2b/`
 
 ### Hasil Keandalan Kompilasi (`flutter analyze`)
 ```
@@ -189,7 +205,54 @@ Screenshot saved: 7_property_editor_validated.png
 ---
 
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 3b s.d. 6b — Template Validasi (Skema Baru)
+## ITERASI 3a — Edge System: Referencing & Denormalization
+## ═══════════════════════════════════════════════════════════════════
+
+### Tanggal Validasi: 2026-07-09
+- **Commit SHA**: `868f032`
+- **Versi Flutter/Dart**: Flutter 3.44.0 / Dart 3.12.0
+- **Perintah Dijalankan**: `flutter analyze`, `flutter test`, `flutter drive` (via Scheduled Task `FDM_HeadedTest`)
+- **Lokasi Bukti**: `dokumentasi-pengembangan/screenshots/iterasi_3a/`
+
+### Hasil Keandalan Kompilasi (`flutter analyze`)
+```
+Analyzing fdm_visual_designer...
+No issues found! (analyzed 48 files)
+```
+
+### Hasil Unit Test (`flutter test`)
+```
+00:04 +15: All tests passed!
+```
+- Berhasil menguji 8 WFR rules secara semantik, termasuk rule referencing target, denormalization property source, dynamic path syntax, query vector, dan boundary overlap.
+
+### Hasil Integration Test (Headed E2E)
+```
+01:34 +5: All tests passed!
+Screenshot saved: 1_launch_screen.png
+Screenshot saved: 2_added_nodes_grid.png
+Screenshot saved: 3_selected_node_properties.png
+Screenshot saved: 4_query_vector_single_field.png
+Screenshot saved: 5_connected_nodes.png
+Screenshot saved: 6_deleted_connection.png
+```
+
+### Ringkasan Validasi Iterasi 3a
+
+| Jenis Validasi | Status | Catatan |
+|----------------|--------|---------|
+| `flutter analyze` | ✅ Lulus | Kompilasi bersih tanpa error |
+| Unit Test | ✅ Lulus | Lulus semua 15 unit test semantik |
+| Integration Test (headed) | ✅ Lulus | E2E flow Stage 1 s.d. 5 sukses, browser tertahan 30s |
+| Manual Review UI | ✅ Lulus | Bézier routing dan dynamic anchor switches ter-render presisi |
+
+### Screenshot Hasil Test
+> *(Screenshot disimpan di `dokumentasi-pengembangan/screenshots/iterasi_3a/`)*
+
+---
+
+## ═══════════════════════════════════════════════════════════════════
+## ITERASI 3b s.d. 6b — Template Validasi (Skema Baru) [BELUM DIISI - TEMPLATE]
 ## ═══════════════════════════════════════════════════════════════════
 
 | Requirement ID | Validation Type | Validator | Evidence | Result | Date | Related Commit | Final Acceptance Authority |

@@ -9,7 +9,7 @@ Aplikasi berbasis web untuk merancang skema Firebase Database (Firestore & Realt
 
 ## 🚀 Fitur Utama
 *   **Workspace Kanvas Interaktif**: Workspace 4000x4000px dengan zoom/pan smooth (`InteractiveViewer`) dan rendering grid dinamis.
-*   **Three-Node Architecture**: Representasi node kustom untuk `StorageNode` (UML Package), `EntityNode` (Document Card), dan `QueryVectorNode`.
+*   **Two-Node Architecture with Query Vector**: Representasi node kustom untuk `StorageNode` (UML Package) dan `EntityNode` (Document Card), di mana query vector diintegrasikan sebagai properti di dalam Entity Node.
 *   **Edge Routing Bézier & Dynamic Anchor**: Garis relasi melengkung (Bézier Cubic) dengan pendeteksian sisi anchor terdekat (Dynamic Anchor Switching).
 *   **8 Well-Formedness Rules Engine**: Sistem validasi semantik real-time yang memverifikasi integritas database non-relasional.
 *   **Firestore & Realtime Database Mode**: Toggle tema visual reaktif dan keyboard shortcuts komprehensif.
