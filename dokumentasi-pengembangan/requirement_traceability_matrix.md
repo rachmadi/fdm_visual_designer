@@ -8,13 +8,18 @@
 
 ## Legend Status
 
-| Simbol | Keterangan |
-|--------|------------|
-| 🕒 | Belum dimulai |
-| 🔄 | Sedang dikerjakan |
-| ✅ | Selesai & terverifikasi |
-| ❌ | Ditolak / Tidak diimplementasi |
-| ⚠️ | Perlu perhatian / Partial |
+### Status Historis (Iterasi 1a s.d. 3a)
+* `🕒 Belum dimulai`
+* `🔄 Sedang dikerjakan`
+* `✅ Selesai / Selesai & terverifikasi`
+
+### Status Prospektif (Mulai Iterasi 3b - Skema Baru)
+1. **Planned**: Masuk dalam backlog/perencanaan iterasi.
+2. **Implemented**: Fitur/kode telah diimplementasikan di codebase.
+3. **Technically Validated**: Lulus pengujian unit/statis (analisis kode & `flutter test`).
+4. **Interactively Validated**: Lulus pengujian headed integration test interaktif (`flutter drive`).
+5. **IA Accepted**: Diterima secara manual oleh Intent Architect.
+6. **Closed**: Integrity check lulus dan requirement resmi ditutup.
 
 ---
 
@@ -95,4 +100,4 @@
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*

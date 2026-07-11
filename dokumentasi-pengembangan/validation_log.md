@@ -1,8 +1,17 @@
 # ✅ Validation Log — FDM Visual Designer
 ## Format: Kumulatif per Iterasi | Spesifikasi: Revisi 3 Final
 
-> File ini mencatat hasil validasi (unit test, integration test, manual review) di setiap akhir iterasi.
-> Semua iterasi WAJIB lulus headed integration test sebelum dinyatakan selesai.
+> [!IMPORTANT]
+> **Prinsip Validasi**: *“Implementation completion does not constitute intent fulfillment. Completion status is validation-gated.”*
+
+### 6 Tahap Status Requirement (Validation Gates)
+Setiap requirement berprogres melalui gerbang status berikut hingga ditutup secara formal:
+1. `Planned`: Requirement telah masuk dalam perencanaan iterasi.
+2. `Implemented`: Kode fitur telah ditulis di codebase.
+3. `Technically Validated`: Lulus pengujian unit test (`flutter test`) atau pengujian statis.
+4. `Interactively Validated`: Lulus headed integration test (`flutter drive`) interaktif dan visual screenshot.
+5. `IA Accepted`: Telah dicoba secara manual dan diterima oleh Intent Architect.
+6. `Closed`: Integrity check selesai dan requirement resmi ditutup.
 
 ---
 
@@ -180,11 +189,18 @@ Screenshot saved: 7_property_editor_validated.png
 ---
 
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 3–7 — [Template]
+## ITERASI 3b s.d. 6b — Template Validasi (Skema Baru)
 ## ═══════════════════════════════════════════════════════════════════
 
-*[Blok-blok ini akan diisi pada iterasi yang sesuai]*
+| Requirement ID | Validation Type | Validator | Evidence | Result | Date | Related Commit | Final Acceptance Authority |
+|---|---|---|---|---|---|---|---|
+| `REQ-XXX` | | | | | | | |
+
+*Daftar Nilai Standar:*
+* **Validation Type**: `Unit Test` / `Integration Test` / `Manual Review` / `Visual Inspection`
+* **Validator**: `Agent` / `Automated Test` / `Intent Architect` / `Joint Validation`
+* **Result**: `PASS` / `FAIL`
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*

@@ -40,38 +40,41 @@
 | 17 | 2026-07-07 | 17:00 | 2b | Intent Architect melaporkan format acak (garbled encoding) pada `commit_history.md` | Memperbaiki skrip update commit untuk menulis UTF-8 tanpa BOM dan menghilangkan karakter non-ASCII | Koreksi Teknis |
 | 18 | 2026-07-07 | 17:06 | 2b | Intent Architect menegaskan seluruh dokumen/log IIDD wajib diperbarui di setiap akhir sesi secara konsisten | Melakukan sinkronisasi penuh pada seluruh berkas log IIDD (RTM, durasi, waktu, conversation, dll.) | Permintaan Dokumentasi |
 
----
+## Standar Klasifikasi Intervensi
 
-## Legenda Jenis Intervensi
-
-| Jenis | Keterangan |
-|-------|------------|
-| Perubahan Stack | Perubahan teknologi atau framework utama |
-| Perubahan Arsitektur | Perubahan desain sistem atau pola implementasi |
-| Penambahan Requirement | REQ baru yang tidak ada di spesifikasi awal |
-| Koreksi Teknis | Agen melakukan kesalahan dan Intent Architect meminta perbaikan |
-| Permintaan Dokumentasi | Permintaan membuat/memperbarui dokumen |
-| Perubahan Prioritas | Mengubah urutan iterasi atau fitur |
-| Perubahan Desain | Perubahan tampilan visual atau tata letak elemen |
-| Pembatalan Fitur | Fitur yang direncanakan dibatalkan |
-| Lainnya | Intervensi yang tidak masuk kategori di atas |
+1. **Corrective Intervention**: IA memperbaiki implementasi atau interpretasi agen yang tidak sesuai spesifikasi.
+2. **Boundary Intervention**: IA menetapkan atau menegaskan batas tindakan agen (misalnya, batasan sistem/keamanan).
+3. **Validation Intervention**: IA menemukan masalah fungsional melalui pengujian langsung atau pemeriksaan hasil.
+4. **Design Authority Intervention**: IA mengambil atau mengubah keputusan visual, UI/UX, atau representasi notasi.
+5. **Architecture Authority Intervention**: IA mengambil keputusan yang memengaruhi stack teknologi, struktur, atau arsitektur sistem.
+6. **Governance Intervention**: IA meminta sinkronisasi dokumentasi, traceability, pencatatan keputusan, atau pemeriksaan integritas.
+7. **Priority Intervention**: IA mengubah urutan pekerjaan atau prioritas implementasi.
 
 ---
 
-## Ringkasan Statistik Intervensi
+## Ringkasan Statistik Intervensi (Retrospektif Klasifikasi Baru)
 
-| Jenis | Jumlah | Dampak Rata-rata |
-|-------|--------|------------------|
-| Perubahan Stack | 1 | Tinggi |
-| Perubahan Arsitektur | 0 | — |
-| Perubahan Desain | 3 | Sedang |
-| Penambahan Requirement | 0 | — |
-| Koreksi Teknis | 11 | Sedang |
-| Permintaan Dokumentasi | 3 | Rendah |
-| Perubahan Prioritas | 0 | — |
-| Pembatalan Fitur | 0 | — |
+| Jenis Intervensi | Jumlah | Dampak Rata-rata |
+|---|---|---|
+| Corrective Intervention | 4 | Sedang |
+| Boundary Intervention | 1 | Tinggi |
+| Validation Intervention | 1 | Sedang |
+| Design Authority Intervention | 3 | Sedang |
+| Architecture Authority Intervention | 1 | Tinggi |
+| Governance Intervention | 8 | Rendah |
+| Priority Intervention | 0 | — |
 | **Total** | **18** | — |
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-08*
+## ═══════════════════════════════════════════════════════════════════
+## ITERASI 3b s.d. 6b — Template Log Intervensi (Skema Baru)
+## ═══════════════════════════════════════════════════════════════════
+
+| Intervention ID | Tanggal | Iterasi | Intervention Type | Trigger | IA Action | Agent Response | Outcome | Req Terkait | Decision Terkait | Drift Terkait |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `INT-00X` | | | | | | | | | | |
+
+---
+
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*

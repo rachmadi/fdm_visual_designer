@@ -82,10 +82,32 @@
 
 ---
 
-## ITERASI 3b–6b — [Template]
+## ITERASI 3b s.d. 6b — Template Iter Summary (Skema Baru)
 ═══════════════════════════════════════════════════════════════════
 
-*[Blok-blok ini akan diisi pada iterasi yang sesuai]*
+- **Tanggal Mulai**: YYYY-MM-DD
+- **Tanggal Selesai**: YYYY-MM-DD
+- **Durasi Aktual (Skema Baru)**:
+  - Elapsed Time (ET):
+  - Active Agent Execution Time (AAET):
+  - Human Interaction Time (HIT):
+  - Recovery Time (RT):
+  - Documentation & Governance Time (DGT):
+- **Status Akhir**: ✅ Selesai
+- **Fitur Selesai**:
+- **REQ yang Ditutup**:
+- **Lesson Learned**:
+
+#### Cross-Artifact Integrity Check (Iterasi X)
+* [ ] Status iterasi konsisten di RTM, Estimated/Actual Time, dan Iter Summary.
+* [ ] Jumlah requirement konsisten di RTM dan Iter Summary.
+* [ ] Durasi menggunakan definisi waktu yang sama di semua log.
+* [ ] Requirement berstatus selesai memiliki bukti di Validation Log.
+* [ ] Decision ID konsisten dengan Decision Log.
+* [ ] Intervention ID konsisten dengan Human Intervention Log.
+* [ ] Drift ID konsisten dengan Context Drift Log.
+* [ ] Tidak terdapat iterasi/requirement fiktif di luar spesifikasi resmi.
+* **Integrity Check**: `PASS` / `FAIL` (Catatan jika FAIL: )
 
 ---
 
@@ -97,7 +119,7 @@
 | 1b | ✅ Selesai | 19 m | 5/5 | PASS |
 | 2a | ✅ Selesai | 38 m | 3/3 | PASS |
 | 2b | ✅ Selesai | 50 m | 2/2 | PASS |
-| 3a | ✅ Selesai | 0 m | 4/4 | PASS |
+| 3a | ✅ Selesai | 56 m | 4/4 | PASS |
 | 3b | 🕒 Belum | — | 0/3 | — |
 | 4a | 🕒 Belum | — | 0/9 | — |
 | 4b | 🕒 Belum | — | 0/4 | — |
@@ -105,8 +127,8 @@
 | 5b | 🕒 Belum | — | 0/2 | — |
 | 6a | 🕒 Belum | — | 0/2 | — |
 | 6b | 🕒 Belum | — | 0/5 | — |
-| **Total** | **⚠️ Partial** | **3 jam 58 m** | **23/50** | **PASS** |
+| **Total** | **⚠️ Partial** | **4 jam 54 m** | **23/50** | **PASS** |
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-08*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*

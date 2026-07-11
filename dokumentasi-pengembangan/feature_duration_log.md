@@ -2,14 +2,32 @@
 ## Format: Kumulatif per Iterasi | Spesifikasi: Revisi 3 Final
 
 > File ini mencatat durasi aktual pengerjaan setiap fitur secara granular.
-> Berguna untuk analisis bottleneck dan perbaikan estimasi proyek serupa di masa depan.
+> Berguna untuk analisis bottleneck dan GOR (Governance Overhead Ratio).
+
+---
+
+### Kode Kategori Governance (GOV)
+
+Mulai Iterasi 3b, aktivitas yang berhubungan dengan tata kelola proyek (governance) diberi kode khusus:
+- `GOV-RTM`: Sinkronisasi/update matriks keterlacakan requirement (RTM).
+- `GOV-DECISION`: Update log keputusan desain/teknis.
+- `GOV-DRIFT`: Update log penyimpangan dan proposal agen.
+- `GOV-VALIDATION`: Update log verifikasi/validasi hasil test.
+- `GOV-INTEGRITY`: Eksekusi Cross-Artifact Integrity Check.
+- `GOV-CONVERSATION`: Update log kronologi percakapan.
+- `GOV-SYNC`: Sinkronisasi akhir seluruh berkas log IIDD & Git.
+
+### Metrik Tata Kelola
+
+* **Governance Overhead Ratio (GOR)**:
+  $$\text{GOR} = \frac{\text{Governance Time}}{\text{Total Development Time}}$$
 
 ---
 
 ## Cara Mengisi
 
-Catat waktu mulai dan selesai setiap fitur/komponen saat dikerjakan.
-Kalkulasi durasi secara otomatis di akhir iterasi.
+Catat waktu mulai, selesai, dan kategori setiap fitur/komponen saat dikerjakan.
+Kalkulasi durasi dan GOR secara otomatis di akhir iterasi.
 
 ---
 
@@ -102,10 +120,14 @@ Kalkulasi durasi secara otomatis di akhir iterasi.
 ---
 
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 3b–6b — [Template]
+## ITERASI 3b s.d. 6b — Template Log Durasi (Prospektif Skema Baru)
 ## ═══════════════════════════════════════════════════════════════════
 
-*[Blok-blok ini akan diisi pada iterasi yang sesuai]*
+| # | Fitur / Komponen | Kategori/Code | File Utama | Mulai | Selesai | Durasi | Kesulitan | Catatan |
+|---|-----------------|---------------|------------|-------|---------|--------|-----------|---------|
+| 1 | [Contoh Fitur] | GOV-RTM | — | 10:00 | 10:10 | 10m | Rendah | Contoh |
+| — | **TOTAL ITERASI** | — | — | — | — | **0m** | — | — |
+| — | **Total Governance** | — | — | — | — | **0m** | — | **GOR: 0%** |
 
 ---
 
@@ -119,4 +141,4 @@ Kalkulasi durasi secara otomatis di akhir iterasi.
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-09*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*

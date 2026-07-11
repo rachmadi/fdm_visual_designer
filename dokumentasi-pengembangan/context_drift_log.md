@@ -213,11 +213,64 @@ Fitur Query Vector dan visualisasinya di canvas berhasil diimplementasikan sepen
 ---
 
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 3–7 — [Template]
+## ITERASI 3b s.d. 6b — Template Log Drift (Skema Baru)
 ## ═══════════════════════════════════════════════════════════════════
 
-*[Blok-blok ini akan diisi pada iterasi yang sesuai]*
+### Tabel Ringkasan Drift
+| Drift ID | Tanggal | Iterasi | Sumber | Intent/Req Terkait | Perubahan Diusulkan | IA Decision | Observed Outcome | Status Akhir |
+|---|---|---|---|---|---|---|---|---|
+| `DFT-00X` | | | | | | | | |
+
+*Daftar Nilai Standar:*
+* **Sumber**: `IA` / `Agent` / `External`
+* **IA Decision**: `Accepted` / `Accepted with Modification` / `Deferred` / `Rejected` / `Ignored`
+* **Observed Outcome**: `Positive` / `Neutral` / `Negative` / `Unknown`
+
+### Detail Entri Drift (Format Vertikal)
+* **Drift ID**: `DFT-00X`
+* **Kondisi Awal**:
+* **Alasan Agen**:
+* **Agent Proposed Impact**:
+* **IA Evaluation**:
+* **Artefak Terdampak**:
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*
+## ═══════════════════════════════════════════════════════════════════
+## LOG CASCADING CONTEXT DRIFT (PROSPEKTIF)
+## ═══════════════════════════════════════════════════════════════════
+
+> Bagian ini mencatat context drift berantai yang menyebar ke beberapa berkas/dokumen proyek.
+
+### Tabel Ringkasan Cascading Drift
+| Drift ID | Initial Misinterpretation | Source Context | CDPD | DRC (Effort/Time) | final Resolution |
+|---|---|---|---|---|---|
+| `CDFT-00X` | | | | | |
+
+* **Context Drift Propagation Depth (CDPD)** = Jumlah berkas/artefak yang terdampak.
+* **Drift Recovery Cost (DRC)** = `[Detection Effort] / [Repair Time] / [Jumlah Artefak Diperbaiki] / [Jumlah Repair Commit]`.
+
+### Detail Entri Cascading Drift
+* **Drift ID**: `CDFT-00X`
+* **Detection Source**:
+* **Detection Actor**:
+* **Affected Artifacts**:
+* **Detection Time**:
+* **Repair Time**:
+* **Repair Commits**:
+
+---
+
+## ═══════════════════════════════════════════════════════════════════
+## LOG PROPOSAL AGEN (AGENT PROPOSAL LOG)
+## ═══════════════════════════════════════════════════════════════════
+
+> Bagian ini mencatat semua inisiatif/proposal teknis yang diajukan oleh agen (diterima maupun ditolak).
+
+| Proposal ID | Tanggal | Iterasi | Agent Proposal | Trigger | Expected Benefit | IA Decision | Final Outcome |
+|---|---|---|---|---|---|---|---|
+| `PROP-00X` | | | | | | | |
+
+---
+
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*

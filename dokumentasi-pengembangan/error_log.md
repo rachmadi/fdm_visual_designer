@@ -6,20 +6,29 @@
 
 ---
 
-## Cara Mengisi
+## Format Entri Error (Prospektif Mulai Iterasi 3b)
 
 ```
 ### E-XXX: [Judul Error]
 - **Iterasi**: 
 - **Tanggal**: 
 - **Jenis Error**: Compile / Runtime / Test / Logic
+- **Error Origin**: [Agent-Induced / Environment-Induced / Requirement-Interpretation-Induced / Integration-Induced / Unknown]
+- **Detection Source**: [Agent / Automated Test / Intent Architect / Runtime / External Tool]
 - **Lokasi**: file:line
 - **Pesan Error**: (paste pesan error asli)
 - **Penyebab Root**: 
 - **Langkah Resolusi**: 
-- **Waktu Resolusi**: 
+- **Detection Time**: YYYY-MM-DD HH:MM
+- **Resolution Start**: YYYY-MM-DD HH:MM
+- **Resolution End**: YYYY-MM-DD HH:MM
+- **Recovery Duration (ART)**: [Duration in minutes/hours]
+- **Reopened**: [Yes / No]
 - **Status**: ✅ Resolved / ⚠️ Workaround / ❌ Open
 ```
+
+*Definisi Metrik Pemulihan:*
+* **Agentic Recovery Time (ART)**: Waktu yang dihabiskan sejak error pertama kali terdeteksi dan dikonfirmasi sampai dengan resolusi perbaikan berhasil diverifikasi.
 
 ---
 
@@ -284,4 +293,4 @@
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*

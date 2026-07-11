@@ -6,19 +6,30 @@
 
 ---
 
-## Format Entri Keputusan
+## Format Entri Keputusan (Prospektif Mulai Iterasi 3b)
 
 ```
 ### D-XXX: [Judul Keputusan]
 - **Tanggal**: YYYY-MM-DD
 - **Dibuat oleh**: [Intent Architect / Agen / Bersama]
+- **Decision Domain**: [Intent / Architecture / Design / Technical / Implementation / Optimization / Recovery / Governance]
+- **Authority Holder**: [Intent Architect / Agent / Shared]
+- **Agent Autonomy Level**: [A0 - No autonomy s.d. A4 - Autonomous technical decision within established boundaries]
+- **IA Validation Required**: [Yes / No]
 - **Konteks**: [Mengapa keputusan ini perlu diambil?]
 - **Keputusan**: [Apa yang diputuskan?]
 - **Alternatif yang Ditolak**: [Opsi lain yang dipertimbangkan]
 - **Alasan Pemilihan**: [Mengapa opsi ini dipilih?]
 - **Dampak**: [Dampak terhadap arsitektur / implementasi]
-- **Iterasi Terdampak**: [1a, 1b, dst.]
+- **Iterasi Terdampak**: [3b, 4a, dst.]
 ```
+
+*Definisi Tingkat Otonomi Agen (Agent Autonomy Level):*
+* **A0** — *No autonomy*: Agen hanya menjalankan instruksi yang telah diformulasikan secara penuh tanpa variasi.
+* **A1** — *Execute explicit instruction*: Agen memilih langkah teknis sederhana untuk memenuhi perintah langsung.
+* **A2** — *Select implementation technique*: Agen memilih metode/pola implementasi terbaik dari beberapa alternatif.
+* **A3** — *Propose and execute with IA validation*: Agen mengusulkan solusi/desain baru dan mengeksekusinya setelah disetujui IA.
+* **A4** — *Autonomous technical decision within established boundaries*: Agen mengambil keputusan teknis mandiri dalam batas aturan workspace yang telah ditetapkan.
 
 ---
 
@@ -234,4 +245,4 @@
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-07*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*

@@ -2,9 +2,28 @@
 ## Format: Kumulatif per Iterasi | Spesifikasi: Revisi 3 Final
 
 > File ini membandingkan estimasi waktu dari spesifikasi dengan waktu aktual pengerjaan.
-> Analisis deviasi digunakan untuk memperbaiki estimasi iterasi berikutnya.
+> Skema pencatatan disempurnakan dengan 5 kategori waktu eksplisit untuk iterasi prospektif.
 
 ---
+
+### Standar Konsep Waktu Pengembangan (Prospektif)
+
+Mulai Iterasi 3b, waktu pengembangan dicatat dalam 5 kategori berikut:
+1. **Elapsed Time (ET)**: Waktu kalender sejak aktivitas dimulai sampai aktivitas selesai.
+2. **Active Agent Execution Time (AAET)**: Waktu yang digunakan agen untuk analisis, implementasi, pengujian, atau tindakan teknis secara aktif.
+3. **Human Interaction Time (HIT)**: Waktu yang digunakan Intent Architect (IA) untuk meninjau hasil, uji coba, koreksi, dan mengambil keputusan.
+4. **Recovery Time (RT)**: Waktu untuk deteksi, analisis, dan perbaikan error atau context drift.
+5. **Documentation and Governance Time (DGT)**: Waktu untuk sinkronisasi RTM, decision log, validation log, dan log governance lainnya.
+
+### Metrik Evaluasi Waktu
+
+* **Actual-to-Estimate Ratio (AER)**:
+  $$\text{AER} = \frac{\text{Actual Time}}{\text{Estimated Time}}$$
+* **Estimation Error Rate (EER)**:
+  $$\text{EER} = \frac{|\text{Estimated Time} - \text{Actual Time}|}{\text{Estimated Time}}$$
+
+---
+
 
 ═══════════════════════════════════════════════════════════════════
 ## ITERASI 1a — Fondasi Canvas & Three-Node Architecture
@@ -90,22 +109,40 @@
 
 ## Rekap Keseluruhan
 
-| Iterasi | Estimasi | Realisasi | Deviasi | Akurasi |
-|---------|----------|-----------|---------|---------|
-| 1a | ~7,5 jam | 2 jam 11 m | -5 jam 19 m | 29.1% |
-| 1b | ~8 jam | 19 menit | -7 jam 41 m | 4.0% |
-| 2a | ~6,5 jam | 38 menit | -5 jam 52 m | 9.7% |
-| 2b | ~6 jam | 50 menit | -5 jam 10 m | 13.9% |
-| 3a | ~7 jam | 56 menit | -6 jam 4 m | 13.3% |
-| 3b | ~6,5 jam | — | — | — |
-| 4a | ~7 jam | — | — | — |
-| 4b | ~5,5 jam | — | — | — |
-| 5a | ~5 jam | — | — | — |
-| 5b | ~6 jam | — | — | — |
-| 6a | ~7 jam | — | — | — |
-| 6b | ~6,5 jam | — | — | — |
-| **Total (Iterasi Selesai)** | **~35 jam** | **4 jam 54 m** | **-30 jam 6 m** | **14.0%** |
+| Iterasi | Estimasi | Realisasi | Deviasi | AER | EER |
+|---------|----------|-----------|---------|-----|-----|
+| 1a | ~7,5 jam | 2 jam 11 m | -5 jam 19 m | 29.1% | 70.9% |
+| 1b | ~8 jam | 19 menit | -7 jam 41 m | 4.0% | 96.0% |
+| 2a | ~6,5 jam | 38 menit | -5 jam 52 m | 9.7% | 90.3% |
+| 2b | ~6 jam | 50 menit | -5 jam 10 m | 13.9% | 86.1% |
+| 3a | ~7 jam | 56 menit | -6 jam 4 m | 13.3% | 86.7% |
+| 3b | ~6,5 jam | — | — | — | — |
+| 4a | ~7 jam | — | — | — | — |
+| 4b | ~5,5 jam | — | — | — | — |
+| 5a | ~5 jam | — | — | — | — |
+| 5b | ~6 jam | — | — | — | — |
+| 6a | ~7 jam | — | — | — | — |
+| 6b | ~6,5 jam | — | — | — | — |
+| **Total (Iterasi Selesai)** | **~35 jam** | **4 jam 54 m** | **-30 jam 6 m** | **14.0%** | **86.0%** |
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-09*
+═══════════════════════════════════════════════════════════════════
+## ITERASI 3b s.d. 6b — Template Log Waktu (Skema 5 Kategori)
+═══════════════════════════════════════════════════════════════════
+
+| Komponen / Aktivitas | Estimasi | Waktu Mulai | Waktu Selesai | ET | AAET | HIT | RT | DGT | Deviasi | Catatan |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [Aktivitas] | | | | | | | | | | |
+| **Total Iterasi** | | | | | | | | | | |
+
+*Keterangan Kolom:*
+* **ET**: Elapsed Time (Waktu Kalender)
+* **AAET**: Active Agent Execution Time
+* **HIT**: Human Interaction Time
+* **RT**: Recovery Time
+* **DGT**: Documentation & Governance Time
+
+---
+
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*
