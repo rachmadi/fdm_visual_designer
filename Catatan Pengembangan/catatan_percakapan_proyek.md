@@ -830,10 +830,10 @@ Setiap kali melakukan pengujian headed test interaktif, Agen **wajib** menggunak
 - ✅ Commit & push ke GitHub master branch sukses
 ---
 
-## Sesi 16 — 2026-07-17 (Iterasi 3b — Security Boundary Lengkap)
-
+## Sesi 16 — 2026-07-17 (Iterasi 3b — Security Boundary Lengkap & Visual Test)
+ 
 ### Kronologi & Temuan Kritis
-
+ 
 - **Penyusunan Rencana Implementasi**:
   - Menyusun Rencana Implementasi (Implementation Plan) untuk Iterasi 3b guna menutup 3 gap Security Boundary (REQ-024 s.d. REQ-026) yang disetujui oleh Intent Architect.
 - **Implementasi Klik-drag Canvas Drawing (REQ-024)**:
@@ -845,34 +845,48 @@ Setiap kali melakukan pengujian headed test interaktif, Agen **wajib** menggunak
   - Menyeret handle tersebut akan mengubah ukuran boundary secara real-time dengan batas minimum 80x80px (clamping).
 - **Implementasi Deteksi Node Konsisten (REQ-026)**:
   - Membuat helper `_recomputeAllBoundaryEnclosures()` di notifier state untuk menghitung ulang `enclosedNodeIds` pada boundary secara konsisten berbasis titik tengah bodi node.
-  - Mengintegrasikan pemicu deteksi otomatis pada mutasi diagram (`updateNodePosition` saat node digeser, `finishDragging` saat penyeretan selesai, boundary resizing, dan penghapusan node).
+  - Mengintegrasikan pemicu deteksi otomatis pada mutasi diagram (`updateNodePosition` saat node digeser, boundary resizing, dan penghapusan node).
 - **Penulisan 15 Unit Test**:
   - Menulis 15 skenario unit test baru di `test/security_boundary_test.dart` yang memverifikasi seluruh detail behavior ini. Semua test passed (23/23 lulus).
-- **Headed Integration Test**:
-  - Menjalankan build web produksi dan ChromeDriver headed integration test (non-headless) untuk memverifikasi fungsionalitas visual dan interaksi secara E2E di Chrome desktop. Semua tahapan integration test lulus 100%.
-
+- **Debugging & Uji Coba Kompatibilitas Chrome v150**:
+  - Saat E2E headed test dijalankan via Task Scheduler, Chrome membuka halaman kosong (blank white screen) dan dwds gagal terhubung (`AppConnectionException`).
+  - **Identifikasi Masalah**:
+    1. Browser Google Chrome pada sistem pengguna telah terupdate ke versi `150.0.7871.127`, sedangkan ChromeDriver lokal yang digunakan masih versi `149`.
+    2. Flag `--disable-gpu` memicu kegagalan inisialisasi context WebGL/Canvas di Chrome v150 visual session.
+    3. Penggunaan `--web-renderer html` tidak didukung oleh `flutter drive`.
+    4. Penggunaan `--web-browser-flag` sandbox memblokir port debugger DevTools.
+  - **Solusi**:
+    1. Melakukan upgrade ChromeDriver lokal ke versi `150.0.7871.124` menggunakan `npm install chromedriver@150`.
+    2. Menghapus flag `--disable-gpu` agar Chrome dapat mengakses resource akselerasi hardware visual desktop (Session 1).
+    3. Menghapus opsi `--web-renderer` dan flag sandbox tambahan, kembali menggunakan konfigurasi `flutter drive` standar.
+- **Hasil Headed Integration Test Akhir**:
+  - Menjalankan kembali Scheduled Task `FDM_HeadedTest`. Browser Chrome v150 fisik terbuka secara interaktif di layar desktop pengguna (Session 1), berhasil memuat aplikasi FDM Designer tanpa blank screen, mengeksekusi seluruh 5 tahapan pengujian visual secara dinamis, menyimpan 6 screenshot visual terbaru, dan menampilkan status `All tests passed!`.
+ 
 **Tabel Durasi Pengerjaan & Pengujian Sesi 16:**
-
+ 
 | Aktivitas | Mulai | Selesai | Durasi |
 |-----------|-------|---------|--------|
 | Perancangan Rencana Implementasi & RTM | 15:30 | 15:40 | 10 menit |
 | Implementasi Klik-drag Drawing (REQ-024) & State | 15:40 | 15:52 | 12 menit |
 | Implementasi Resize Handle (REQ-025) & Containment (REQ-026) | 15:52 | 16:05 | 13 menit |
-| Penulisan 15 Unit Test & Error Fixes | 16:05 | 16:15 | 10 menit |
-| Build Web & Headed Integration Test | 16:15 | 16:25 | 10 menit |
-| **Total Sesi 16** | **15:30** | **16:25** | **55 menit** |
-
+| Penulisan 15 Unit Test & Komit Awal | 16:05 | 16:15 | 10 menit |
+| Uji Coba Awal & Debugging Blank Page / Chrome v150 | 16:15 | 16:30 | 15 menit |
+| Upgrade ChromeDriver v150 & Perbaikan Script `run_test.bat` | 16:30 | 16:40 | 10 menit |
+| Eksekusi Sukses Headed E2E Test & Sinkronisasi Repositori | 16:40 | 16:49 | 9 menit |
+| **Total Sesi 16** | **15:30** | **16:49** | **1 jam 19 menit** |
+ 
 ### Status Akhir Sesi 16
-
+ 
 - ✅ Klik-drag drawing mode Security Boundary (REQ-024) terimplementasi & teruji E2E
 - ✅ Resize handle interaktif (REQ-025) terimplementasi & teruji E2E
 - ✅ Deteksi node otomatis yang konsisten (REQ-026) terimplementasi & teruji E2E
 - ✅ 15 unit test baru lulus 100% (total 23 unit test passed)
-- ✅ Headed Integration Test lulus 100% via ChromeDriver
-- ✅ Seluruh log dokumen IIDD diperbarui secara akurat dan konsisten secara matematis
-
+- ✅ Headed Integration Test lulus 100% via ChromeDriver v150 (Visual Chrome muncul di layar IA)
+- ✅ Seluruh log dokumen IIDD diperbarui secara akurat dan disinkronkan secara matematis
+- ✅ Git commit & push sukses (hash komit terakhir: `443458d`)
+ 
 ---
-
+ 
 ## Sesi 17 — Rencana Pengerjaan Berikutnya
-
+ 
 - Melanjutkan ke Iterasi 4a (Physical Guardrails & semantika WFR lanjutan) dengan skema pengujian dan dokumentasi yang stabil.
