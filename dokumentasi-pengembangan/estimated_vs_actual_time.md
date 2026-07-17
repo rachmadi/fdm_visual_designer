@@ -1,4 +1,4 @@
-﻿# ⏱️ Estimasi vs Realisasi Waktu — FDM Visual Designer
+# ⏱️ Estimasi vs Realisasi Waktu — FDM Visual Designer
 ## Format: Kumulatif per Iterasi | Spesifikasi: Revisi 3 Final
 
 > File ini membandingkan estimasi waktu dari spesifikasi dengan waktu aktual pengerjaan.
@@ -116,19 +116,34 @@ Mulai Iterasi 3b, waktu pengembangan dicatat dalam 5 kategori berikut:
 | 2a | ~6,5 jam | 38 menit | -5 jam 52 m | 9.7% | 90.3% |
 | 2b | ~6 jam | 50 menit | -5 jam 10 m | 13.9% | 86.1% |
 | 3a | ~7 jam | 56 menit | -6 jam 4 m | 13.3% | 86.7% |
-| 3b | ~6,5 jam | — | — | — | — |
+| 3b | ~6,5 jam | 55 menit | -5 jam 35 m | 14.1% | 85.9% |
 | 4a | ~7 jam | — | — | — | — |
 | 4b | ~5,5 jam | — | — | — | — |
 | 5a | ~5 jam | — | — | — | — |
 | 5b | ~6 jam | — | — | — | — |
 | 6a | ~7 jam | — | — | — | — |
 | 6b | ~6,5 jam | — | — | — | — |
-| **Total (Iterasi Selesai)** | **~35 jam** | **4 jam 54 m** | **-30 jam 6 m** | **14.0%** | **86.0%** |
+| **Total (Iterasi Selesai)** | **~41.5 jam** | **5 jam 49 m** | **-35 jam 41 m** | **14.0%** | **86.0%** |
 
 ---
 
 ═══════════════════════════════════════════════════════════════════
-## ITERASI 3b s.d. 6b — Template Log Waktu (Skema 5 Kategori)
+## ITERASI 3b — Security Boundary Lengkap
+═══════════════════════════════════════════════════════════════════
+
+| Komponen / Aktivitas | Estimasi | Waktu Mulai | Waktu Selesai | ET | AAET | HIT | RT | DGT | Deviasi | Catatan |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Perancangan Implementasi & RTM | 1 jam | 15:30 | 15:40 | 10m | 10m | 0m | 0m | 0m | -50m | Draft plan |
+| Implementasi Klik-drag Drawing (REQ-024) & State | 2 jam | 15:40 | 15:52 | 12m | 12m | 0m | 0m | 0m | -108m | state.dart & canvas_view.dart |
+| Implementasi Resize Handle (REQ-025) & Containment (REQ-026) | 2 jam | 15:52 | 16:05 | 13m | 13m | 0m | 0m | 0m | -107m | canvas_view.dart & state.dart |
+| Penulisan 15 Unit Test & Error Fixes | 1 jam | 16:05 | 16:15 | 10m | 5m | 0m | 5m | 0m | -50m | E-018 & E-019 resolved |
+| Build Web & Headed Integration Test | 0.5 jam | 16:15 | 16:25 | 10m | 5m | 0m | 0m | 5m | -20m | npx chromedriver + flutter drive |
+| **Total Iterasi** | **~6.5 jam** | **15:30** | **16:25** | **55m** | **45m** | **0m** | **5m** | **5m** | **-5 jam 35m** | Selesai |
+
+---
+
+═══════════════════════════════════════════════════════════════════
+## ITERASI 4a s.d. 6b — Template Log Waktu (Skema 5 Kategori)
 ═══════════════════════════════════════════════════════════════════
 
 | Komponen / Aktivitas | Estimasi | Waktu Mulai | Waktu Selesai | ET | AAET | HIT | RT | DGT | Deviasi | Catatan |
@@ -145,4 +160,4 @@ Mulai Iterasi 3b, waktu pengembangan dicatat dalam 5 kategori berikut:
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-17*

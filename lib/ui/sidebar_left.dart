@@ -67,20 +67,6 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
   }
 
 
-  void _createBoundary() {
-    final rand = math.Random();
-    final id = 'boundary_${DateTime.now().millisecondsSinceEpoch}_${rand.nextInt(1000000)}';
-    final rect = Rect.fromLTWH(1350.0 + rand.nextInt(50), 1350.0 + rand.nextInt(50), 300, 250);
-    
-    final boundary = SecurityBoundary(
-      id: id,
-      accessLevel: 'public',
-      enclosedNodeIds: [],
-      rect: rect,
-    );
-
-    ref.read(diagramProvider.notifier).addBoundary(boundary);
-  }
 
   void _connectNodes() {
     if (_selectedSourceNodeId == null || _selectedTargetNodeId == null) {
@@ -190,21 +176,48 @@ class _SidebarLeftState extends ConsumerState<SidebarLeft> {
               ),
             ),
             const SizedBox(height: 8),
-            ElevatedButton.icon(
-              onPressed: _createBoundary,
-              icon: const Icon(Icons.security, size: 16),
-              label: const Text('Add Security Boundary'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: isDark ? const Color(0xFF065F46) : const Color(0xFFD1FAE5),
-                foregroundColor: isDark ? Colors.green.shade100 : const Color(0xFF065F46),
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  side: BorderSide(color: isDark ? const Color(0xFF047857) : const Color(0xFF34D399)),
+            // REQ-024: Toggle boundary drawing mode instead of directly creating
+            Builder(builder: (context) {
+              final isDrawing = ref.watch(
+                diagramProvider.select((s) => s.isBoundaryDrawingMode),
+              );
+              return ElevatedButton.icon(
+                onPressed: () =>
+                    ref.read(diagramProvider.notifier).toggleBoundaryDrawingMode(),
+                icon: Icon(
+                  isDrawing ? Icons.cancel_outlined : Icons.security,
+                  size: 16,
                 ),
-              ),
-            ),
+                label: Text(isDrawing
+                    ? 'Cancel Drawing (Esc)'
+                    : 'Draw Security Boundary'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: isDrawing
+                      ? const Color(0xFF6366F1)
+                      : (isDark
+                          ? const Color(0xFF065F46)
+                          : const Color(0xFFD1FAE5)),
+                  foregroundColor: isDrawing
+                      ? Colors.white
+                      : (isDark
+                          ? Colors.green.shade100
+                          : const Color(0xFF065F46)),
+                  alignment: Alignment.centerLeft,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    side: BorderSide(
+                      color: isDrawing
+                          ? const Color(0xFF4F46E5)
+                          : (isDark
+                              ? const Color(0xFF047857)
+                              : const Color(0xFF34D399)),
+                    ),
+                  ),
+                ),
+              );
+            }),
             const SizedBox(height: 24),
             const Divider(),
             const SizedBox(height: 16),

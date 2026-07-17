@@ -105,6 +105,13 @@
 - [x] Membuat tabel bukti Cross-Artifact Integrity Check pada `iteration_summary.md` dengan status PASS
 
 
+## [1.8.0] - Security Boundary Lengkap (Iterasi 3b - Selesai)
+
+- [x] Menggambar Security Boundary secara bebas di canvas menggunakan klik-drag kosong (REQ-024)
+- [x] Mengubah ukuran Security Boundary menggunakan drag handle interaktif di sudut kanan-bawah (REQ-025)
+- [x] Otomasi deteksi node di dalam area Security Boundary (`enclosedNodeIds`) yang dipicu secara real-time saat penyeretan node atau boundary resizing (REQ-026)
+- [x] Penulisan 15 unit test baru untuk memverifikasi draw/resize/containment logic pada boundary di `test/security_boundary_test.dart`
+- [x] Menjalankan analisis statis dan headed E2E integration test untuk memverifikasi fungsionalitas
 
 ## Rencana Selanjutnya (Peningkatan Masa Depan)
 

@@ -56,6 +56,8 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
   // Node/boundary being dragged (ID)
   String? _draggingNodeId;
   String? _draggingBoundaryId;
+  String? _resizingBoundaryId; // REQ-025: boundary currently being resized
+  bool _isDrawingBoundary = false; // REQ-024: pointer-down started a boundary draw
   Offset? _lastPointerPosition;
   int? _activePointerId; // Track the pointer ID currently doing the drag
 
@@ -134,6 +136,18 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
       final labelRect =
           Rect.fromLTWH(b.rect.left + 10, b.rect.top - 12, 100, 28);
       if (labelRect.contains(canvasPos)) return b.id;
+    }
+    return null;
+  }
+
+  /// REQ-025: Returns the boundary ID if the pointer is within 16px of the
+  /// bottom-right resize handle corner.
+  String? _hitTestBoundaryResizeHandle(Offset canvasPos) {
+    final boundaries = ref.read(diagramProvider).boundaries;
+    for (int i = boundaries.length - 1; i >= 0; i--) {
+      final b = boundaries[i];
+      final handlePos = Offset(b.rect.right, b.rect.bottom);
+      if ((canvasPos - handlePos).distance <= 16.0) return b.id;
     }
     return null;
   }
@@ -299,11 +313,13 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
   }
 
   void _abortDrag() {
-    if (_draggingNodeId != null || _draggingBoundaryId != null) {
+    if (_draggingNodeId != null || _draggingBoundaryId != null || _resizingBoundaryId != null) {
       ref.read(diagramProvider.notifier).finishDragging();
     }
     _draggingNodeId = null;
     _draggingBoundaryId = null;
+    _resizingBoundaryId = null;
+    _isDrawingBoundary = false;
     _lastPointerPosition = null;
     _activePointerId = null;
     if (_isDraggingNode) {
@@ -312,9 +328,6 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
   }
 
   void _handlePointerDown(PointerDownEvent event) {
-    // If a drag is already active, this might be a second finger touching the screen.
-    // In that case, we abort the current drag session so that multi-touch pan/zoom
-    // can proceed normally without dragging any nodes.
     if (_activePointerId != null) {
       _abortDrag();
       return;
@@ -322,17 +335,41 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
 
     final canvasPos = _screenToCanvas(event.localPosition);
     _lastPointerPosition = event.localPosition;
+    final diagramState = ref.read(diagramProvider);
+
+    // REQ-024: If boundary drawing mode is active, start drawing on empty space
+    if (diagramState.isBoundaryDrawingMode) {
+      // Only start a draw if we did NOT click on an existing node/boundary
+      final nodeId = _hitTestNode(canvasPos);
+      final boundaryId = _hitTestBoundary(canvasPos);
+      if (nodeId == null && boundaryId == null) {
+        _isDrawingBoundary = true;
+        _activePointerId = event.pointer;
+        setState(() => _isDraggingNode = true); // disable IV pan while drawing
+        ref.read(diagramProvider.notifier).startBoundaryDraw(canvasPos);
+        return;
+      }
+    }
+
+    // REQ-025: Check resize handle BEFORE drag header
+    final resizeId = _hitTestBoundaryResizeHandle(canvasPos);
+    if (resizeId != null) {
+      _resizingBoundaryId = resizeId;
+      _activePointerId = event.pointer;
+      ref.read(diagramProvider.notifier).selectBoundary(resizeId);
+      setState(() => _isDraggingNode = true);
+      return;
+    }
 
     final nodeId = _hitTestNode(canvasPos);
     if (nodeId != null) {
-      final isConnecting = ref.read(diagramProvider).isConnecting;
+      final isConnecting = diagramState.isConnecting;
       if (isConnecting) {
         ref.read(diagramProvider.notifier).completeConnection(nodeId);
       } else {
         ref.read(diagramProvider.notifier).selectNode(nodeId);
         _draggingNodeId = nodeId;
         _activePointerId = event.pointer;
-        // Disable InteractiveViewer pan while we drag a node
         setState(() => _isDraggingNode = true);
       }
       return;
@@ -343,7 +380,7 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
       _draggingBoundaryId = boundaryId;
       _activePointerId = event.pointer;
       ref.read(diagramProvider.notifier).selectBoundary(boundaryId);
-      setState(() => _isDraggingNode = true); // block IV panning for boundaries too
+      setState(() => _isDraggingNode = true);
       return;
     }
 
@@ -353,20 +390,31 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
       return;
     }
 
-    // Empty space — let InteractiveViewer pan
+    // Empty space
     ref.read(diagramProvider.notifier).selectNode(null);
   }
 
   void _handlePointerMove(PointerMoveEvent event) {
-    // Ignore events that do not match the active dragging pointer,
-    // or if no drag is currently active.
     if (_activePointerId == null || event.pointer != _activePointerId) return;
     if (_lastPointerPosition == null) return;
 
-    if (_draggingNodeId != null) {
-      // CRITICAL: Convert BOTH positions to canvas-space using full matrix inversion.
-      // Simply dividing by scale is WRONG — it ignores the translation component
-      // of the matrix. This caused nodes to drift when zoomed in/out.
+    if (_isDrawingBoundary) {
+      // REQ-024: update draft boundary end point
+      final currentCanvas = _screenToCanvas(event.localPosition);
+      ref.read(diagramProvider.notifier).updateBoundaryDraft(currentCanvas);
+    } else if (_resizingBoundaryId != null) {
+      // REQ-025: resize boundary by moving its bottom-right corner
+      final currentCanvas = _screenToCanvas(event.localPosition);
+      final boundaries = ref.read(diagramProvider).boundaries;
+      final b = boundaries.firstWhere((b) => b.id == _resizingBoundaryId);
+      final newRect = Rect.fromLTRB(
+        b.rect.left,
+        b.rect.top,
+        currentCanvas.dx,
+        currentCanvas.dy,
+      );
+      ref.read(diagramProvider.notifier).updateBoundaryRect(_resizingBoundaryId!, newRect);
+    } else if (_draggingNodeId != null) {
       final currentCanvas = _screenToCanvas(event.localPosition);
       final prevCanvas = _screenToCanvas(_lastPointerPosition!);
       final canvasDelta = currentCanvas - prevCanvas;
@@ -399,6 +447,10 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
 
   void _handlePointerUp(PointerUpEvent event) {
     if (event.pointer == _activePointerId) {
+      if (_isDrawingBoundary) {
+        // REQ-024: commit the draft boundary
+        ref.read(diagramProvider.notifier).commitBoundaryDraft();
+      }
       _abortDrag();
     }
   }
@@ -419,25 +471,28 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
 
     return Container(
       color: bgColor,
-      // Listener wraps InteractiveViewer to receive raw pointer events
-      // for hit-testing nodes before InteractiveViewer consumes them.
       child: Listener(
         onPointerDown: _handlePointerDown,
         onPointerMove: _handlePointerMove,
         onPointerUp: _handlePointerUp,
         onPointerCancel: (_) => _abortDrag(),
         behavior: HitTestBehavior.translucent,
-        child: InteractiveViewer(
-          transformationController: _transformationController,
-          // Disable panning when we're actively dragging a node to prevent
-          // the InteractiveViewer from capturing our drag gesture
-          panEnabled: !_isDraggingNode,
-          scaleEnabled: !_isDraggingNode,
-          constrained: false,
-          boundaryMargin: const EdgeInsets.all(500),
-          minScale: 0.1,
-          maxScale: 4.0,
-          child: RepaintBoundary(
+        child: MouseRegion(
+          // REQ-024: Show crosshair cursor when boundary drawing mode is active
+          cursor: state.isBoundaryDrawingMode
+              ? SystemMouseCursors.precise
+              : MouseCursor.defer,
+          child: InteractiveViewer(
+            transformationController: _transformationController,
+            // Disable panning when we're actively dragging a node to prevent
+            // the InteractiveViewer from capturing our drag gesture
+            panEnabled: !_isDraggingNode,
+            scaleEnabled: !_isDraggingNode,
+            constrained: false,
+            boundaryMargin: const EdgeInsets.all(500),
+            minScale: 0.1,
+            maxScale: 4.0,
+            child: RepaintBoundary(
             key: ref.watch(canvasKeyProvider),
             child: SizedBox(
               width: _canvasWidth,
@@ -461,6 +516,29 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
                     SecurityBoundaryWidget(
                       key: ValueKey(boundary.id),
                       boundary: boundary,
+                    ),
+
+                  // Layer 3b: Draft boundary during drawing mode (REQ-024)
+                  if (state.isBoundaryDrawingMode &&
+                      state.boundaryDraftStart != null &&
+                      state.boundaryDraftEnd != null)
+                    Positioned.fromRect(
+                      rect: Rect.fromPoints(
+                        state.boundaryDraftStart!,
+                        state.boundaryDraftEnd!,
+                      ),
+                      child: IgnorePointer(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF6366F1).withValues(alpha: 0.08),
+                            border: Border.all(
+                              color: const Color(0xFF6366F1),
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      ),
                     ),
 
                   // Layer 4: Edges (below nodes)
@@ -510,7 +588,8 @@ class _CanvasViewState extends ConsumerState<CanvasView> {
               ),
             ),
           ),
-        ),
+          ), // closes InteractiveViewer
+        ), // closes MouseRegion
       ),
     );
   }

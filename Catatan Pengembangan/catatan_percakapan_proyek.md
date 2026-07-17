@@ -828,9 +828,51 @@ Setiap kali melakukan pengujian headed test interaktif, Agen **wajib** menggunak
 - ✅ Terminologi "Three-Node" diubah ke "Two-Node with Query Vector" untuk kepatuhan visual
 - ✅ Cross-Artifact Integrity Check terdokumentasi dalam tabel bukti terstruktur (Status: `PASS`)
 - ✅ Commit & push ke GitHub master branch sukses
+---
+
+## Sesi 16 — 2026-07-17 (Iterasi 3b — Security Boundary Lengkap)
+
+### Kronologi & Temuan Kritis
+
+- **Penyusunan Rencana Implementasi**:
+  - Menyusun Rencana Implementasi (Implementation Plan) untuk Iterasi 3b guna menutup 3 gap Security Boundary (REQ-024 s.d. REQ-026) yang disetujui oleh Intent Architect.
+- **Implementasi Klik-drag Canvas Drawing (REQ-024)**:
+  - Mengubah tombol palette "Add Security Boundary" di sidebar kiri menjadi toggle drawing mode.
+  - Saat mode drawing aktif, kursor mouse berubah menjadi crosshair (`SystemMouseCursors.precise`) dan menyeret pada area kosong canvas akan merender draft container semi-transparan berwarna indigo (`#6366F1`) secara real-time.
+  - PointerUp melakukan commit boundary baru jika dimensi >= 60x60px.
+- **Implementasi Resize Handle (REQ-025)**:
+  - Hit-testing diposisikan dengan radius 16px di pojok kanan-bawah boundary.
+  - Menyeret handle tersebut akan mengubah ukuran boundary secara real-time dengan batas minimum 80x80px (clamping).
+- **Implementasi Deteksi Node Konsisten (REQ-026)**:
+  - Membuat helper `_recomputeAllBoundaryEnclosures()` di notifier state untuk menghitung ulang `enclosedNodeIds` pada boundary secara konsisten berbasis titik tengah bodi node.
+  - Mengintegrasikan pemicu deteksi otomatis pada mutasi diagram (`updateNodePosition` saat node digeser, `finishDragging` saat penyeretan selesai, boundary resizing, dan penghapusan node).
+- **Penulisan 15 Unit Test**:
+  - Menulis 15 skenario unit test baru di `test/security_boundary_test.dart` yang memverifikasi seluruh detail behavior ini. Semua test passed (23/23 lulus).
+- **Headed Integration Test**:
+  - Menjalankan build web produksi dan ChromeDriver headed integration test (non-headless) untuk memverifikasi fungsionalitas visual dan interaksi secara E2E di Chrome desktop. Semua tahapan integration test lulus 100%.
+
+**Tabel Durasi Pengerjaan & Pengujian Sesi 16:**
+
+| Aktivitas | Mulai | Selesai | Durasi |
+|-----------|-------|---------|--------|
+| Perancangan Rencana Implementasi & RTM | 15:30 | 15:40 | 10 menit |
+| Implementasi Klik-drag Drawing (REQ-024) & State | 15:40 | 15:52 | 12 menit |
+| Implementasi Resize Handle (REQ-025) & Containment (REQ-026) | 15:52 | 16:05 | 13 menit |
+| Penulisan 15 Unit Test & Error Fixes | 16:05 | 16:15 | 10 menit |
+| Build Web & Headed Integration Test | 16:15 | 16:25 | 10 menit |
+| **Total Sesi 16** | **15:30** | **16:25** | **55 menit** |
+
+### Status Akhir Sesi 16
+
+- ✅ Klik-drag drawing mode Security Boundary (REQ-024) terimplementasi & teruji E2E
+- ✅ Resize handle interaktif (REQ-025) terimplementasi & teruji E2E
+- ✅ Deteksi node otomatis yang konsisten (REQ-026) terimplementasi & teruji E2E
+- ✅ 15 unit test baru lulus 100% (total 23 unit test passed)
+- ✅ Headed Integration Test lulus 100% via ChromeDriver
+- ✅ Seluruh log dokumen IIDD diperbarui secara akurat dan konsisten secara matematis
 
 ---
 
-## Sesi 16 — Rencana Pengerjaan Berikutnya
+## Sesi 17 — Rencana Pengerjaan Berikutnya
 
-- Memulai implementasi fitur-fitur teknis baru pada iterasi selanjutnya menggunakan skema pelaporan dan validasi yang baru diselaraskan.
+- Melanjutkan ke Iterasi 4a (Physical Guardrails & semantika WFR lanjutan) dengan skema pengujian dan dokumentasi yang stabil.

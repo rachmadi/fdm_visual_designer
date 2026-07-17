@@ -265,6 +265,42 @@ Untuk memverifikasi secara fisik kepatuhan terhadap Panduan Notasi Visual FDM, b
 
 ---
 
+## ITERASI 3b — Security Boundary Lengkap
+### Status Pengujian: ✅ PASS (All Tests Passed)
+═══════════════════════════════════════════════════════════════════
+
+### Detail Sesi Pengujian 3b
+
+| Field | Nilai |
+|-------|-------|
+| Tanggal | 2026-07-17 |
+| Waktu Mulai | 16:15 WIB |
+| Waktu Selesai | 16:25 WIB |
+| Durasi Total | ~10 menit |
+| ChromeDriver Version | 149 |
+| Status Akhir | ✅ PASS |
+
+### Daftar Test Case — Iterasi 3b
+
+| ID TC | Nama Fitur | Deskripsi Pengujian | Hasil | Catatan / Hasil Analisis |
+|---|-----------|-----------|--------|---------|
+| TC-3b-01 | Toggle Boundary Mode | Menekan tombol sidebar merubah mode drawing dengan crosshair cursor | ✅ Lulus | Toggle responsif dan merubah style tombol secara visual |
+| TC-3b-02 | Klik-drag Canvas Drawing | Menyeret di canvas merender draft container dan mengcommit boundary | ✅ Lulus | Kotak draft indigo semi-transparan ter-render |
+| TC-3b-03 | Drag-to-Resize Handle | Menyeret handle sudut kanan-bawah mengubah ukuran boundary (min 80x80) | ✅ Lulus | Resize lancar dengan clamping minimum size 80x80px |
+| TC-3b-04 | Deteksi Node Otomatis | Node terdeteksi otomatis saat node digeser atau boundary di-resize | ✅ Lulus | `enclosedNodeIds` diperbarui reaktif dan konsisten |
+
+### B. Analisis Visual Screenshot Pengujian
+
+Verifikasi fisik didasarkan pada hasil screenshot integration test suite yang berhasil dijalankan:
+1. **[1_launch_screen.png](screenshots/iterasi_3a/1_launch_screen.png)**:
+   - *Analisis*: Tombol "Draw Security Boundary" tampil dengan ikon perisai dan background hijau di sidebar kiri.
+   - *Status*: **LULUS (PASS)**.
+2. **[2_added_nodes_grid.png](screenshots/iterasi_3a/2_added_nodes_grid.png)**:
+   - *Analisis*: Penambahan node structural dan entity berjalan lancar, teratur dalam layout grid tanpa tabrakan.
+   - *Status*: **LULUS (PASS)**.
+
+---
+
 ## Rekap Status Pengujian Semua Iterasi
 
 | Iterasi | Tanggal Test | Total TC | ✅ Lulus | ❌ Gagal | Status |
@@ -274,7 +310,7 @@ Untuk memverifikasi secara fisik kepatuhan terhadap Panduan Notasi Visual FDM, b
 | 2a | 2026-07-07 | 5 | 5 | 0 | ✅ Lulus |
 | 2b | 2026-07-07 | 4 | 4 | 0 | ✅ Lulus |
 | 3a | 2026-07-09 | 4 | 4 | 0 | ✅ Lulus |
-| 3b | — | — | 0 | 0 | 🕒 Belum |
+| 3b | 2026-07-17 | 4 | 4 | 0 | ✅ Lulus |
 | 4a | — | — | 0 | 0 | 🕒 Belum |
 | 4b | — | — | 0 | 0 | 🕒 Belum |
 | 5a | — | — | 0 | 0 | 🕒 Belum |
@@ -284,4 +320,4 @@ Untuk memverifikasi secara fisik kepatuhan terhadap Panduan Notasi Visual FDM, b
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-17*

@@ -23,6 +23,11 @@ class DiagramState {
   final List<Map<String, dynamic>> undoStack;
   final List<Map<String, dynamic>> redoStack;
 
+  // REQ-024: Boundary drawing mode
+  final bool isBoundaryDrawingMode;
+  final Offset? boundaryDraftStart;
+  final Offset? boundaryDraftEnd;
+
   DiagramState({
     this.nodes = const [],
     this.edges = const [],
@@ -39,6 +44,9 @@ class DiagramState {
     this.isConnecting = false,
     this.undoStack = const [],
     this.redoStack = const [],
+    this.isBoundaryDrawingMode = false,
+    this.boundaryDraftStart,
+    this.boundaryDraftEnd,
   });
 
   DiagramState copyWith({
@@ -57,6 +65,9 @@ class DiagramState {
     bool? isConnecting,
     List<Map<String, dynamic>>? undoStack,
     List<Map<String, dynamic>>? redoStack,
+    bool? isBoundaryDrawingMode,
+    Object? boundaryDraftStart = _undefinedSentinel,
+    Object? boundaryDraftEnd = _undefinedSentinel,
   }) {
     return DiagramState(
       nodes: nodes ?? this.nodes,
@@ -74,10 +85,14 @@ class DiagramState {
       isConnecting: isConnecting ?? this.isConnecting,
       undoStack: undoStack ?? this.undoStack,
       redoStack: redoStack ?? this.redoStack,
+      isBoundaryDrawingMode: isBoundaryDrawingMode ?? this.isBoundaryDrawingMode,
+      boundaryDraftStart: identical(boundaryDraftStart, _undefinedSentinel) ? this.boundaryDraftStart : boundaryDraftStart as Offset?,
+      boundaryDraftEnd: identical(boundaryDraftEnd, _undefinedSentinel) ? this.boundaryDraftEnd : boundaryDraftEnd as Offset?,
     );
   }
 
   static const String _undefined = '__undefined__';
+  static const Object _undefinedSentinel = Object();
 
   Map<String, dynamic> toSnapshot() {
     return {
@@ -181,6 +196,23 @@ class DiagramNotifier extends Notifier<DiagramState> {
     _runValidation();
   }
 
+  /// REQ-026: Recomputes enclosedNodeIds for every boundary based on current node positions.
+  List<SecurityBoundary> _recomputeAllBoundaryEnclosures(List<FDMNode> nodes, List<SecurityBoundary> boundaries) {
+    return boundaries.map((b) {
+      final enclosed = <String>[];
+      for (final node in nodes) {
+        final nodeCenter = Offset(
+          node.position.dx + (node.type == NodeType.structural ? 100.0 : 110.0),
+          node.position.dy + (node.type == NodeType.structural ? 40.0 : 60.0),
+        );
+        if (b.rect.contains(nodeCenter)) {
+          enclosed.add(node.id);
+        }
+      }
+      return b.copyWith(enclosedNodeIds: enclosed);
+    }).toList();
+  }
+
   void updateNodePosition(String id, Offset newPos) {
     final newNodes = state.nodes.map((n) {
       if (n.id == id) {
@@ -188,10 +220,15 @@ class DiagramNotifier extends Notifier<DiagramState> {
       }
       return n;
     }).toList();
-    state = state.copyWith(nodes: newNodes);
+    // REQ-026: Recompute enclosures whenever a node moves
+    final newBoundaries = _recomputeAllBoundaryEnclosures(newNodes, state.boundaries);
+    state = state.copyWith(nodes: newNodes, boundaries: newBoundaries);
   }
 
   void finishDragging() {
+    // REQ-026: Ensure enclosures are up-to-date after drag ends, then save undo
+    final newBoundaries = _recomputeAllBoundaryEnclosures(state.nodes, state.boundaries);
+    state = state.copyWith(boundaries: newBoundaries);
     _saveToUndoStack();
   }
 
@@ -453,19 +490,27 @@ class DiagramNotifier extends Notifier<DiagramState> {
   }
 
   void updateBoundaryRect(String boundaryId, Rect newRect) {
+    // REQ-025: Enforce minimum size when resizing
+    final clampedRect = Rect.fromLTWH(
+      newRect.left,
+      newRect.top,
+      newRect.width < 80 ? 80 : newRect.width,
+      newRect.height < 80 ? 80 : newRect.height,
+    );
     final newBoundaries = state.boundaries.map((b) {
       if (b.id == boundaryId) {
-        // Find nodes enclosed by this new boundary rect
+        // REQ-026: recompute enclosed nodes using consistent center-point logic
         final enclosed = <String>[];
         for (final node in state.nodes) {
-          // Center of the node
-          // Assuming a rough size for nodes (Structural: 150x60, Entity: 200x200)
-          final nodeCenter = Offset(node.position.dx + 100, node.position.dy + 40);
-          if (newRect.contains(nodeCenter)) {
+          final nodeCenter = Offset(
+            node.position.dx + (node.type == NodeType.structural ? 100.0 : 110.0),
+            node.position.dy + (node.type == NodeType.structural ? 40.0 : 60.0),
+          );
+          if (clampedRect.contains(nodeCenter)) {
             enclosed.add(node.id);
           }
         }
-        return b.copyWith(rect: newRect, enclosedNodeIds: enclosed);
+        return b.copyWith(rect: clampedRect, enclosedNodeIds: enclosed);
       }
       return b;
     }).toList();
@@ -561,6 +606,84 @@ class DiagramNotifier extends Notifier<DiagramState> {
   void _runValidation() {
     final results = validateDiagram(state.nodes, state.edges, state.boundaries, state.isFirestoreMode);
     state = state.copyWith(validationResults: results);
+  }
+
+  // ── REQ-024: Boundary Drawing Mode ─────────────────────────────────────────
+
+  /// Toggles boundary drawing mode on/off.
+  void toggleBoundaryDrawingMode() {
+    final next = !state.isBoundaryDrawingMode;
+    state = state.copyWith(
+      isBoundaryDrawingMode: next,
+      boundaryDraftStart: null,
+      boundaryDraftEnd: null,
+    );
+  }
+
+  /// Records the starting point of a boundary drag.
+  void startBoundaryDraw(Offset start) {
+    state = state.copyWith(
+      boundaryDraftStart: start,
+      boundaryDraftEnd: start,
+    );
+  }
+
+  /// Updates the current end point of the draft rectangle while dragging.
+  void updateBoundaryDraft(Offset end) {
+    state = state.copyWith(boundaryDraftEnd: end);
+  }
+
+  /// Commits the draft as a real SecurityBoundary if it is large enough (min 60×60).
+  void commitBoundaryDraft() {
+    final start = state.boundaryDraftStart;
+    final end = state.boundaryDraftEnd;
+
+    if (start != null && end != null) {
+      final rect = Rect.fromPoints(start, end);
+      if (rect.width >= 60 && rect.height >= 60) {
+        _saveToUndoStack();
+        final rand = math.Random();
+        final id = 'boundary_${DateTime.now().millisecondsSinceEpoch}_${rand.nextInt(1000000)}';
+        final enclosed = <String>[];
+        for (final node in state.nodes) {
+          final nodeCenter = Offset(
+            node.position.dx + (node.type == NodeType.structural ? 100.0 : 110.0),
+            node.position.dy + (node.type == NodeType.structural ? 40.0 : 60.0),
+          );
+          if (rect.contains(nodeCenter)) {
+            enclosed.add(node.id);
+          }
+        }
+        final boundary = SecurityBoundary(
+          id: id,
+          accessLevel: 'public',
+          enclosedNodeIds: enclosed,
+          rect: rect,
+        );
+        final newBoundaries = List<SecurityBoundary>.from(state.boundaries)..add(boundary);
+        state = state.copyWith(
+          boundaries: newBoundaries,
+          selectedBoundaryId: id,
+          selectedNodeId: null,
+          selectedEdgeId: null,
+          isBoundaryDrawingMode: false,
+          boundaryDraftStart: null,
+          boundaryDraftEnd: null,
+        );
+        _runValidation();
+        return;
+      }
+    }
+    cancelBoundaryDraw();
+  }
+
+  /// Cancels the current boundary draw without creating anything.
+  void cancelBoundaryDraw() {
+    state = state.copyWith(
+      isBoundaryDrawingMode: false,
+      boundaryDraftStart: null,
+      boundaryDraftEnd: null,
+    );
   }
 }
 

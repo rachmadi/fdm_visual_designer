@@ -50,9 +50,9 @@
 | 21 | REQ-021 | Edge tipe Denormalization: garis tebal dengan kepala panah ganda (<<-->) dan label inline | 3a | ✅ Selesai | `lib/canvas/edges_painter.dart` |
 | 22 | REQ-022 | Dynamic Anchor Switching: anchor koneksi berpindah otomatis berdasarkan posisi relatif node | 3a | ✅ Selesai | `lib/canvas/edges_painter.dart` |
 | 23 | REQ-023 | Routing kurva Bézier cubic untuk seluruh tipe edge agar tidak saling menimpa | 3a | ✅ Selesai | `lib/canvas/edges_painter.dart` |
-| 24 | REQ-024 | Security Boundary: gambar area boundary dengan klik-drag | 3b | Partially Implemented (Gap: Boundary dibuat via tombol palette sidebar, bukan klik-drag canvas) | `lib/ui/sidebar_left.dart` |
-| 25 | REQ-025 | Security Boundary: resize handle di sudut dan tepi | 3b | Partially Implemented (Gap: Handle visual sudah di-render, tetapi belum ada handler drag-to-resize) | `lib/canvas/nodes/security_boundary.dart` |
-| 26 | REQ-026 | Security Boundary: deteksi node yang berada di dalam area | 3b | Partially Implemented (Gap: Deteksi node boundary terimplementasi, tetapi belum dipicu konsisten pada perubahan node/boundary) | `lib/canvas/nodes/security_boundary.dart` |
+| 24 | REQ-024 | Security Boundary: gambar area boundary dengan klik-drag | 3b | Interactively Validated | `lib/ui/sidebar_left.dart`, `lib/canvas/canvas_view.dart`, `lib/core/state.dart` |
+| 25 | REQ-025 | Security Boundary: resize handle di sudut dan tepi | 3b | Interactively Validated | `lib/canvas/canvas_view.dart`, `lib/core/state.dart` |
+| 26 | REQ-026 | Security Boundary: deteksi node yang berada di dalam area | 3b | Interactively Validated | `lib/core/state.dart` |
 | 27 | REQ-027 | WFR R1: Alternasi ketat Firestore (SN → EN → SN) | 4a | Technically Validated | `lib/engine/validator.dart` |
 | 28 | REQ-028 | WFR R2: Target referencing harus ada dan bertipe Entity Node | 4a | Technically Validated | `lib/engine/validator.dart` |
 | 29 | REQ-029 | WFR R3: Source property key dari Denormalized harus terdefinisi | 4a | Technically Validated | `lib/engine/validator.dart` |
@@ -61,7 +61,7 @@
 | 32 | REQ-032 | WFR R6: Peringatan partial overlap pada Security Boundary | 4a | Technically Validated | `lib/engine/validator.dart` |
 | 33 | REQ-033 | WFR R7: Peringatan fisik — tipe kompleks tak berbatas (limit 1MB) | 4a | Technically Validated | `lib/engine/validator.dart` |
 | 34 | REQ-034 | WFR R8: Peringatan fisik — high frequency writes (>1/s) | 4a | Technically Validated | `lib/engine/validator.dart` |
-| 35 | REQ-035 | Overlay pesan error/warning pada node yang tidak valid | 4a | Implemented (Gap: Badge visual sudah ter-render, tetapi belum memiliki unit/integration test mandiri) | `lib/canvas/nodes/entity_node.dart` |
+| 35 | REQ-035 | Overlay badge error/warning pada node yang tidak valid | 4a | Implemented (Gap: Badge visual sudah ter-render, tetapi belum memiliki unit/integration test mandiri) | `lib/canvas/nodes/entity_node.dart` |
 | 36 | REQ-036 | Ekspor diagram ke format PNG resolusi tinggi | 4b | Implemented | `lib/ui/toolbar.dart` |
 | 37 | REQ-037 | Ekspor diagram ke format SVG | 4b | 🕒 Belum dimulai | — |
 | 38 | REQ-038 | Ekspor/Impor diagram ke format JSON | 4b | Implemented | `lib/export/serializer.dart` |
@@ -82,22 +82,22 @@
 
 ## Ringkasan Status RTM
 
-| Iterasi | Total REQ | Selesai (Closed) | Implemented | Partially Implemented | Technically Validated | 🕒 Belum |
-|---------|-----------|------------------|-------------|-----------------------|-----------------------|---------|
-| 1a | 9 | 9 | 0 | 0 | 0 | 0 |
-| 1b | 5 | 5 | 0 | 0 | 0 | 0 |
-| 2a | 3 | 3 | 0 | 0 | 0 | 0 |
-| 2b | 2 | 2 | 0 | 0 | 0 | 0 |
-| 3a | 4 | 4 | 0 | 0 | 0 | 0 |
-| 3b | 3 | 0 | 0 | 3 | 0 | 0 |
-| 4a | 9 | 0 | 1 | 0 | 8 | 0 |
-| 4b | 4 | 0 | 2 | 0 | 0 | 2 |
-| 5a | 2 | 0 | 0 | 0 | 0 | 2 |
-| 5b | 2 | 0 | 0 | 0 | 0 | 2 |
-| 6a | 2 | 0 | 0 | 0 | 0 | 2 |
-| 6b | 5 | 0 | 0 | 0 | 0 | 5 |
-| **Total**| **50** | **23** | **3** | **3** | **8** | **13** |
+| Iterasi | Total REQ | Closed | Interactively Validated | Technically Validated | Implemented | Partially Implemented | 🕒 Belum |
+|---------|-----------|--------|-------------------------|-----------------------|-------------|-----------------------|---------|
+| 1a | 9 | 9 | 0 | 0 | 0 | 0 | 0 |
+| 1b | 5 | 5 | 0 | 0 | 0 | 0 | 0 |
+| 2a | 3 | 3 | 0 | 0 | 0 | 0 | 0 |
+| 2b | 2 | 2 | 0 | 0 | 0 | 0 | 0 |
+| 3a | 4 | 4 | 0 | 0 | 0 | 0 | 0 |
+| 3b | 3 | 0 | 3 | 0 | 0 | 0 | 0 |
+| 4a | 9 | 0 | 0 | 8 | 1 | 0 | 0 |
+| 4b | 4 | 0 | 0 | 0 | 2 | 0 | 2 |
+| 5a | 2 | 0 | 0 | 0 | 0 | 0 | 2 |
+| 5b | 2 | 0 | 0 | 0 | 0 | 0 | 2 |
+| 6a | 2 | 0 | 0 | 0 | 0 | 0 | 2 |
+| 6b | 5 | 0 | 0 | 0 | 0 | 0 | 5 |
+| **Total**| **50** | **23** | **3** | **8** | **3** | **0** | **13** |
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-17*

@@ -1,4 +1,4 @@
-﻿# ⏲️ Durasi Per Fitur — FDM Visual Designer
+# ⏲️ Durasi Per Fitur — FDM Visual Designer
 ## Format: Kumulatif per Iterasi | Spesifikasi: Revisi 3 Final
 
 > File ini mencatat durasi aktual pengerjaan setiap fitur secara granular.
@@ -120,7 +120,23 @@ Kalkulasi durasi dan GOR secara otomatis di akhir iterasi.
 ---
 
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 3b s.d. 6b — Template Log Durasi (Prospektif Skema Baru)
+## ITERASI 3b — Security Boundary Lengkap
+## ═══════════════════════════════════════════════════════════════════
+
+| # | Fitur / Komponen | Kategori/Code | File Utama | Mulai | Selesai | Durasi | Kesulitan | Catatan |
+|---|-----------------|---------------|------------|-------|---------|--------|-----------|---------|
+| 1 | Perancangan Rencana & RTM | GOV-RTM | `implementation_plan.md` | 15:30 | 15:40 | 10m | Rendah | Selesai |
+| 2 | Klik-drag Canvas Drawing | DEV | `canvas_view.dart`, `state.dart` | 15:40 | 15:52 | 12m | Sedang | Selesai |
+| 3 | Resize Handle & Containment | DEV | `canvas_view.dart`, `state.dart` | 15:52 | 16:05 | 13m | Sedang | Selesai |
+| 4 | 15 Unit Test & Bug Fixes | TEST | `security_boundary_test.dart` | 16:05 | 16:15 | 10m | Sedang | Selesai |
+| 5 | Build & Headed E2E Drive | TEST-E2E | `app_test.dart` | 16:15 | 16:25 | 10m | Sedang | Selesai |
+| — | **TOTAL ITERASI 3b** | — | — | — | — | **55m** | — | — |
+| — | **Total Governance** | — | — | — | — | **10m** | — | **GOR: 18.2%** |
+
+---
+
+## ═══════════════════════════════════════════════════════════════════
+## ITERASI 4a s.d. 6b — Template Log Durasi (Prospektif Skema Baru)
 ## ═══════════════════════════════════════════════════════════════════
 
 | # | Fitur / Komponen | Kategori/Code | File Utama | Mulai | Selesai | Durasi | Kesulitan | Catatan |

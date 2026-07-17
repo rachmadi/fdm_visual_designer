@@ -252,7 +252,19 @@ Screenshot saved: 6_deleted_connection.png
 ---
 
 ## ═══════════════════════════════════════════════════════════════════
-## ITERASI 3b s.d. 6b — Template Validasi (Skema Baru) [BELUM DIISI - TEMPLATE]
+## ITERASI 3b — Security Boundary Lengkap
+## ═══════════════════════════════════════════════════════════════════
+
+| Requirement ID | Validation Type | Validator | Evidence | Result | Date | Related Commit | Final Acceptance Authority |
+|---|---|---|---|---|---|---|---|
+| `REQ-024` | `Integration Test` / `Unit Test` | `Automated Test` | `security_boundary_test.dart` & `app_test.dart` | `PASS` | `2026-07-17` | `f8e12ab` | `Intent Architect` |
+| `REQ-025` | `Unit Test` | `Automated Test` | `security_boundary_test.dart` | `PASS` | `2026-07-17` | `f8e12ab` | `Intent Architect` |
+| `REQ-026` | `Unit Test` | `Automated Test` | `security_boundary_test.dart` | `PASS` | `2026-07-17` | `f8e12ab` | `Intent Architect` |
+
+---
+
+## ═══════════════════════════════════════════════════════════════════
+## ITERASI 4a s.d. 6b — Template Validasi (Skema Baru)
 ## ═══════════════════════════════════════════════════════════════════
 
 | Requirement ID | Validation Type | Validator | Evidence | Result | Date | Related Commit | Final Acceptance Authority |
@@ -266,4 +278,4 @@ Screenshot saved: 6_deleted_connection.png
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-17*

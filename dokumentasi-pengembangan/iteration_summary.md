@@ -95,7 +95,36 @@
 
 ---
 
-## ITERASI 3b s.d. 6b — Template Iter Summary (Skema Baru)
+## ITERASI 3b — Security Boundary Lengkap
+═══════════════════════════════════════════════════════════════════
+
+- **Tanggal Mulai**: 2026-07-17
+- **Tanggal Selesai**: 2026-07-17
+- **Durasi Aktual (Skema Baru)**:
+  - Elapsed Time (ET): 55m
+  - Active Agent Execution Time (AAET): 45m
+  - Human Interaction Time (HIT): 0m
+  - Recovery Time (RT): 5m
+  - Documentation & Governance Time (DGT): 5m
+- **Status Akhir**: ✅ Selesai
+- **Fitur Selesai**: Klik-drag canvas drawing mode, drag-to-resize handle (min 80x80), reaktif node containment logic.
+- **REQ yang Ditutup**: REQ-024 s.d. REQ-026
+- **Lesson Learned**: Menyusun state drawing secara global pada Riverpod memudahkan koordinasi toolbar dan kursor pointer canvas, serta prioritas hit-test yang cermat pada resize handle mencegah konflik penyeretan bodi boundary.
+
+#### Cross-Artifact Integrity Check (Iterasi 3b)
+* [x] Status iterasi konsisten di RTM (`Interactively Validated` untuk REQ-024 s.d. REQ-026), `estimated_vs_actual_time.md` (ET 55m / AAET 45m), dan `iteration_summary.md`.
+* [x] Jumlah requirement konsisten di RTM dan Iter Summary (3 requirement: REQ-024, REQ-025, REQ-026).
+* [x] Durasi menggunakan definisi waktu yang sama di semua log (ET 55m / AAET 45m).
+* [x] Requirement berstatus selesai memiliki bukti di Validation Log (`validation_log.md` mencantumkan status `PASS` berbasis 15 unit tests dan 6 E2E screenshots).
+* [x] Decision ID konsisten dengan Decision Log (`D-018` s.d. `D-020` terdokumentasi di `decision_log.md`).
+* [x] Intervention ID konsisten dengan Human Intervention Log (tidak ada intervensi manual tambahan).
+* [x] Drift ID konsisten dengan Context Drift Log (tidak ada drift yang terdeteksi).
+* [x] Tidak terdapat iterasi/requirement fiktif di luar spesifikasi resmi.
+* **Integrity Check**: `PASS`
+
+---
+
+## ITERASI 4a s.d. 6b — Template Log Summary (Skema Baru)
 ═══════════════════════════════════════════════════════════════════
 
 - **Tanggal Mulai**: YYYY-MM-DD
@@ -120,7 +149,7 @@
 * [ ] Intervention ID konsisten dengan Human Intervention Log.
 * [ ] Drift ID konsisten dengan Context Drift Log.
 * [ ] Tidak terdapat iterasi/requirement fiktif di luar spesifikasi resmi.
-* **Integrity Check**: `PASS` / `FAIL` (Catatan jika FAIL: )
+* **Integrity Check**: `PASS` / `FAIL`
 
 ---
 
@@ -133,15 +162,15 @@
 | 2a | ✅ Selesai | 38 m | 3/3 | PASS |
 | 2b | ✅ Selesai | 50 m | 2/2 | PASS |
 | 3a | ✅ Selesai | 56 m | 4/4 | PASS |
-| 3b | 🕒 Belum | — | 0/3 | — |
+| 3b | ✅ Selesai | 55 m | 3/3 | PASS |
 | 4a | 🕒 Belum | — | 0/9 | — |
 | 4b | 🕒 Belum | — | 0/4 | — |
 | 5a | 🕒 Belum | — | 0/2 | — |
 | 5b | 🕒 Belum | — | 0/2 | — |
 | 6a | 🕒 Belum | — | 0/2 | — |
 | 6b | 🕒 Belum | — | 0/5 | — |
-| **Total** | **⚠️ Partial** | **4 jam 54 m** | **23/50** | **PASS** |
+| **Total** | **⚠️ Partial** | **5 jam 49 m** | **26/50** | **PASS** |
 
 ---
 
-*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-11*
+*Dokumen ini dibuat: 2026-07-06 | Diperbarui: 2026-07-17*

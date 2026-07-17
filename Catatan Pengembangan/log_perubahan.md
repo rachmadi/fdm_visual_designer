@@ -336,6 +336,26 @@ Seluruh penambahan, peningkatan, dan perbaikan pada proyek FDM Visual Designer d
   - Memasukkan metadata validasi autentik tanpa perkiraan fiktif pada `validation_log.md`.
   - Mengganti tautan screenshot absolut `file:///` menjadi relatif (seperti `screenshots/iterasi_3a/...`) pada `interactive_test_log.md`.
 
+## [1.8.0] - 2026-07-17 (Sesi 16 — Security Boundary Lengkap)
 
+### Added (Penambahan Fitur)
+- **Klik-drag Canvas Drawing Mode (REQ-024)**:
+  - Tombol palette di sidebar kiri diubah menjadi toggle drawing mode.
+  - Mengubah cursor kanvas menjadi crosshair (`SystemMouseCursors.precise`) saat mode drawing aktif.
+  - Kotak draft semi-transparan berwarna indigo (`#6366F1`) di-render di atas kanvas secara real-time saat pointer diseret.
+  - Drag yang dilepaskan dengan ukuran >= 60x60px akan otomatis di-commit menjadi objek `SecurityBoundary` baru.
+- **Drag-to-Resize Handle Interaktif (REQ-025)**:
+  - Menambahkan resize handle interaktif (lingkaran putih kecil) di pojok kanan-bawah Security Boundary.
+  - Hit-testing diposisikan dengan radius 16px di pojok kanan-bawah.
+  - Geseran resize handle memperbarui dimensi boundary secara real-time dengan pembatasan ukuran minimum 80x80px (clamping).
+- **Otomasi Deteksi Node Konsisten (REQ-026)**:
+  - Mengenkapsulasi logika deteksi dalam satu fungsi privat helper `_recomputeAllBoundaryEnclosures()` di notifier state berbasis titik tengah bodi node.
+  - Memicu deteksi otomatis dan update `enclosedNodeIds` secara real-time ketika node digeser (`updateNodePosition` & `finishDragging`), boundary di-resize, dan node dihapus.
+  - Node yang berada di dalam irisan beberapa boundary akan otomatis tercatat sebagai anggota di seluruh boundary tersebut.
+- **15 Unit Test Baru (`test/security_boundary_test.dart`)**:
+  - Menulis 15 skenario unit test baru untuk memverifikasi toggle mode, cancel/commit draft, resizing, clamping, serta deteksi node otomatis saat penyeretan dan penghapusan.
 
-
+### Fixed (Perbaikan Bug & Tes)
+- **Warning Unused Element**: Menghapus sisa kode fungsi `_createBoundary` di `sidebar_left.dart` karena tidak lagi dipanggil setelah diubah ke toggle.
+- **Syntax Error Missing Closing Brackets**: Memperbaiki kurung penutup (`),`) untuk `InteractiveViewer` dan `MouseRegion` di `canvas_view.dart`.
+- **Headed E2E Integration Test**: Menjalankan build web produksi dan ChromeDriver headed integration test (non-headless) untuk memverifikasi fungsionalitas visual dan interaksi secara E2E di Chrome desktop. Semua tahapan integration test lulus 100%.
