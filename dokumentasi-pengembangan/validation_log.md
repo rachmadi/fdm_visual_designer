@@ -257,9 +257,9 @@ Screenshot saved: 6_deleted_connection.png
 
 | Requirement ID | Validation Type | Validator | Evidence | Result | Date | Related Commit | Final Acceptance Authority |
 |---|---|---|---|---|---|---|---|
-| `REQ-024` | `Integration Test` / `Unit Test` | `Automated Test` | `security_boundary_test.dart` & `app_test.dart` | `PASS` | `2026-07-17` | `f8e12ab` | `Intent Architect` |
-| `REQ-025` | `Unit Test` | `Automated Test` | `security_boundary_test.dart` | `PASS` | `2026-07-17` | `f8e12ab` | `Intent Architect` |
-| `REQ-026` | `Unit Test` | `Automated Test` | `security_boundary_test.dart` | `PASS` | `2026-07-17` | `f8e12ab` | `Intent Architect` |
+| `REQ-024` | `Integration Test` / `Unit Test` | `Automated Test` | `security_boundary_test.dart` & `app_test.dart` | `PASS` | `2026-07-17` | `eccedd0` | `Intent Architect` |
+| `REQ-025` | `Unit Test` | `Automated Test` | `security_boundary_test.dart` | `PASS` | `2026-07-17` | `eccedd0` | `Intent Architect` |
+| `REQ-026` | `Unit Test` | `Automated Test` | `security_boundary_test.dart` | `PASS` | `2026-07-17` | `eccedd0` | `Intent Architect` |
 
 ---
 
